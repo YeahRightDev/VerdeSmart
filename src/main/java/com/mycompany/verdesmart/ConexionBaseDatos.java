@@ -30,7 +30,7 @@ public class ConexionBaseDatos {
             System.out.println("Conexión establecida por primera vez (Singleton).");
         } else if (instancia.getConexion().isClosed()) {
             instancia = new ConexionBaseDatos();
-            System.out.println("Conexión reabierta.");
+            System.out.println("Conexión reabierta");
         }
         return instancia;
     }

@@ -5,13 +5,12 @@ public class VerdeSmart {
         try {
             System.out.println("Intentando conectar al servidor de MySQL...");
             
-            // Invocar la conexión única de tu Singleton
             java.sql.Connection cn = ConexionBaseDatos.getInstancia().getConexion();
             
             if (cn != null && !cn.isClosed()) {
                 System.out.println("                                                 ");
                 System.out.println("ola, ya esta conectado con el usuario: sopes");
-                System.out.println("La base de datos verde_smart esta lista.");
+                System.out.println("La base de datos verde_smart esta lista");
                 System.out.println("                                                 ");
             }
         } catch (Exception e) {
