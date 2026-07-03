@@ -47,12 +47,7 @@ public class card extends javax.swing.JPanel {
     jButton1.setBorderPainted(false);      
     jButton1.setFocusPainted(false);      
 
-    jButton2.setPreferredSize(new java.awt.Dimension(42, 42));
-    jButton2.setSize(42, 42);
-    jButton2.putClientProperty("FlatLaf.style", "background: #7AB06B; arc: 999; borderWidth: 0; focusWidth: 0;");
-    jButton2.setContentAreaFilled(false); 
-    jButton2.setBorderPainted(false);      
-    jButton2.setFocusPainted(false);      
+  
 
     jButton3.setPreferredSize(new java.awt.Dimension(42, 42));
     jButton3.setSize(42, 42);
@@ -64,7 +59,6 @@ public class card extends javax.swing.JPanel {
    
     if (jPanel1 != null) {
         jPanel1.setComponentZOrder(jButton1, 0);
-        jPanel1.setComponentZOrder(jButton2, 0);
         jPanel1.setComponentZOrder(jButton3, 0);
     }
 }
@@ -82,7 +76,6 @@ public class card extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -99,10 +92,10 @@ public class card extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Planta ");
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\gota-de-agua (1).png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\eliminar (1).png")); // NOI18N
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -116,29 +109,26 @@ public class card extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel3)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(0, 8, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -156,41 +146,54 @@ public class card extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        delete del= new delete();
-        del.setVisible(true);
+       // 1. Buscamos la ventana que contiene actualmente a esta tarjeta
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+        
+        // 2. Si se abrió desde la ventana de MONITORING
+        if (parentWindow instanceof MONITORING) {
+            MONITORING monitoreoActual = (MONITORING) parentWindow;
+            
+            // Abrimos delete pasándole la ventana de monitoreo
+            delete del = new delete(monitoreoActual);
+            del.setVisible(true);
+            
+            // Ocultamos monitoreo para que no se encimen
+            monitoreoActual.setVisible(false);
+            
+        } else {
+            // 3. Si por alguna razón se abre desde 'grounds' u otra parte y no hay MONITORING activo
+            // Le pasamos null para evitar que el programa se rompa por falta de argumentos
+            delete del = new delete(null);
+            del.setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       // 1. Buscamos la ventana contenedora superior (grounds) de forma dinámica
-    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+      // 1. Buscamos la ventana contenedora superior (grounds) de forma dinámica
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+        
+        if (parentWindow instanceof grounds) {
+            // 2. Si la encontramos, la convertimos a tipo 'grounds'
+            grounds pantallaPrincipal = (grounds) parentWindow;
+            
+            // 3. Obtenemos el nombre del jardín real de esta tarjeta
+            String nombreDelJardinActual = jLabel1.getText();
+            
+            // 4. Le pasamos AMBOS parámetros obligatorios al constructor de MONITORING
+            MONITORING MO = new MONITORING(pantallaPrincipal, nombreDelJardinActual);
+            MO.setVisible(true);
+            
+            // 5. Ocultamos la ventana principal temporalmente
+            pantallaPrincipal.setVisible(false); 
+        } else {
+            System.out.println("Error: No se encontró la ventana principal 'grounds'.");
+        }
     
-    if (parentWindow instanceof grounds) {
-        // 2. Si la encontramos, la convertimos a tipo 'grounds'
-        grounds pantallaPrincipal = (grounds) parentWindow;
-        
-        // 3. Le pasamos la ventana principal real al constructor de MONITORING
-        MONITORING MO = new MONITORING(pantallaPrincipal);
-        MO.setVisible(true);
-        
-        // 4. Ocultamos la ventana principal para conservar todas tus tarjetas intactas
-        pantallaPrincipal.setVisible(false); 
-    } else {
-        // Por si acaso estás probando la tarjeta sola fuera de grounds
-        System.out.println("Error: No se encontró la ventana principal 'grounds'.");
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        data d = new data();
-        d.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

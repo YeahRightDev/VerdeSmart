@@ -11,10 +11,7 @@ public class VerdeSmart {
                 System.out.println("ola, ya esta conectado con el usuario: sopes");
                 System.out.println("La base de datos verde_smart esta lista");
                 
-                java.awt.EventQueue.invokeLater(() -> {
-                    login2 ventanaLogin = new login2(); 
-                    ventanaLogin.setVisible(true);
-                });
+                
             }
         } catch (Exception e) {
             System.out.println("\n error al conectar ");

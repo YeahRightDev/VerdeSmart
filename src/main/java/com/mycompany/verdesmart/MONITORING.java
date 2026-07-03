@@ -3,28 +3,70 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.verdesmart;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
+// IMPORTS CRUCIALES PARA LA BASE DE DATOS
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
  /*
  * @author Brith
  */
 public class MONITORING extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MONITORING.class.getName());
-
     private grounds pantallaPrincipal;
+    private String nombreJardin; 
      
-   
-    public MONITORING(grounds pantallaPrincipal) {
+    // Configuración de tu Base de Datos (Ajusta la contraseña si usas otra)
+    private final String URL = "jdbc:mysql://localhost:3306/verdesmart"; 
+    private final String USER = "root"; 
+    private final String PASSWORD = "tu_contraseña";
+    /**
+     * Modificamos el constructor para recibir la ventana padre Y el nombre del jardín concreto
+     */
+   public MONITORING(grounds pantallaPrincipal, String nombreJardin) {
         this.pantallaPrincipal = pantallaPrincipal; 
+        this.nombreJardin = nombreJardin; 
         initComponents();
         reemplazarYEstilarLabels();
+        cargarDatosMonitoreo(); 
     }
     
+    private void cargarDatosMonitoreo() {
+        String sql = "SELECT humedad, fecha_riego, hora_riego FROM monitoreo WHERE nombre_jardin = ? ORDER BY id DESC LIMIT 1";
+        
+        try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, this.nombreJardin);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String humedad = rs.getString("humedad");
+                    String fecha = rs.getString("fecha_riego");
+                    String hora = rs.getString("hora_riego");
+                    
+                    jLabel4.setText(humedad + "%");
+                    jLabel6.setText(fecha);
+                    jLabel9.setText(hora);
+                } else {
+                    jLabel4.setText("S/D");
+                    jLabel6.setText("Sin registros");
+                    jLabel9.setText("Sin registros");
+                }
+            }
+        } catch (SQLException e) {
+            logger.severe("Error al conectar o consultar la base de datos: " + e.getMessage());
+            jLabel4.setText("Error");
+            jLabel6.setText("Error BD");
+            jLabel9.setText("Error BD");
+        }
+    }
    private void reemplazarYEstilarLabels() {
         
         jLabel4.setOpaque(true);
@@ -105,10 +147,13 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\boton-x.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Monitoreo");
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -238,9 +283,9 @@ public class MONITORING extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        grounds gr = new grounds();
-        gr.setVisible(true);
+        if (this.pantallaPrincipal != null) {
+            this.pantallaPrincipal.setVisible(true); // Regresamos a la pantalla original intacta
+        }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
