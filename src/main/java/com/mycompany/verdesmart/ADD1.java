@@ -172,7 +172,7 @@ public class ADD1 extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
@@ -199,6 +199,7 @@ public class ADD1 extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel8)
@@ -209,8 +210,7 @@ public class ADD1 extends javax.swing.JFrame {
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(17, 17, 17)))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(17, 17, 17))))))
                 .addGap(25, 25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -233,7 +233,7 @@ public class ADD1 extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(61, 61, 61))
         );
 
         jButton5.setText("Cerrar");
@@ -324,23 +324,57 @@ public class ADD1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String nombre = jTextField1.getText();
-        String ladoX = jTextField2.getText();
-        String ladoY = jTextField3.getText();
-        String areaCalculada = "0";
+                                      
+    String nombre = jTextField1.getText().trim();
+    String ladoX = jTextField2.getText().trim();
+    String ladoY = jTextField3.getText().trim();
+    double length = 0;
+    double wide = 0;
+    double totalArea = 0;
 
+    // 1. Validar y convertir los datos numéricos de las medidas
     try {
-        double x = Double.parseDouble(ladoX);
-        double y = Double.parseDouble(ladoY);
-        areaCalculada = String.valueOf(x * y);
+        length = Double.parseDouble(ladoX);
+        wide = Double.parseDouble(ladoY);
+        totalArea = length * wide;
     } catch (NumberFormatException e) {
-        areaCalculada = ladoX; 
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa medidas numéricas válidas para el terreno.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return; // Detiene la ejecución si los números no son válidos
     }
 
-    
-    PLANTS ventanaPlantas = new PLANTS(this.pantallaPrincipal, nombre, areaCalculada);
-    ventanaPlantas.setVisible(true);
-    this.dispose(); 
+    // 2. Definir la consulta SQL con el nombre real de tu tabla: garden
+    String sql = "INSERT INTO garden (Name_garden, Length, Wide, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // 3. Conectar usando tu Singleton (ConexionBaseDatos.getInstancia().getConexion())
+    try {
+        java.sql.Connection con = ConexionBaseDatos.getInstancia().getConexion();
+        try (java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, nombre);
+            ps.setDouble(2, length);
+            ps.setDouble(3, wide);
+            ps.setDouble(4, totalArea);
+            ps.setString(5, "Rectangular"); 
+            ps.setString(6, "Normal");      
+            ps.setDouble(7, 0.0);           
+            ps.setInt(8, 1);                // ID de usuario asignado por defecto temporalmente
+
+            // Ejecutar la inserción
+            int filasInsertadas = ps.executeUpdate();
+            
+            if (filasInsertadas > 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "¡Terreno registrado con éxito en la base de datos!");
+                
+                // 4. Continuar hacia la ventana de PLANTAS pasando los datos necesarios
+                PLANTS ventanaPlantas = new PLANTS(this.pantallaPrincipal, nombre, String.valueOf(totalArea));
+                ventanaPlantas.setVisible(true);
+                this.dispose(); 
+            }
+        }
+    } catch (java.sql.SQLException ex) {
+        logger.log(java.util.logging.Level.SEVERE, "Error al insertar el jardín", ex);
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

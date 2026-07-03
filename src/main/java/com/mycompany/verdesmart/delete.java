@@ -9,14 +9,16 @@ package com.mycompany.verdesmart;
  * @author Brith
  */
 public class delete extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(delete.class.getName());
-// 1. Creamos una variable para almacenar la ventana de monitoreo
     private MONITORING pantallaMonitoreo;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(delete.class.getName());
 
-    // 2. Modificamos el constructor para recibirla
-    public delete(MONITORING pantallaMonitoreo) {
+
+    private int idGardenEliminar; 
+
+    // UNICO CONSTRUCTOR: Recibe la pantalla y el ID real obligatoriamente
+    public delete(MONITORING pantallaMonitoreo, int idGarden) {
         this.pantallaMonitoreo = pantallaMonitoreo;
+        this.idGardenEliminar = idGarden;
         initComponents();
     }
 
@@ -47,6 +49,7 @@ public class delete extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,6 +100,69 @@ public class delete extends javax.swing.JFrame {
     // Cerramos la ventana de eliminación actual sin hacer nada más
     this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  
+        // Confirmación de seguridad para el usuario
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas asociadas.", 
+            "Confirmar Eliminación", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        if (respuesta != javax.swing.JOptionPane.YES_OPTION) {
+            return; 
+        }
+
+        // CORRECCIÓN AQUÍ: Se cambia id_Plant por id_Garden para borrar todas las plantas que correspondan a ESTE jardín
+        String sqlDeletePlantas = "DELETE FROM plant WHERE id_Garden = ?"; 
+        String sqlDeleteGarden = "DELETE FROM garden WHERE id_Garden = ?";
+
+        java.sql.Connection con = null;
+
+        try {
+            con = ConexionBaseDatos.getInstancia().getConexion();
+            con.setAutoCommit(false); // Iniciamos la transacción segura
+
+            // 1. Eliminar plantas vinculadas al jardín
+            try (java.sql.PreparedStatement psPlantas = con.prepareStatement(sqlDeletePlantas)) {
+                psPlantas.setInt(1, idGardenEliminar);
+                psPlantas.executeUpdate();
+            }
+
+            // 2. Eliminar el registro del jardín definitivo
+            try (java.sql.PreparedStatement psGarden = con.prepareStatement(sqlDeleteGarden)) {
+                psGarden.setInt(1, idGardenEliminar);
+                int filasJardin = psGarden.executeUpdate();
+
+                if (filasJardin > 0) {
+                    con.commit(); // Guardamos los cambios de forma permanente en la Base de Datos
+                    javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus plantas se eliminaron correctamente.");
+                    
+                    if (this.pantallaMonitoreo != null) {
+                        this.pantallaMonitoreo.setVisible(true);
+                    }
+                    this.dispose();
+                } else {
+                    con.rollback(); 
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró el jardín especificado en la base de datos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } catch (java.sql.SQLException ex) {
+            if (con != null) {
+                try { con.rollback(); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+            }
+            logger.log(java.util.logging.Level.SEVERE, "Error en la transacción de eliminación", ex);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (con != null) {
+                try { con.setAutoCommit(true); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
