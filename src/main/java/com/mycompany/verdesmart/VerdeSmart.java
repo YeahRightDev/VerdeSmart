@@ -14,10 +14,13 @@ public class VerdeSmart {
                 System.out.println("                                                 ");
             }
         } catch (Exception e) {
-            System.out.println("\n❌ error al conectar ❌");
+            System.out.println("\n error al conectar ");
             System.out.println("Causa del fallo: " + e.getMessage());
             System.out.println("HOla");
         }
+        forrgotten_password password = new forrgotten_password();
+        password.setVisible(true);
+        
     }
     
 }
