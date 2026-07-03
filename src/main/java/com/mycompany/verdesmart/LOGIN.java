@@ -202,7 +202,9 @@ public class LOGIN extends javax.swing.JFrame {
         create.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        System.exit(0); 
+    }
     /**
      * @param args the command line arguments
      */

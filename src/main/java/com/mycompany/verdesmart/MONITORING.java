@@ -9,9 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
- /*
- * @author Brith
- */
 public class MONITORING extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MONITORING.class.getName());
@@ -25,8 +22,8 @@ public class MONITORING extends javax.swing.JFrame {
    private void reemplazarYEstilarLabels() {
        
         jLabel4.setOpaque(true);
-        jLabel6.setOpaque(true);
-        jLabel9.setOpaque(true);
+        lblFechaRiego.setOpaque(true);
+        lblHoraRiego.setOpaque(true);
 
         jButton2.setContentAreaFilled(false); 
         jButton2.setBorderPainted(false);     
@@ -38,15 +35,15 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("45%");
 
-        jLabel6.setBackground(new java.awt.Color(240, 240, 240));
-        jLabel6.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("30/06/2026");
+        lblFechaRiego.setBackground(new java.awt.Color(240, 240, 240));
+        lblFechaRiego.setForeground(new java.awt.Color(27, 77, 47));
+        lblFechaRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFechaRiego.setText("30/06/2026");
 
-        jLabel9.setBackground(new java.awt.Color(240, 240, 240)); 
-        jLabel9.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("10:50 PM");
+        lblHoraRiego.setBackground(new java.awt.Color(240, 240, 240)); 
+        lblHoraRiego.setForeground(new java.awt.Color(27, 77, 47));
+        lblHoraRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHoraRiego.setText("10:50 PM");
 
       
         javax.swing.border.AbstractBorder bordeRedondeado = new javax.swing.border.AbstractBorder() {
@@ -66,8 +63,8 @@ public class MONITORING extends javax.swing.JFrame {
 
         
         jLabel4.setBorder(bordeRedondeado);
-        jLabel6.setBorder(bordeRedondeado);
-        jLabel9.setBorder(bordeRedondeado);
+        lblFechaRiego.setBorder(bordeRedondeado);
+        lblHoraRiego.setBorder(bordeRedondeado);
     }
 
     /**
@@ -89,11 +86,12 @@ public class MONITORING extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblUltimoRiegoTitulo = new javax.swing.JLabel();
+        lblFechaRiego = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblHoraRiego = new javax.swing.JLabel();
+        lblUltimoRiego = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -142,13 +140,10 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel3.setText("HUMEDAD");
 
         jLabel4.setBackground(new java.awt.Color(199, 221, 181));
-        jLabel4.setText("jLabel4");
 
-        jLabel5.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel5.setText("ULTIMO RIEGO");
-
-        jLabel6.setText("jLabel6");
+        lblUltimoRiegoTitulo.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        lblUltimoRiegoTitulo.setForeground(new java.awt.Color(27, 77, 47));
+        lblUltimoRiegoTitulo.setText("ULTIMO RIEGO");
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
@@ -157,8 +152,6 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
         jLabel8.setText("HORA");
-
-        jLabel9.setText("jLabel9");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -169,11 +162,12 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
+                    .addComponent(lblFechaRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addComponent(lblUltimoRiegoTitulo)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblHoraRiego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblUltimoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -184,15 +178,17 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(38, 38, 38)
+                .addComponent(lblUltimoRiegoTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(lblUltimoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(18, 18, 18)
+                .addComponent(lblFechaRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(lblHoraRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
@@ -252,13 +248,14 @@ public class MONITORING extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblFechaRiego;
+    private javax.swing.JLabel lblHoraRiego;
+    private javax.swing.JLabel lblUltimoRiego;
+    private javax.swing.JLabel lblUltimoRiegoTitulo;
     // End of variables declaration//GEN-END:variables
 }

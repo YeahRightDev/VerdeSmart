@@ -38,6 +38,10 @@ public class forgotten_password extends javax.swing.JFrame {
         estilarCampoRedondeado(jPasswordField2);
         estilarCampoRedondeado(jTextField1);
         estilarCampoRedondeado(jTextField2);
+        
+        jPasswordField1.setEnabled(false);
+        jPasswordField2.setEnabled(false);
+        jButton3.setEnabled(false);
     }
 
    
@@ -273,8 +277,46 @@ public class forgotten_password extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+String user = jTextField1.getText().trim(); 
+        String email = jTextField2.getText().trim(); 
         
+        if (user.isEmpty() || email.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena los campos de Usuario y Correo.");
+            return;
+        }
+        
+        String sql = "SELECT * FROM user WHERE e_mail = ? AND Name = ?";
+        
+        try {
+            java.sql.Connection con = ConexionBaseDatos.getInstancia().getConexion();
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, user);
+            
+            java.sql.ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                String nombreReal = rs.getString("Name");
+                javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido de nuevo, " + nombreReal + "!\nAhora puedes ingresar tu nueva contraseña.");
+                
+                jPasswordField1.setEnabled(true);
+                jPasswordField2.setEnabled(true);
+                jButton3.setEnabled(true);
+                
+                jTextField1.setEnabled(false);
+                jTextField2.setEnabled(false);
+                jButton4.setEnabled(false);
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "El usuario o el correo no coinciden en nuestro sistema.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            
+            ps.close();
+            rs.close();
+            
+        } catch (java.sql.SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al verificar usuario", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

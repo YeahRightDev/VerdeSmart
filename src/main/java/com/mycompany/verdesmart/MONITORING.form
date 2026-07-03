@@ -148,11 +148,12 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" pref="663" max="32767" attributes="0"/>
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaRiego" pref="663" max="32767" attributes="0"/>
+                          <Component id="lblUltimoRiegoTitulo" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" max="32767" attributes="0"/>
-                          <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblHoraRiego" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblUltimoRiego" pref="663" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="48" max="32767" attributes="0"/>
                   </Group>
@@ -166,15 +167,17 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="57" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="lblUltimoRiegoTitulo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblUltimoRiego" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" pref="36" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblFechaRiego" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="lblHoraRiego" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace pref="118" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -197,10 +200,9 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="b5" green="dd" red="c7" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="jLabel4"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel5">
+            <Component class="javax.swing.JLabel" name="lblUltimoRiegoTitulo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Sylfaen" size="24" style="0"/>
@@ -211,10 +213,7 @@
                 <Property name="text" type="java.lang.String" value="ULTIMO RIEGO"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel6"/>
-              </Properties>
+            <Component class="javax.swing.JLabel" name="lblFechaRiego">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -238,10 +237,9 @@
                 <Property name="text" type="java.lang.String" value="HORA"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel9"/>
-              </Properties>
+            <Component class="javax.swing.JLabel" name="lblHoraRiego">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblUltimoRiego">
             </Component>
           </SubComponents>
         </Container>

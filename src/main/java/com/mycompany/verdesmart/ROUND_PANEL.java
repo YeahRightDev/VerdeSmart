@@ -50,8 +50,8 @@ public class ROUND_PANEL extends JPanel {
             Ellipse2D.Double circuloRecorte = new Ellipse2D.Double(x, y, diametro, diametro);
             g2.setClip(circuloRecorte);
             
-            g2.drawImage(imagen, x, y, diametro, diametro, this);
-            g2.setClip(clipOriginal);
+            g2.setColor(getBackground()); 
+            g2.fillOval(x, y, diametro, diametro);
         }
     }
 }
