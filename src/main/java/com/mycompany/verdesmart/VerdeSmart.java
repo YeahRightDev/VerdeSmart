@@ -16,6 +16,7 @@ public class VerdeSmart {
         } catch (Exception e) {
             System.out.println("\n❌ error al conectar ❌");
             System.out.println("Causa del fallo: " + e.getMessage());
+            System.out.println("HOla");
         }
     }
 }
