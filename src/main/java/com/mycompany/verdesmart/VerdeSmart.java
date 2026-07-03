@@ -21,8 +21,8 @@ public class VerdeSmart {
             System.out.println("Causa del fallo: " + e.getMessage());
             System.out.println("HOla");
         }
-        forrgotten_password password = new forrgotten_password();
-        password.setVisible(true);
-        
+        LOGIN LOG = new LOGIN();
+        LOG.setVisible(true);
+      
     }
 }

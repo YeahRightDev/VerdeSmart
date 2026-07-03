@@ -4,6 +4,8 @@
  */
 package com.mycompany.verdesmart;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Brith
@@ -37,7 +39,10 @@ public class forgotten_password extends javax.swing.JFrame {
         estilarCampoRedondeado(jPasswordField1);
         estilarCampoRedondeado(jPasswordField2);
         estilarCampoRedondeado(jTextField1);
-        estilarCampoRedondeado(jTextField2);
+        
+        jPasswordField1.setEnabled(false);
+        jPasswordField2.setEnabled(false);
+        jButton2.setEnabled(false);
     }
 
    
@@ -99,10 +104,8 @@ public class forgotten_password extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -167,19 +170,12 @@ public class forgotten_password extends javax.swing.JFrame {
         jButton3.setToolTipText("");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        jLabel5.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel5.setText("Usuario");
-
         jTextField1.setColumns(60);
         jTextField1.setText("jTextField1");
 
         jLabel6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(27, 77, 47));
         jLabel6.setText("Correo");
-
-        jTextField2.setColumns(60);
-        jTextField2.setText("jTextField2");
 
         jButton4.setFont(new java.awt.Font("Sylfaen", 0, 12)); // NOI18N
         jButton4.setText("Confirmar ");
@@ -195,15 +191,13 @@ public class forgotten_password extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(275, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,14 +216,10 @@ public class forgotten_password extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(3, 3, 3)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jLabel3)
@@ -259,7 +249,60 @@ public class forgotten_password extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+                                                   
+    // 1. Obtener las contraseñas que el usuario escribió en las cajas 3 y 4
+    String pass1 = jPasswordField1.getText().trim();
+    String pass2 = jPasswordField2.getText().trim();
+    
+    // Recuperamos el correo de la caja 1 (que ya fue validado en el Botón 1)
+    // Lo usamos como filtro para saber exactamente a qué usuario modificarle la contraseña
+    String email = jTextField1.getText().trim(); 
+
+    // 2. Validar que no hayan dejado los campos vacíos
+    if (pass1.isEmpty() || pass2.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, escribe la nueva contraseña en ambos campos.");
+        return;
+    }
+
+    // 3. Validar que ambas contraseñas coincidan exactamente
+    if (!pass1.equals(pass2)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden. Inténtalo de nuevo.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 4. Sentencia SQL para hacer la actualización real en tu tabla 'user_user'
+    String sqlUpdate = "UPDATE user_user SET Password_user = ? WHERE e_mail = ?";
+
+    // 5. Conectarse y ejecutar la actualización en la Base de Datos
+    try (Connection con = ConexionBaseDatos.getInstancia().getConexion();
+         java.sql.PreparedStatement ps = con.prepareStatement(sqlUpdate)) {
+        
+        // Pasamos los datos al query (? , ?)
+        ps.setString(1, pass1); // Nueva contraseña
+        ps.setString(2, email); // Filtro de correo electrónico
+
+        // executeUpdate() devuelve cuántas filas se modificaron en MySQL
+        int filasAfectadas = ps.executeUpdate();
+
+        if (filasAfectadas > 0) {
+            // ¡Éxito! Se guardó en la base de datos
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Contraseña actualizada con éxito en la base de datos!", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
+            // Cierra la ventana actual de recuperación automáticamente
+            this.dispose(); 
+            
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró el correo del usuario para actualizar.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (java.sql.SQLException e) {
+        // En caso de que falle la comunicación con MySQL
+        logger.log(java.util.logging.Level.SEVERE, "Error al actualizar contraseña", e);
+        javax.swing.JOptionPane.showMessageDialog(this, "Error crítico de Base de Datos:\n" + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+
+       
         login2 log = new login2();
         log.setVisible(true);
         this.dispose();
@@ -273,6 +316,49 @@ public class forgotten_password extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+          // TODO add your handling code here:                                       
+    
+    String email = jTextField1.getText().trim(); 
+  
+    
+    // Validar que los campos no estén vacíos
+    if (email.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
+        return;
+    }
+    String sql = "SELECT * FROM user_user WHERE e_mail = ?   ";
+    
+    
+    
+    try {
+        Connection con = ConexionBaseDatos.getInstancia().getConexion();
+        
+        java.sql.PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, email);
+        
+        java.sql.ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            String nameuser = rs.getString("Name_user");
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido de nuevo, " + nameuser + "!");
+            jPasswordField1.setEnabled(true);
+            jPasswordField2.setEnabled(true);
+            jButton2.setEnabled(true);
+            
+            jTextField1.setEnabled(false);
+           
+            jButton1.setEnabled(false);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuario o correo son incorrectos", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        
+        ps.close();
+        rs.close();
+        
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al conectar con la base de datos: " + e.getMessage());
+    }
+    
 
         
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -290,13 +376,11 @@ public class forgotten_password extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

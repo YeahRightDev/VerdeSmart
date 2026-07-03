@@ -280,7 +280,7 @@ if (correo.isEmpty() || contra.isEmpty()) {
 try {
     java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
     if (con != null) {
-        String sql = "SELECT * FROM user WHERE e_mail = ? AND Password = ?";
+        String sql = "SELECT * FROM user_user WHERE e_mail = ? AND Password_user = ?";
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, correo);
         pst.setString(2, contra);

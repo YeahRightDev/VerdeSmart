@@ -15,15 +15,18 @@ import javax.swing.JLabel;
 public class MONITORING extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MONITORING.class.getName());
-     /* Creates new form MONITORING
-     */
-    public MONITORING() {
+
+    private grounds pantallaPrincipal;
+     
+   
+    public MONITORING(grounds pantallaPrincipal) {
+        this.pantallaPrincipal = pantallaPrincipal; 
         initComponents();
         reemplazarYEstilarLabels();
     }
     
    private void reemplazarYEstilarLabels() {
-       
+        
         jLabel4.setOpaque(true);
         jLabel6.setOpaque(true);
         jLabel9.setOpaque(true);
@@ -124,10 +127,10 @@ public class MONITORING extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
