@@ -49,17 +49,13 @@ public class PLANTS extends javax.swing.JFrame {
         "focusWidth:0;" +
         "arc:999;");
          
-       jButton8.setPreferredSize(new java.awt.Dimension(40, 40));
-       jButton8.setSize(42, 42);
-       jButton8.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+       btnGuardar.setPreferredSize(new java.awt.Dimension(40, 40));
+       btnGuardar.setSize(42, 42);
+       btnGuardar.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
         
         jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
         
         
-        jButton5.addActionListener(e -> plantaSeleccionada = "Corona de Cristo");
-        jButton7.addActionListener(e -> plantaSeleccionada = "Diffenbachia");
-        jButton9.addActionListener(e -> plantaSeleccionada = "Arbol abundancia");
-        jButton6.addActionListener(e -> plantaSeleccionada = "Durantia");
     }
 
     /**
@@ -80,12 +76,12 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnDiffenbachia = new javax.swing.JButton();
+        btnArbolAbundancia = new javax.swing.JButton();
+        btnCoronaCristo = new javax.swing.JButton();
+        btnDurantia = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -133,22 +129,24 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 250, 40));
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
-        jButton7.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton7.setText(" Diffenbachia                                                                                                  ");
+        btnDiffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDiffenbachia.setText(" Diffenbachia                                                                                                  ");
+        btnDiffenbachia.addActionListener(this::btnDiffenbachiaActionPerformed);
 
-        jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton9.setText("Arbol abundancia                                                                                ");
-        jButton9.setToolTipText("");
-        jButton9.addActionListener(this::jButton9ActionPerformed);
+        btnArbolAbundancia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnArbolAbundancia.setText("Arbol abundancia                                                                                             ");
+        btnArbolAbundancia.setToolTipText("");
+        btnArbolAbundancia.addActionListener(this::btnArbolAbundanciaActionPerformed);
 
-        jButton5.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton5.setText("Corona de Cristo                                                                                ");
+        btnCoronaCristo.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnCoronaCristo.setText("Corona de Cristo                                                                                ");
+        btnCoronaCristo.addActionListener(this::btnCoronaCristoActionPerformed);
 
-        jButton6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton6.setText("Durantia                                                                                                         ");
+        btnDurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDurantia.setText("Durantia                                                                                                         ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,25 +155,25 @@ public class PLANTS extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9)
-                    .addComponent(jButton7)
+                    .addComponent(btnArbolAbundancia)
+                    .addComponent(btnDiffenbachia)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6))
+                        .addComponent(btnCoronaCristo, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDurantia))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(btnCoronaCristo)
                 .addGap(49, 49, 49)
-                .addComponent(jButton7)
+                .addComponent(btnDiffenbachia)
                 .addGap(36, 36, 36)
-                .addComponent(jButton9)
+                .addComponent(btnArbolAbundancia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addComponent(btnDurantia)
                 .addGap(33, 33, 33))
         );
 
@@ -186,10 +184,10 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel4.setText("Plantas");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
 
-        jButton8.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton8.setText("Guardar");
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 190, 50));
+        btnGuardar.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 190, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,11 +205,12 @@ public class PLANTS extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        plantaSeleccionada = "Arbol abundancia";
+    }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         if (this.pantallaPrincipal != null) {
             
@@ -235,7 +234,7 @@ public class PLANTS extends javax.swing.JFrame {
         
         this.pantallaPrincipal.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     ADD1 add = new ADD1(this.pantallaPrincipal);
@@ -248,6 +247,16 @@ public class PLANTS extends javax.swing.JFrame {
         add.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
+        // TODO add your handling code here:
+        plantaSeleccionada = "Corona de Cristo";
+    }//GEN-LAST:event_btnCoronaCristoActionPerformed
+
+    private void btnDiffenbachiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiffenbachiaActionPerformed
+        // TODO add your handling code here:
+        plantaSeleccionada = "Diffenbachia";
+    }//GEN-LAST:event_btnDiffenbachiaActionPerformed
 
     class PanelRedondeado extends javax.swing.JPanel {
     private int radio;
@@ -273,15 +282,15 @@ public class PLANTS extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnArbolAbundancia;
+    private javax.swing.JButton btnCoronaCristo;
+    private javax.swing.JButton btnDiffenbachia;
+    private javax.swing.JButton btnDurantia;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
