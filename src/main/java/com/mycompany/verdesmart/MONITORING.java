@@ -105,7 +105,7 @@ public class MONITORING extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
-        jLabel1.setText("MONITOREO");
+        jLabel1.setText("Monitoreo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -133,32 +133,33 @@ public class MONITORING extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("ESTADO DEL SUELO");
+        jLabel2.setText("Estado del suelo");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel3.setText("HUMEDAD");
+        jLabel3.setText("Humedad");
 
         jLabel4.setBackground(new java.awt.Color(199, 221, 181));
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("****");
+        jLabel4.setToolTipText("");
 
         jLabel5.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel5.setText("ULTIMO RIEGO");
+        jLabel5.setText("Último riego");
 
-        jLabel6.setText("jLabel6");
+        jLabel6.setText("****");
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("FECHA ");
+        jLabel7.setText("Fecha");
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel8.setText("HORA");
+        jLabel8.setText("Hora");
 
-        jLabel9.setText("jLabel9");
+        jLabel9.setText("****");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
