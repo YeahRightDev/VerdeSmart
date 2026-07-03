@@ -4,6 +4,10 @@
  */
 package com.mycompany.verdesmart;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import org.netbeans.lib.awtextra.*;
 /**
  *
  * @author Brith
@@ -11,12 +15,51 @@ package com.mycompany.verdesmart;
 public class PLANTS extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PLANTS.class.getName());
+    
+    private grounds pantallaPrincipal;
+    private String nombreJardin;
+    private String metrosJardin;
+    private String plantaSeleccionada = "Sin plantas";
 
-    /**
-     * Creates new form PLANTS
-     */
-    public PLANTS() {
+    
+    public PLANTS(grounds pantallaPrincipal, String nombre, String metros) {
+        this.pantallaPrincipal = pantallaPrincipal;
+        this.nombreJardin = nombre;
+        this.metrosJardin = metros;
+        
         initComponents();
+        this.setSize(800,700);
+        
+        jButton1.setContentAreaFilled(false); 
+        jButton1.setBorderPainted(false);     
+        jButton1.setFocusPainted(false);  
+        
+        jButton2.setContentAreaFilled(false); 
+        jButton2.setBorderPainted(false);     
+        jButton2.setFocusPainted(false);  
+        
+        jButton3.setContentAreaFilled(false); 
+        jButton3.setBorderPainted(false);     
+        jButton3.setFocusPainted(false);  
+        
+         jButton4.putClientProperty("FlatLaf.style",
+        "background:#1B5E20;" +
+        "foreground:#FFFFFF;" +
+        "borderWidth:0;" +
+        "focusWidth:0;" +
+        "arc:999;");
+         
+       jButton8.setPreferredSize(new java.awt.Dimension(40, 40));
+       jButton8.setSize(42, 42);
+       jButton8.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
+        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
+        
+        
+        jButton5.addActionListener(e -> plantaSeleccionada = "Corona de Cristo");
+        jButton7.addActionListener(e -> plantaSeleccionada = "Diffenbachia");
+        jButton9.addActionListener(e -> plantaSeleccionada = "Arbol abundancia");
+        jButton6.addActionListener(e -> plantaSeleccionada = "Durantia");
     }
 
     /**
@@ -28,47 +71,222 @@ public class PLANTS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(199, 221, 181));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(27, 77, 47));
+
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel1.setText("Verde Smart");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(54, 54, 54)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(331, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton2)
+                        .addComponent(jButton1)))
+                .addGap(8, 8, 8))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, -1));
+
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(27, 77, 47));
+        jLabel3.setText("-----------------------------------------");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
+
+        jButton7.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton7.setText(" Diffenbachia                                                                                                  ");
+
+        jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton9.setText("Arbol abundancia                                                                                             ");
+        jButton9.setToolTipText("");
+        jButton9.addActionListener(this::jButton9ActionPerformed);
+
+        jButton5.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton5.setText("Corona de Cristo                                                                                ");
+
+        jButton6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton6.setText("Durantia                                                                                                         ");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton9)
+                    .addComponent(jButton7)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(49, 49, 49)
+                .addComponent(jButton7)
+                .addGap(36, 36, 36)
+                .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addGap(33, 33, 33))
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 181, 710, 390));
+
+        jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(27, 77, 47));
+        jLabel4.setText("Plantas");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
+
+        jButton8.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton8.setText("Guardar");
+        jButton8.addActionListener(this::jButton8ActionPerformed);
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 190, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 804, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+
+        if (this.pantallaPrincipal != null) {
+            
+            card nuevaTarjeta = new card(nombreJardin, metrosJardin, plantaSeleccionada);
+            
+            
+            nuevaTarjeta.setMaximumSize(new java.awt.Dimension(650, 150));
+            nuevaTarjeta.setPreferredSize(new java.awt.Dimension(650, 150));
+            nuevaTarjeta.setMinimumSize(new java.awt.Dimension(650, 150));
+            nuevaTarjeta.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            
+            
+            this.pantallaPrincipal.getJPanel3().add(nuevaTarjeta);
+            this.pantallaPrincipal.getJPanel3().add(javax.swing.Box.createVerticalStrut(10)); 
+            
+            
+            this.pantallaPrincipal.getJPanel3().revalidate();
+            this.pantallaPrincipal.getJPanel3().repaint();
+            }
+        
+        
+        this.pantallaPrincipal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    ADD1 add = new ADD1(this.pantallaPrincipal);
+        add.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    ADD1 add = new ADD1(this.pantallaPrincipal);
+        add.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    class PanelRedondeado extends javax.swing.JPanel {
+    private int radio;
+    public PanelRedondeado(int radio) {
+        this.radio = radio;
+        setOpaque(false); 
+    }
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        super.paintComponent(g);
+        java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
+        g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(getBackground());
+        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radio, radio);
+    }
+}
+
+                     
+   
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new PLANTS().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

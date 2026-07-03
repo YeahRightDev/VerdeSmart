@@ -163,7 +163,7 @@ public class Create_account extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Account created successfully.");
 
-            LOGIN login = new LOGIN();
+            login2 login = new login2();
             login.setVisible(true);
             this.dispose();
 
