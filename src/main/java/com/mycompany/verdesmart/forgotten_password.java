@@ -264,7 +264,7 @@ public class forgotten_password extends javax.swing.JFrame {
                 if (rows > 0) {
                     JOptionPane.showMessageDialog(this, "Password updated successfully.");
                     
-                    LOGIN log = new LOGIN();
+                    login2 log = new login2();
                     log.setVisible(true);
                     this.dispose();
                 } else {

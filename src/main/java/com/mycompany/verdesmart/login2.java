@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 public class login2 extends javax.swing.JFrame {    
+    private ROUND_PANEL panelredondo1;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(login2.class.getName());
     public login2() {
         initComponents();
+        panelredondo1 = new ROUND_PANEL();
          this.setSize(800,700);
          this.setLocationRelativeTo(null);
         
@@ -268,20 +270,18 @@ public class login2 extends javax.swing.JFrame {
         try {
             Connection con = ConexionBaseDatos.getInstancia().getConexion();
 
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, email);
-            ps.setString(2, String.valueOf(txtPassword.getPassword()));
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(this, "Welcome " + rs.getString("Name"));
-            } else {
-                JOptionPane.showMessageDialog(this, "Incorrect email or password.");
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ps.setString(2, String.valueOf(txtPassword.getPassword()));
+                
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(this, "Welcome " + rs.getString("Name"));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Incorrect email or password.");
+                    }
+                }
             }
-
-            rs.close();
-            ps.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
