@@ -1,5 +1,7 @@
 package com.mycompany.verdesmart;
 
+import java.sql.SQLException;
+
 public class VerdeSmart {
     public static void main(String[] args) {
         try {
@@ -8,15 +10,18 @@ public class VerdeSmart {
             java.sql.Connection cn = ConexionBaseDatos.getInstancia().getConexion();
             
             if (cn != null && !cn.isClosed()) {
-                System.out.println("                                                 ");
                 System.out.println("ola, ya esta conectado con el usuario: sopes");
                 System.out.println("La base de datos verde_smart esta lista");
-                System.out.println("                                                 ");
+                
+                
             }
-        } catch (Exception e) {
-            System.out.println("\n❌ error al conectar ❌");
+        } catch (SQLException e) {
+            System.out.println("\n error al conectar ");
             System.out.println("Causa del fallo: " + e.getMessage());
             System.out.println("HOla");
         }
+        LOGIN LOG = new LOGIN();
+        LOG.setVisible(true);
+      
     }
 }
