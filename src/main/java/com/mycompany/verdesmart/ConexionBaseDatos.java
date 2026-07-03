@@ -8,9 +8,9 @@ public class ConexionBaseDatos {
     private static ConexionBaseDatos instancia;
     private Connection conexion;
     
-    private String url = "jdbc:mysql://localhost:3306/verde_smart";
-    private String usuario = "sopes"; 
-    private String contrasena = "Sopes.2026*"; 
+    private String url = "jdbc:mysql://localhost:3306/verde_smart_project";
+    private String usuario = "root"; 
+    private String contrasena = "1234"; 
     private ConexionBaseDatos() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

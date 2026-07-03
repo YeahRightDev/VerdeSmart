@@ -13,33 +13,41 @@ public class card extends javax.swing.JPanel {
     /**
      * Creates new form card
      */
-    public card() {
-     initComponents();
-        formatearDiseno();
-    }
-
-    public card(String nombre, String metros, String planta) {
+    private int id_Garden;
+   public card(int idGarden, String nombre, String metros, String planta) {
         initComponents();
-        
-        // Asignar los textos dinámicos reales
+        this.id_Garden = idGarden; // Guardamos el ID
         jLabel1.setText(nombre);
         jLabel2.setText("ÁREA: " + metros + " m²");
         jLabel3.setText(planta);
         
         formatearDiseno();
     }
+    // Overloaded constructor to initialize the card with dynamic garden data
+    //Constructor sobrecargado para inicializar la tarjeta con datos dinámicos del jardín
     
+    public card(String nombre, String metros, String planta) {
+        initComponents();
+        // Assign the actual dynamic text values
+        jLabel1.setText(nombre);
+        jLabel2.setText("ÁREA: " + metros + " m²");
+        jLabel3.setText(planta);
+        
+        formatearDiseno();
+    }
+    //Configures custom visual styles, sizing, and properties for the panel and buttons
     private void formatearDiseno() {
         this.setSize(548, 152);
-        this.setOpaque(false); 
+        this.setOpaque(false); //Makes the panel background transparent
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 16, 12, 16));
     
     
     if (jPanel1 != null) {
         jPanel1.setOpaque(false);
-        jPanel1.setEnabled(false); 
+        jPanel1.setEnabled(false); //Disables interaction with the inner container
     }
     
+    //Style configuration for jButton
     jButton1.setPreferredSize(new java.awt.Dimension(42, 42));
     jButton1.setSize(42, 42);
     jButton1.putClientProperty("FlatLaf.style", "background: #80C1DF; arc: 999; borderWidth: 0; focusWidth: 0;");
@@ -47,12 +55,7 @@ public class card extends javax.swing.JPanel {
     jButton1.setBorderPainted(false);      
     jButton1.setFocusPainted(false);      
 
-    jButton2.setPreferredSize(new java.awt.Dimension(42, 42));
-    jButton2.setSize(42, 42);
-    jButton2.putClientProperty("FlatLaf.style", "background: #7AB06B; arc: 999; borderWidth: 0; focusWidth: 0;");
-    jButton2.setContentAreaFilled(false); 
-    jButton2.setBorderPainted(false);      
-    jButton2.setFocusPainted(false);      
+  
 
     jButton3.setPreferredSize(new java.awt.Dimension(42, 42));
     jButton3.setSize(42, 42);
@@ -61,10 +64,9 @@ public class card extends javax.swing.JPanel {
     jButton3.setFocusPainted(false);      
     jButton3.putClientProperty("FlatLaf.style", "background: #EF9FBC; borderWidth: 0; focusWidth: 0; arc: 999;");
     
-   
+   //Ensure buttons stay on the top visual laye
     if (jPanel1 != null) {
         jPanel1.setComponentZOrder(jButton1, 0);
-        jPanel1.setComponentZOrder(jButton2, 0);
         jPanel1.setComponentZOrder(jButton3, 0);
     }
 }
@@ -82,27 +84,26 @@ public class card extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel1.setText("Nombre del Jardín");
+        jLabel1.setText("Nombre Jardin");
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("Área ");
+        jLabel2.setText("Area ");
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Planta ");
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\gota-de-agua (1).png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\eliminar (1).png")); // NOI18N
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -114,33 +115,31 @@ public class card extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel2))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 17, Short.MAX_VALUE)
-                        .addComponent(jButton3))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jLabel3)
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(16, 16, 16))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -155,29 +154,53 @@ public class card extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Action performed when the delete button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        delete del= new delete();
+       // Buscamos la ventana contenedora
+    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+    
+    if (parentWindow instanceof MONITORING) {
+        MONITORING monitoreoActual = (MONITORING) parentWindow;
+        
+        // CORRECCIÓN: Le pasamos la ventana de monitoreo Y el ID guardado en esta tarjeta
+        delete del = new delete(monitoreoActual, this.id_Garden);
         del.setVisible(true);
+        monitoreoActual.setVisible(false);
+        
+    } else {
+        // Si se abre desde 'grounds' u otro lugar, pasamos null pero conservamos el ID de la tarjeta
+        delete del = new delete(null, this.id_Garden);
+        del.setVisible(true);
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    //Action performed when the water drop button (jButton1) is clicked
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        MONITORING MO = new MONITORING();
-        MO.setVisible(true);
+        //Dynamically find the parent top-level container window (grounds)
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
         
+        if (parentWindow instanceof grounds) {
+            // If found, cast it to the 'grounds' class type
+            grounds home_page = (grounds) parentWindow;
+            
+            // Retrieve the current garden name from this specific card
+            String namethegarden = jLabel1.getText();
+            
+            // Pass BOTH mandatory arguments to the MONITORING constructor
+            MONITORING MO = new MONITORING(home_page, namethegarden);
+            MO.setVisible(true);
+            
+            //Temporarily hide the main window to keep all existing cards intact
+            home_page.setVisible(false); 
+        } else {
+            System.out.println("Error: No se encontró la ventana principal 'grounds'.");
+        }
+    
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        data d = new data();
-        d.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -185,8 +208,10 @@ public class card extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
+    //Custom painting method to draw smooth anti-aliased rounded corners on the card panel
     @Override
     protected void paintComponent(java.awt.Graphics g) {
+        //Activate anti-aliasing for better rounded rendering
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
         g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(java.awt.Color.WHITE); 

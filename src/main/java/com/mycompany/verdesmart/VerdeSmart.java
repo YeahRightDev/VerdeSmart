@@ -13,15 +13,15 @@ public class VerdeSmart {
                 System.out.println("ola, ya esta conectado con el usuario: sopes");
                 System.out.println("La base de datos verde_smart esta lista");
                 
-                java.awt.EventQueue.invokeLater(() -> {
-                    login2 ventanaLogin = new login2(); 
-                    ventanaLogin.setVisible(true);
-                });
+                
             }
         } catch (SQLException e) {
             System.out.println("\n error al conectar ");
             System.out.println("Causa del fallo: " + e.getMessage());
             System.out.println("HOla");
         }
+        LOGIN LOG = new LOGIN();
+        LOG.setVisible(true);
+      
     }
 }

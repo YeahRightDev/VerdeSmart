@@ -15,11 +15,12 @@ import org.netbeans.lib.awtextra.*;
 public class PLANTS extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PLANTS.class.getName());
-    
     private grounds pantallaPrincipal;
     private String nombreJardin;
     private String metrosJardin;
-    private String plantaSeleccionada = "Sin plantas";
+    
+    // CAMBIO AQUÍ: Ahora usamos una lista para acumular múltiples plantas seleccionadas
+    private java.util.List<String> plantasSeleccionadas = new java.util.ArrayList<>();
 
     
     public PLANTS(grounds pantallaPrincipal, String nombre, String metros) {
@@ -32,15 +33,15 @@ public class PLANTS extends javax.swing.JFrame {
         
         jButton1.setContentAreaFilled(false); 
         jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
+        jButton1.setFocusPainted(false);    
         
         jButton2.setContentAreaFilled(false); 
         jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
+        jButton2.setFocusPainted(false);    
         
         jButton3.setContentAreaFilled(false); 
         jButton3.setBorderPainted(false);     
-        jButton3.setFocusPainted(false);  
+        jButton3.setFocusPainted(false);    
         
          jButton4.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
@@ -49,13 +50,13 @@ public class PLANTS extends javax.swing.JFrame {
         "focusWidth:0;" +
         "arc:999;");
          
-       btnGuardar.setPreferredSize(new java.awt.Dimension(40, 40));
-       btnGuardar.setSize(42, 42);
-       btnGuardar.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+       jButton8.setPreferredSize(new java.awt.Dimension(40, 40));
+       jButton8.setSize(42, 42);
+       jButton8.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
         
         jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
         
-        
+        // Quitamos los action listeners simples que reescribían la variable de texto
     }
 
     /**
@@ -76,12 +77,12 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        btnDiffenbachia = new javax.swing.JButton();
-        btnArbolAbundancia = new javax.swing.JButton();
-        btnCoronaCristo = new javax.swing.JButton();
-        btnDurantia = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -107,46 +108,52 @@ public class PLANTS extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(54, 54, 54)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(323, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2)
-                        .addComponent(jButton1)))
-                .addGap(8, 8, 8))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(8, 8, 8))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, -1));
 
         jButton3.addActionListener(this::jButton3ActionPerformed);
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 40));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 250, 40));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, 30));
 
-        btnDiffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        btnDiffenbachia.setText(" Diffenbachia                                                                                                  ");
-        btnDiffenbachia.addActionListener(this::btnDiffenbachiaActionPerformed);
+        jButton7.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton7.setText(" Diffenbachia                                                                                                  ");
+        jButton7.addActionListener(this::jButton7ActionPerformed);
 
-        btnArbolAbundancia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        btnArbolAbundancia.setText("Arbol abundancia                                                                                             ");
-        btnArbolAbundancia.setToolTipText("");
-        btnArbolAbundancia.addActionListener(this::btnArbolAbundanciaActionPerformed);
+        jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton9.setText("Arbol abundancia                                                                                ");
+        jButton9.setToolTipText("");
+        jButton9.addActionListener(this::jButton9ActionPerformed);
 
-        btnCoronaCristo.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        btnCoronaCristo.setText("Corona de Cristo                                                                                ");
-        btnCoronaCristo.addActionListener(this::btnCoronaCristoActionPerformed);
+        jButton5.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton5.setText("Corona de Cristo                                                                                ");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
-        btnDurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        btnDurantia.setText("Durantia                                                                                                         ");
+        jButton6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton6.setText("Durantia                                                                                                         ");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -155,25 +162,28 @@ public class PLANTS extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnArbolAbundancia)
-                    .addComponent(btnDiffenbachia)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(btnCoronaCristo, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDurantia))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton6)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(jButton9))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(btnCoronaCristo)
-                .addGap(49, 49, 49)
-                .addComponent(btnDiffenbachia)
-                .addGap(36, 36, 36)
-                .addComponent(btnArbolAbundancia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(btnDurantia)
+                .addComponent(jButton5)
+                .addGap(66, 66, 66)
+                .addComponent(jButton7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addGap(59, 59, 59)
+                .addComponent(jButton6)
                 .addGap(33, 33, 33))
         );
 
@@ -184,10 +194,10 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel4.setText("Plantas");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
 
-        btnGuardar.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 190, 50));
+        jButton8.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jButton8.setText("Guardar");
+        jButton8.addActionListener(this::jButton8ActionPerformed);
+        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 600, 190, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -205,36 +215,63 @@ public class PLANTS extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
-        // TODO add your handling code here:
-        plantaSeleccionada = "Arbol abundancia";
-    }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+      // Añadimos a la lista si no existía ya
+        if (!plantasSeleccionadas.contains("Arbol abundancia")) {
+            plantasSeleccionadas.add("Arbol abundancia");
+        }
+                
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description_garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
+            try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                pst.setString(1, "Arbol abundancia");
+                pst.setString(2, "Portulacaria afra");
+                pst.setFloat(3, 0.4f);
+                pst.setFloat(4, 0.49f);
+                pst.setFloat(5, 5.0f);
+                pst.setString(6, "Sudáfrica");
+                pst.setString(7, "Suculenta / Arbusto");
+                pst.setString(8, "Arbusto suculento de hojas pequeñas, carnosas y brillantes. Muy resistente a las sequías y amante del sol directo. Simboliza la prosperidad.");
+                
+                int filasAfectadas = pst.executeUpdate();
+                if (filasAfectadas > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Planta 'Arbol abundancia' agregada a la selección y guardada en BD!");
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al interactuar con la base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         if (this.pantallaPrincipal != null) {
             
-            card nuevaTarjeta = new card(nombreJardin, metrosJardin, plantaSeleccionada);
+            // CAMBIO AQUÍ: Juntamos todas las plantas seleccionadas separadas por coma. Si la lista está vacía ponemos "Sin plantas"
+            String plantasTexto = "Sin plantas";
+            if (!plantasSeleccionadas.isEmpty()) {
+                plantasTexto = String.join(", ", plantasSeleccionadas);
+            }
             
+            card nuevaTarjeta = new card(nombreJardin, metrosJardin, plantasTexto);
             
             nuevaTarjeta.setMaximumSize(new java.awt.Dimension(650, 150));
             nuevaTarjeta.setPreferredSize(new java.awt.Dimension(650, 150));
             nuevaTarjeta.setMinimumSize(new java.awt.Dimension(650, 150));
             nuevaTarjeta.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
             
-            
             this.pantallaPrincipal.getJPanel3().add(nuevaTarjeta);
             this.pantallaPrincipal.getJPanel3().add(javax.swing.Box.createVerticalStrut(10)); 
             
-            
             this.pantallaPrincipal.getJPanel3().revalidate();
             this.pantallaPrincipal.getJPanel3().repaint();
-            }
-        
+        }
         
         this.pantallaPrincipal.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     ADD1 add = new ADD1(this.pantallaPrincipal);
@@ -248,15 +285,98 @@ public class PLANTS extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
-        // TODO add your handling code here:
-        plantaSeleccionada = "Corona de Cristo";
-    }//GEN-LAST:event_btnCoronaCristoActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+      // Añadimos a la lista si no existía ya
+        if (!plantasSeleccionadas.contains("Corona de Cristo")) {
+            plantasSeleccionadas.add("Corona de Cristo");
+        }
+                                            
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description_garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try {
+            java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
+            try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                pst.setString(1, "Corona de Cristo");
+                pst.setString(2, "Euphorbia milii");
+                pst.setFloat(3, 0.5f);
+                pst.setFloat(4, 0.36f);
+                pst.setFloat(5, 10.0f);
+                pst.setString(6, "Madagascar");
+                pst.setString(7, "Suculenta / Arbusto");
+                pst.setString(8, "Arbusto espinoso muy resistente al sol directo. Produce vistosas brácteas de colores casi todo el año. Requiere excelente drenaje.");
+                
+                int filasAfectadas = pst.executeUpdate();
+                if (filasAfectadas > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Planta 'Corona de Cristo' agregada a la selección y guardada en BD!");
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al interactuar con la base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void btnDiffenbachiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiffenbachiaActionPerformed
-        // TODO add your handling code here:
-        plantaSeleccionada = "Diffenbachia";
-    }//GEN-LAST:event_btnDiffenbachiaActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       // Añadimos a la lista si no existía ya
+        if (!plantasSeleccionadas.contains("Diffenbachia")) {
+            plantasSeleccionadas.add("Diffenbachia");
+        }
+                
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description_garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
+            try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                pst.setString(1, "Diffenbachia");
+                pst.setString(2, "Dieffenbachia seguine");
+                pst.setFloat(3, 0.8f);
+                pst.setFloat(4, 0.25f);
+                pst.setFloat(5, 15.0f);
+                pst.setString(6, "América Central y del Sur");
+                pst.setString(7, "Planta de Interior / Follaje");
+                pst.setString(8, "Planta tropical de interior con grandes hojas matizadas en tonos verdes y blancos. Requiere luz indirecta y riego regular sin encharcar. Savia tóxica.");
+                
+                int filasAfectadas = pst.executeUpdate();
+                if (filasAfectadas > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Planta 'Diffenbachia' agregada a la selección y guardada en BD!");
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al interactuar con la base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       // Añadimos a la lista si no existía ya
+        if (!plantasSeleccionadas.contains("Durantia")) {
+            plantasSeleccionadas.add("Durantia");
+        }
+                
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description_garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
+            try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                pst.setString(1, "Durantia");
+                pst.setString(2, "Duranta erecta");
+                pst.setFloat(3, 1.5f);
+                pst.setFloat(4, 1.0f);
+                pst.setFloat(5, 10.0f);
+                pst.setString(6, "América Tropical");
+                pst.setString(7, "Arbusto de Exterior / Ornamental");
+                pst.setString(8, "Arbusto vigoroso ideal para cercas vivas. Produce hermosas flores moradas o azules en racimos. Atrae polinizadores y requiere sol pleno.");
+                
+                int filasAfectadas = pst.executeUpdate();
+                if (filasAfectadas > 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Planta 'Durantia' agregada a la selección y guardada en BD!");
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al interactuar con la base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     class PanelRedondeado extends javax.swing.JPanel {
     private int radio;
@@ -282,15 +402,15 @@ public class PLANTS extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnArbolAbundancia;
-    private javax.swing.JButton btnCoronaCristo;
-    private javax.swing.JButton btnDiffenbachia;
-    private javax.swing.JButton btnDurantia;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

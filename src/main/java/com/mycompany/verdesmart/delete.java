@@ -9,13 +9,16 @@ package com.mycompany.verdesmart;
  * @author Brith
  */
 public class delete extends javax.swing.JFrame {
-    
+    private MONITORING pantallaMonitoreo;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(delete.class.getName());
 
-    /**
-     * Creates new form delete
-     */
-    public delete() {
+
+    private int idGardenEliminar; 
+
+    // UNICO CONSTRUCTOR: Recibe la pantalla y el ID real obligatoriamente
+    public delete(MONITORING pantallaMonitoreo, int idGarden) {
+        this.pantallaMonitoreo = pantallaMonitoreo;
+        this.idGardenEliminar = idGarden;
         initComponents();
     }
 
@@ -28,21 +31,138 @@ public class delete extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(199, 221, 181));
+
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(27, 77, 47));
+        jLabel1.setText("Eliminar Jardín");
+
+        jButton1.setText("Canclar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setText("Eliminar");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(jLabel1)
+                .addContainerGap(204, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(83, 83, 83))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(38, 38, 38))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       // Si la referencia a la pantalla de monitoreo existe, la volvemos a mostrar
+    if (this.pantallaMonitoreo != null) {
+        this.pantallaMonitoreo.setVisible(true); 
+    }
+    // Cerramos la ventana de eliminación actual sin hacer nada más
+    this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  
+        // Confirmación de seguridad para el usuario
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas asociadas.", 
+            "Confirmar Eliminación", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        if (respuesta != javax.swing.JOptionPane.YES_OPTION) {
+            return; 
+        }
+
+        // CORRECCIÓN AQUÍ: Se cambia id_Plant por id_Garden para borrar todas las plantas que correspondan a ESTE jardín
+        String sqlDeletePlantas = "DELETE FROM plant WHERE id_Garden = ?"; 
+        String sqlDeleteGarden = "DELETE FROM garden WHERE id_Garden = ?";
+
+        java.sql.Connection con = null;
+
+        try {
+            con = ConexionBaseDatos.getInstancia().getConexion();
+            con.setAutoCommit(false); // Iniciamos la transacción segura
+
+            // 1. Eliminar plantas vinculadas al jardín
+            try (java.sql.PreparedStatement psPlantas = con.prepareStatement(sqlDeletePlantas)) {
+                psPlantas.setInt(1, idGardenEliminar);
+                psPlantas.executeUpdate();
+            }
+
+            // 2. Eliminar el registro del jardín definitivo
+            try (java.sql.PreparedStatement psGarden = con.prepareStatement(sqlDeleteGarden)) {
+                psGarden.setInt(1, idGardenEliminar);
+                int filasJardin = psGarden.executeUpdate();
+
+                if (filasJardin > 0) {
+                    con.commit(); // Guardamos los cambios de forma permanente en la Base de Datos
+                    javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus plantas se eliminaron correctamente.");
+                    
+                    if (this.pantallaMonitoreo != null) {
+                        this.pantallaMonitoreo.setVisible(true);
+                    }
+                    this.dispose();
+                } else {
+                    con.rollback(); 
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró el jardín especificado en la base de datos.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } catch (java.sql.SQLException ex) {
+            if (con != null) {
+                try { con.rollback(); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+            }
+            logger.log(java.util.logging.Level.SEVERE, "Error en la transacción de eliminación", ex);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (con != null) {
+                try { con.setAutoCommit(true); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -50,5 +170,9 @@ public class delete extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
