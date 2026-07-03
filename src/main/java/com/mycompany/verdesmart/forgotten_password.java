@@ -17,6 +17,11 @@ public class forgotten_password extends javax.swing.JFrame {
      */
     public forgotten_password() {
         initComponents();
+        
+        jTextField1.putClientProperty("JTextField.placeholderText", "Usuario");
+        jTextField2.putClientProperty("JTextField.placeholderText", "Correo");
+        jPasswordField1.putClientProperty("JPasswordField1.placeholderText","..............");
+                
         this.setSize(800,700);
         jButton1.setContentAreaFilled(false); 
         jButton1.setBorderPainted(false);     
@@ -153,10 +158,8 @@ public class forgotten_password extends javax.swing.JFrame {
         jLabel2.setText("Recuperar contraseña");
 
         jPasswordField1.setColumns(60);
-        jPasswordField1.setText("jPasswordField1");
 
         jPasswordField2.setColumns(60);
-        jPasswordField2.setText("jPasswordField2");
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
@@ -176,14 +179,12 @@ public class forgotten_password extends javax.swing.JFrame {
         jLabel5.setText("Usuario");
 
         jTextField1.setColumns(60);
-        jTextField1.setText("jTextField1");
 
         jLabel6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(27, 77, 47));
         jLabel6.setText("Correo");
 
         jTextField2.setColumns(60);
-        jTextField2.setText("jTextField2");
 
         jButton4.setFont(new java.awt.Font("Sylfaen", 0, 12)); // NOI18N
         jButton4.setText("Confirmar ");
