@@ -18,6 +18,7 @@ public class ConexionBaseDatos {
         } catch (ClassNotFoundException e) {
             throw new SQLException("Error: No se encontró el Driver de MySQL: " + e.getMessage());
         }
+        
     }
 
     public Connection getConexion() {
