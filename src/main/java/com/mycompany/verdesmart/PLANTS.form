@@ -212,7 +212,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Sylfaen" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Arbol abundancia                                                                                             "/>
+                <Property name="text" type="java.lang.String" value="Arbol abundancia                                                                                "/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
               <Events>

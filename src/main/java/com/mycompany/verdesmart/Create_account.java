@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.verdesmart;
-
 /**
  *
  * @author Brith
@@ -15,9 +14,18 @@ public class Create_account extends javax.swing.JFrame {
     /**
      * Creates new form Create_account
      */
+    
+    
     public Create_account() {
         initComponents();
         this.setSize(800,700);
+             
+        jTextField1.putClientProperty("JTextField.placeholderText","Nombre");
+        jTextField2.putClientProperty("JTextField.placeholderText","00");
+        jTextField3.putClientProperty("JTextField.placeholderText","YYYY-MM-DD");
+        jTextField4.putClientProperty("JTextField.placeholderText", "Correo");
+        jPasswordField1.putClientProperty("JPasswordField.placeholderText","...........");
+        jPasswordField2.putClientProperty("JPasswordField.placeholderText","...........");
         
         estilarCampoRedondeado(jTextField1);
         estilarCampoRedondeado(jTextField2);
@@ -161,7 +169,6 @@ public class Create_account extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(102, 102, 102));
         jTextField1.setColumns(55);
-        jTextField1.setText("Nombre");
         jTextField1.setBorder(null);
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -170,23 +177,18 @@ public class Create_account extends javax.swing.JFrame {
         });
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
-        jTextField2.setText("00");
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
         jTextField3.setColumns(60);
-        jTextField3.setText("YYYY-MM-DD");
         jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jTextField4.setColumns(60);
-        jTextField4.setText("Correo");
         jTextField4.addActionListener(this::jTextField4ActionPerformed);
 
         jPasswordField1.setColumns(60);
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
 
         jPasswordField2.setColumns(60);
-        jPasswordField2.setText("jPasswordField2");
         jPasswordField2.addActionListener(this::jPasswordField2ActionPerformed);
 
         jButton3.setText("Iniciar Sesion");
@@ -228,7 +230,6 @@ public class Create_account extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel8)
                             .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,7 +239,9 @@ public class Create_account extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)

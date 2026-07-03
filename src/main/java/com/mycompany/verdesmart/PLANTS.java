@@ -143,7 +143,7 @@ public class PLANTS extends javax.swing.JFrame {
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
         jButton9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
-        jButton9.setText("Arbol abundancia                                                                                             ");
+        jButton9.setText("Arbol abundancia                                                                                ");
         jButton9.setToolTipText("");
         jButton9.addActionListener(this::jButton9ActionPerformed);
 

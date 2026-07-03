@@ -19,6 +19,11 @@ public class login2 extends javax.swing.JFrame {
      */
     public login2() {
         initComponents();
+        txtCorreo.putClientProperty("txtCorreo.placeholderText","Correo electrónico");
+        txtPassword.putClientProperty("txtPassword.placeholderText","...............");
+        
+        
+        
          this.setSize(800,700);
          this.setLocationRelativeTo(null);
         
@@ -160,14 +165,13 @@ public class login2 extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("Inicio Sesion");
+        jLabel2.setText("Inicio Sesión");
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel3.setText("Correo Electronico");
+        jLabel3.setText("Correo Electrónico");
 
         txtCorreo.setColumns(67);
-        txtCorreo.setText("Correo Electronico");
         txtCorreo.setBorder(
             new javax.swing.border.AbstractBorder() { @Override public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) { java.awt.Graphics2D g2 = (java.awt.Graphics2D) g; g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(java.awt.Color.GRAY); g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15); } @Override public java.awt.Insets getBorderInsets(java.awt.Component c) { return new java.awt.Insets(4, 10, 4, 10); } });
 
@@ -175,14 +179,13 @@ public class login2 extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(27, 77, 47));
         jLabel4.setText("Contraseña");
 
-        jButton3.setText("Iniciar Sesion");
+        jButton3.setText("Iniciar Sesión");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
-        jButton4.setText("Olvide Contraseña");
+        jButton4.setText("Olvidé Contraseña");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
         txtPassword.setColumns(67);
-        txtPassword.setText("jPasswordField1");
 
         javax.swing.GroupLayout panelredondo1Layout = new javax.swing.GroupLayout(panelredondo1);
         panelredondo1.setLayout(panelredondo1Layout);
@@ -219,7 +222,7 @@ public class login2 extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelredondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addGap(298, 298, 298))
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,8 +272,8 @@ public class login2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-String correo = txtCorreo.getText().trim();
-String contra = new String(txtPassword.getPassword()).trim();
+    String correo = txtCorreo.getText().trim();
+    String contra = new String(txtPassword.getPassword()).trim();
 
 if (correo.isEmpty() || contra.isEmpty()) {
     javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");

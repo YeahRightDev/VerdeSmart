@@ -115,16 +115,16 @@ public class LOGIN extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel1.setText("VERDE  SMART");
+        jLabel1.setText("Verde Smart");
 
         jButton2.setBackground(new java.awt.Color(217, 206, 159));
-        jButton2.setText("CREAR CUENTA");
+        jButton2.setText("Crear cuenta");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton3.setText("SALIR");
+        jButton3.setText("Salir");
 
         jButton1.setBackground(new java.awt.Color(27, 77, 47));
-        jButton1.setText("INICIAR SESION");
+        jButton1.setText("Iniciar Sesión");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout rOUND_PANEL1Layout = new javax.swing.GroupLayout(rOUND_PANEL1);
