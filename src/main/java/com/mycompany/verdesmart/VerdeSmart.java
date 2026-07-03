@@ -8,16 +8,18 @@ public class VerdeSmart {
             java.sql.Connection cn = ConexionBaseDatos.getInstancia().getConexion();
             
             if (cn != null && !cn.isClosed()) {
-                System.out.println("                                                 ");
                 System.out.println("ola, ya esta conectado con el usuario: sopes");
                 System.out.println("La base de datos verde_smart esta lista");
-                System.out.println("                                                 ");
+                
+                java.awt.EventQueue.invokeLater(() -> {
+                    login2 ventanaLogin = new login2(); 
+                    ventanaLogin.setVisible(true);
+                });
             }
         } catch (Exception e) {
-            System.out.println("\n❌ error al conectar ❌");
+            System.out.println("\n error al conectar ");
             System.out.println("Causa del fallo: " + e.getMessage());
             System.out.println("HOla");
         }
     }
-    
 }
