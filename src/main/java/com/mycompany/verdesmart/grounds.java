@@ -2,18 +2,24 @@ package com.mycompany.verdesmart;
 public class grounds extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(grounds.class.getName());
+    /**
+     * Creates a new instance form of grounds.
+     * Configures dimensions, custom FlatLaf style properties, backgrounds, 
+     * transparent button structures, hidden scrollbar states, and triggers the database fetch.
+     */
     public grounds() {
       initComponents();
         this.setSize(800,705);
        
+        // Define dimension parameters for the Add Garden icon button component layer
         jButton3.setPreferredSize(new java.awt.Dimension(55, 55));
         jButton3.setSize(55, 55);
 
-        
+        // Apply advanced FlatLaf-specific geometric properties for custom arcs
         jButton3.putClientProperty("JButton.buttonType", "roundRect");
         jButton3.putClientProperty("JComponent.customArc", 100);
 
-       
+       // Inject FlatLaf-compliant global dark green styling properties directly
         jButton3.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
         "foreground:#FFFFFF;" +
@@ -21,6 +27,7 @@ public class grounds extends javax.swing.JFrame {
         "focusWidth:0;" +
         "arc:999;");
             
+        // Configure transparent interaction behaviors across the structural navigation buttons
         jButton1.setContentAreaFilled(false); 
         jButton1.setBorderPainted(false);     
         jButton1.setFocusPainted(false);  
@@ -33,10 +40,10 @@ public class grounds extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);     
         jButton3.setFocusPainted(false);  
         
-       
+       // Define baseline theme color constant (Soft Olive/Green)
         java.awt.Color miColorVerde = new java.awt.Color(0xC7DDB5);
 
-       
+       // Strip default line borders away from the background viewport scroll pane elements
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder());
 
@@ -61,8 +68,51 @@ public class grounds extends javax.swing.JFrame {
         this.setBackground(miColorVerde);
        
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
+        cargarJardinesDesdeBD();
     }
     
+    
+    
+    /**
+     * Queries records from the relational schema database table structure, 
+     * generating individualized GroundCard display panels safely positioned 
+     * with alignment parameters and spacer components.
+     */
+    public void cargarJardinesDesdeBD() {
+        jPanel3.removeAll();
+        
+        String sql = "SELECT * FROM garden"; 
+
+        try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
+             java.sql.PreparedStatement ps = con.prepareStatement(sql);
+             java.sql.ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                // Map out columns directly following table indexing patterns
+                int id = rs.getInt(1);          
+                String nombre = rs.getString(2); 
+                String metros = rs.getString(3); 
+                String planta = rs.getString(4); 
+
+                // Instantiate customized item row item component
+                GroundCard tarjetaJardin = new GroundCard(id, nombre, metros, planta);
+
+                // Force layout manager alignment context definitions to ensure clean centering alignment
+                tarjetaJardin.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+                jPanel3.add(tarjetaJardin);
+                // Add a structural tracking blank layout divider box of exactly 10 horizontal pixels
+                jPanel3.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 10)));
+            }
+
+        } catch (java.sql.SQLException ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al cargar los jardines en la interfaz gráfica", ex);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar datos: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
+
     public javax.swing.JPanel getJPanel3() {
         return this.jPanel3;
     }
@@ -189,9 +239,9 @@ public class grounds extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         ADD1 add = new ADD1(this); 
+       ADD1 add = new ADD1(this); 
         add.setVisible(true);
-        this.setVisible(false); 
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

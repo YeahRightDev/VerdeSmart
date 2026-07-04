@@ -3,10 +3,23 @@ package com.mycompany.verdesmart;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * VerdeSmart Class.
+ * This serves as the primary entry point for the application. It initializes the
+ * UI Look and Feel, verifies database connectivity, and launches the initial login window.
+ */
 public class VerdeSmart {
 
     public static void main(String[] args) {
+    // --- Look and Feel Initialization ---
+        try {
+            com.formdev.flatlaf.FlatLightLaf.setup(); // Usa FlatDarkLaf.setup(); si prefieres tema oscuro
+        } catch (Exception ex) {
+            System.err.println("No se pudo inicializar el Look and Feel de FlatLaf: " + ex.getMessage());
+        }
+        // ----------------------------------
 
+        // --- Database Connection Verification Test ---
         try {
             System.out.println("Connecting to MySQL server...");
 
@@ -23,6 +36,7 @@ public class VerdeSmart {
             System.out.println("Error: " + e.getMessage());
         }
 
+        // --- View Instantiation and Navigation Lifecycle ---
         LOGIN loginWindow = new LOGIN();
         loginWindow.setVisible(true);
     }

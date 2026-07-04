@@ -3,27 +3,37 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
+/**
+ * forgotten_password Frame Class.
+ * Handles the user verification and password update lifecycle workflow within the system.
+ * It uses a two-step validation model: first matching user email records from the database,
+ * and subsequently granting safe write-access updates to cleartext credentials.
+ */
 public class forgotten_password extends javax.swing.JFrame {
 
-    private boolean emailVerified = false;
+    private boolean emailVerified = false;// Internal structural gate tracking if step 1 validation passed
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(forgotten_password.class.getName());
 
+    /**
+     * Creates new form forgotten_password.
+     * Establishes look-and-feel configurations, placeholders, and structural locks.
+     */
     public forgotten_password() {
         initComponents();
 
+        // Enforce dedicated frame boundaries
         this.setSize(800, 700);
 
-        // Placeholders
+       // UI Element Properties & FlatLaf Layout Placeholders
         mailTxt.putClientProperty("FlatLaf.placeholderText", "Email");
         newPassword.putClientProperty("FlatLaf.placeholderText", "New Password");
         confPassword.putClientProperty("FlatLaf.placeholderText", "Confirm Password");
 
-        // Top buttons
+       // Transparent Top Header Navigation Buttons
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
@@ -32,30 +42,33 @@ public class forgotten_password extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
 
-        // Verify button (PASO 1)
+        // Step 1: Email Verification Submission UI Setup
         jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton4.setSize(42, 42);
         jButton4.putClientProperty("FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;");
 
-        // Change password button (PASO 2)
+        // Step 2: Password Modification Confirmation UI Setup
         jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton3.setSize(42, 42);
         jButton3.putClientProperty("FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;");
 
-        // Rounded fields
+        // Apply visual round border clipping rules across custom fields
         styleRoundedField(mailTxt);
         styleRoundedField(newPassword);
         styleRoundedField(confPassword);
 
-        // BLOQUEADO hasta verificar email
+       // Security Lock: Keep modification fields disabled until email verification completes
         newPassword.setEnabled(false);
         confPassword.setEnabled(false);
         jButton3.setEnabled(false);
     }
 
-   
+   /**
+     * Dynamically injects antialiased borders and corner radii configurations 
+     * matching custom parent component layouts.
+     */
     private void styleRoundedField(javax.swing.JTextField field) {
 
         field.setOpaque(true);
@@ -144,7 +157,10 @@ public class forgotten_password extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -274,6 +290,11 @@ public class forgotten_password extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action handler for Step 2 (Save Button).
+     * Validates matching configurations, checks field constraints, edits matching user rows 
+     * from database schema, and transitions window frames back to Login view context.
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (!emailVerified) {
             JOptionPane.showMessageDialog(this, "First verify your email.");
@@ -298,7 +319,7 @@ public class forgotten_password extends javax.swing.JFrame {
             return;
         }
 
-        String sql = "UPDATE user SET Password = ? WHERE e_mail = ?";
+        String sql = "UPDATE users SET User_Password = ? WHERE e_mail = ?";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -321,12 +342,21 @@ public class forgotten_password extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * Action handler for the Back button.
+     * Closes the recovery frame and reverts display visibility to the login window layout.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         login2 loginWindow = new login2();
         loginWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Action handler for Step 1 (Confirm/Verify Email Button).
+     * Parses the field string against standard email regex patterns, performs a database
+     * lookup query, and enables password edit fields upon finding a structural record match.
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String email = mailTxt.getText().trim();
         if (email.isEmpty()) {
@@ -334,12 +364,13 @@ public class forgotten_password extends javax.swing.JFrame {
             return;
         }
 
+        // Basic structural validation check via modern regex string pattern matching loops
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             JOptionPane.showMessageDialog(this, "Invalid email format.");
             return;
         }
 
-        String sql = "SELECT * FROM user WHERE e_mail = ?";
+        String sql = "SELECT * FROM users WHERE e_mail = ?";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -355,10 +386,12 @@ public class forgotten_password extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this,
                             "Email verified. Now enter your new password.");
                     
+                    // Unlock entry capabilities across sub-layer password fields
                     newPassword.setEnabled(true);
                     confPassword.setEnabled(true);
                     jButton3.setEnabled(true);
                     
+                    // Lock down baseline identity components once successfully checked
                     mailTxt.setEnabled(false);
                     jButton4.setEnabled(false);
                     

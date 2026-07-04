@@ -9,19 +9,23 @@ package com.mycompany.verdesmart;
  * @author Brith
  */
 public class delete extends javax.swing.JFrame {
-    private MONITORING pantallaMonitoreo;
+
+
+   
+    private grounds home_page; // Reference to the main dashboard frame layout
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(delete.class.getName());
+    private int idGardenEliminar;  // The target identifier key of the garden to be deleted
 
-
-    private int idGardenEliminar; 
-
-    // UNICO CONSTRUCTOR: Recibe la pantalla y el ID real obligatoriamente
-    public delete(MONITORING pantallaMonitoreo, int idGarden) {
-        this.pantallaMonitoreo = pantallaMonitoreo;
+   /**
+     * Creates new form delete context mapped to a primary screen and a specific record ID.
+     */
+    public delete(grounds page_home, int idGarden) {
+        this.home_page = page_home;
         this.idGardenEliminar = idGarden;
         initComponents();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,21 +96,29 @@ public class delete extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action handler for the cancel button.
+     * Redirects the user back to the primary dashboard view without dropping database data.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       // Si la referencia a la pantalla de monitoreo existe, la volvemos a mostrar
-    if (this.pantallaMonitoreo != null) {
-        this.pantallaMonitoreo.setVisible(true); 
-    }
-    // Cerramos la ventana de eliminación actual sin hacer nada más
-    this.dispose();
+    // CAMBIADO: Regresar a grounds al cancelar
+        if (this.home_page != null) {
+            this.home_page.setVisible(true); 
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Action handler for the delete button.
+     * Prompts for final validation confirmation before dropping the specified record context 
+     * using safe SQL transaction rollbacks.
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  
-        // Confirmación de seguridad para el usuario
+
+            // Display confirmation alert before performing permanent cascading data removal
         int respuesta = javax.swing.JOptionPane.showConfirmDialog(
             this, 
-            "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas asociadas.", 
+            "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas, monitoreos e irrigaciones asociadas.", 
             "Confirmar Eliminación", 
             javax.swing.JOptionPane.YES_NO_OPTION, 
             javax.swing.JOptionPane.WARNING_MESSAGE
@@ -116,33 +128,28 @@ public class delete extends javax.swing.JFrame {
             return; 
         }
 
-        // CORRECCIÓN AQUÍ: Se cambia id_Plant por id_Garden para borrar todas las plantas que correspondan a ESTE jardín
-        String sqlDeletePlantas = "DELETE FROM plant WHERE id_Garden = ?"; 
         String sqlDeleteGarden = "DELETE FROM garden WHERE id_Garden = ?";
-
         java.sql.Connection con = null;
 
         try {
-            con = ConexionBaseDatos.getInstancia().getConexion();
-            con.setAutoCommit(false); // Iniciamos la transacción segura
+            con = DatabaseConnection.getInstance().getConnection();
+            con.setAutoCommit(false); 
 
-            // 1. Eliminar plantas vinculadas al jardín
-            try (java.sql.PreparedStatement psPlantas = con.prepareStatement(sqlDeletePlantas)) {
-                psPlantas.setInt(1, idGardenEliminar);
-                psPlantas.executeUpdate();
-            }
-
-            // 2. Eliminar el registro del jardín definitivo
             try (java.sql.PreparedStatement psGarden = con.prepareStatement(sqlDeleteGarden)) {
                 psGarden.setInt(1, idGardenEliminar);
                 int filasJardin = psGarden.executeUpdate();
 
                 if (filasJardin > 0) {
-                    con.commit(); // Guardamos los cambios de forma permanente en la Base de Datos
-                    javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus plantas se eliminaron correctamente.");
+                    con.commit(); 
+                    javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus datos asociados se eliminaron correctamente.");
                     
-                    if (this.pantallaMonitoreo != null) {
-                        this.pantallaMonitoreo.setVisible(true);
+                    // MODIFICADO: Forzamos un reinicio limpio de la pantalla grounds para que se limpie por completo
+                    grounds nuevaPantalla = new grounds();
+                    nuevaPantalla.setVisible(true);
+                    
+                    // Cerramos la pantalla vieja que estaba en segundo plano
+                    if (this.home_page != null) {
+                        this.home_page.dispose();
                     }
                     this.dispose();
                 } else {
@@ -162,6 +169,7 @@ public class delete extends javax.swing.JFrame {
                 try { con.setAutoCommit(true); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
             }
         }
+    
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -1,23 +1,24 @@
 package com.mycompany.verdesmart;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class login2 extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(login2.class.getName());
 
+    /**
+     * Creates a new instance form of login2.
+     * Manages window boundaries, establishes FlatLaf placeholders, resolves application branding assets, 
+     * strips native button decoration contexts, and applies anti-aliased border configurations.
+     */
     public login2() {
         initComponents();
 
         this.setSize(800, 700);
         this.setLocationRelativeTo(null);
 
-        // Placeholders
+       // Inject inline context guidance text placeholders using FlatLaf engine keys
         txtCorreo.putClientProperty("FlatLaf.placeholderText", "Email");
         txtPassword.putClientProperty("FlatLaf.placeholderText", "Password");
 
@@ -36,7 +37,7 @@ public class login2 extends javax.swing.JFrame {
             System.out.println("Image loading error: " + e.getMessage());
         }
 
-        // Buttons style
+        // Configure transparent interaction behaviors across navigation button instances
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
@@ -51,11 +52,13 @@ public class login2 extends javax.swing.JFrame {
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
         );
 
+        // Apply interactive behavior properties for the recovery access action button link
         jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton4.setContentAreaFilled(false);
         jButton4.setBorderPainted(false);
         jButton4.setFocusPainted(false);
 
+        // Enforce anti-aliased geometry overrides across text input structures5
         styleRoundedField(txtCorreo);
         styleRoundedField(txtPassword);
     }
@@ -137,9 +140,12 @@ public class login2 extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
 
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -266,12 +272,21 @@ public class login2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action handler triggered when the back navigation button (jButton2) is selected.
+     * Restores window focus to the primary LOGIN layout workspace before disposing of this frame.
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         LOGIN nuevaVentana = new LOGIN();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Action handler triggered when the primary login submit action button (jButton3) is clicked.
+     * Validates field integrity, secures connection access, maps parameters against active parameters,
+     * and forwards successful authentication tokens to the grounds visual dashboard frame.
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String Email = txtCorreo.getText().trim();
         String Password = new String(txtPassword.getPassword()).trim();
