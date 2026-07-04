@@ -1,25 +1,29 @@
 package com.mycompany.verdesmart;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class VerdeSmart {
+
     public static void main(String[] args) {
+
         try {
-            System.out.println("Intentando conectar al servidor de MySQL...");
-            
-            java.sql.Connection cn = ConexionBaseDatos.getInstancia().getConexion();
-            
-            if (cn != null && !cn.isClosed()) {
-                System.out.println("ola, ya esta conectado con el usuario: sopes");
-                System.out.println("La base de datos verde_smart esta lista");
-                
-                
+            System.out.println("Connecting to MySQL server...");
+
+            Connection connection = DatabaseConnection.getInstance().getConnection();
+
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Connection established successfully.");
+                System.out.println("Database 'verde_smart' is ready.");
             }
-        } catch (Exception e) {
-            System.out.println("\n error al conectar ");
-            System.out.println("Causa del fallo: " + e.getMessage());
-            System.out.println("HOla");
+
+        } catch (SQLException e) {
+
+            System.out.println("\nConnection failed.");
+            System.out.println("Error: " + e.getMessage());
         }
-        LOGIN LOG = new LOGIN();
-        LOG.setVisible(true);
-      
+
+        LOGIN loginWindow = new LOGIN();
+        loginWindow.setVisible(true);
     }
 }

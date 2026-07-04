@@ -1,125 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.verdesmart;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import javax.swing.JLabel;
-// IMPORTS CRUCIALES PARA LA BASE DE DATOS
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
- /*
- * @author Brith
- */
 public class MONITORING extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MONITORING.class.getName());
-    private grounds pantallaPrincipal;
-    private String nombreJardin; 
-     
-    // Configuración de tu Base de Datos (Ajusta la contraseña si usas otra)
-    private final String URL = "jdbc:mysql://localhost:3306/verdesmart"; 
-    private final String USER = "root"; 
-    private final String PASSWORD = "tu_contraseña";
-    /**
-     * Modificamos el constructor para recibir la ventana padre Y el nombre del jardín concreto
-     */
-   public MONITORING(grounds pantallaPrincipal, String nombreJardin) {
-        this.pantallaPrincipal = pantallaPrincipal; 
-        this.nombreJardin = nombreJardin; 
+    public MONITORING(grounds mainScreen, String currentGroundName) {
         initComponents();
-        reemplazarYEstilarLabels();
-        cargarDatosMonitoreo(); 
+        styleLabels();
     }
     
-    private void cargarDatosMonitoreo() {
-        String sql = "SELECT humedad, fecha_riego, hora_riego FROM monitoreo WHERE nombre_jardin = ? ORDER BY id DESC LIMIT 1";
-        
-        try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            
-            ps.setString(1, this.nombreJardin);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String humedad = rs.getString("humedad");
-                    String fecha = rs.getString("fecha_riego");
-                    String hora = rs.getString("hora_riego");
-                    
-                    jLabel4.setText(humedad + "%");
-                    jLabel6.setText(fecha);
-                    jLabel9.setText(hora);
-                } else {
-                    jLabel4.setText("S/D");
-                    jLabel6.setText("Sin registros");
-                    jLabel9.setText("Sin registros");
-                }
-            }
-        } catch (SQLException e) {
-            logger.severe("Error al conectar o consultar la base de datos: " + e.getMessage());
-            jLabel4.setText("Error");
-            jLabel6.setText("Error BD");
-            jLabel9.setText("Error BD");
-        }
-    }
-   private void reemplazarYEstilarLabels() {
-        
-        jLabel4.setOpaque(true);
-        jLabel6.setOpaque(true);
-        jLabel9.setOpaque(true);
+    private void styleLabels() {
 
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
- 
-        
-        jLabel4.setBackground(new java.awt.Color(199, 221, 181)); 
-        jLabel4.setForeground(new java.awt.Color(27, 77, 47));
+        jLabel4.setOpaque(true);
+        lblFechaRiego.setOpaque(true);
+        lblHoraRiego.setOpaque(true);
+
+        jButton2.setContentAreaFilled(false);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
+
+        jLabel4.setBackground(new Color(199,221,181));
+        jLabel4.setForeground(new Color(27,77,47));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("45%");
 
-        jLabel6.setBackground(new java.awt.Color(240, 240, 240));
-        jLabel6.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("30/06/2026");
+        lblFechaRiego.setBackground(new Color(240,240,240));
+        lblFechaRiego.setForeground(new Color(27,77,47));
+        lblFechaRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFechaRiego.setText("30/06/2026");
 
-        jLabel9.setBackground(new java.awt.Color(240, 240, 240)); 
-        jLabel9.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("10:50 PM");
+        lblHoraRiego.setBackground(new Color(240,240,240));
+        lblHoraRiego.setForeground(new Color(27,77,47));
+        lblHoraRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHoraRiego.setText("10:50 PM");
 
-      
-        javax.swing.border.AbstractBorder bordeRedondeado = new javax.swing.border.AbstractBorder() {
+        javax.swing.border.AbstractBorder roundedBorder =
+                new javax.swing.border.AbstractBorder() {
+
             @Override
-            public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                
-                g2.setColor(new java.awt.Color(27, 77, 47));
+            public void paintBorder(java.awt.Component c, Graphics g,
+                                    int x, int y, int width, int height) {
+
+                Graphics2D g2 = (Graphics2D) g.create();
+
+                g2.setRenderingHint(
+                        RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2.setColor(new Color(27,77,47));
                 g2.setStroke(new java.awt.BasicStroke(2));
-                g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 20, 20); 
-                
+                g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 20, 20);
+
                 g2.dispose();
             }
         };
 
-        
-        jLabel4.setBorder(bordeRedondeado);
-        jLabel6.setBorder(bordeRedondeado);
-        jLabel9.setBorder(bordeRedondeado);
+        jLabel4.setBorder(roundedBorder);
+        lblFechaRiego.setBorder(roundedBorder);
+        lblHoraRiego.setBorder(roundedBorder);
     }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -134,11 +75,12 @@ public class MONITORING extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblUltimoRiegoTitulo = new javax.swing.JLabel();
+        lblFechaRiego = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lblHoraRiego = new javax.swing.JLabel();
+        lblUltimoRiego = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -147,13 +89,10 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\boton-x.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
-        jLabel1.setText("Monitoreo");
-
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
+        jLabel1.setText("MONITOREO");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -172,42 +111,36 @@ public class MONITORING extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("Estado del suelo");
+        jLabel2.setText("ESTADO DEL SUELO");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel3.setText("Humedad");
+        jLabel3.setText("HUMEDAD");
 
         jLabel4.setBackground(new java.awt.Color(199, 221, 181));
-        jLabel4.setText("****");
-        jLabel4.setToolTipText("");
 
-        jLabel5.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel5.setText("Último riego");
-
-        jLabel6.setText("****");
+        lblUltimoRiegoTitulo.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        lblUltimoRiegoTitulo.setForeground(new java.awt.Color(27, 77, 47));
+        lblUltimoRiegoTitulo.setText("ULTIMO RIEGO");
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("Fecha");
+        jLabel7.setText("FECHA ");
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel8.setText("Hora");
-
-        jLabel9.setText("****");
+        jLabel8.setText("HORA");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -218,11 +151,12 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
+                    .addComponent(lblFechaRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addComponent(lblUltimoRiegoTitulo)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblHoraRiego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblUltimoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -233,15 +167,17 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(38, 38, 38)
+                .addComponent(lblUltimoRiegoTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(lblUltimoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(18, 18, 18)
+                .addComponent(lblFechaRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(lblHoraRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
@@ -283,16 +219,11 @@ public class MONITORING extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (this.pantallaPrincipal != null) {
-            this.pantallaPrincipal.setVisible(true); // Regresamos a la pantalla original intacta
-        }
+        // TODO add your handling code here:
+        grounds gr = new grounds();
+        gr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -301,13 +232,14 @@ public class MONITORING extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblFechaRiego;
+    private javax.swing.JLabel lblHoraRiego;
+    private javax.swing.JLabel lblUltimoRiego;
+    private javax.swing.JLabel lblUltimoRiegoTitulo;
     // End of variables declaration//GEN-END:variables
 }
