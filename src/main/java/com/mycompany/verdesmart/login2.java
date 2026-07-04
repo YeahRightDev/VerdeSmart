@@ -1,113 +1,117 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.verdesmart;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Brith
- */
 public class login2 extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(login2.class.getName());
 
-    /**
-     * Creates new form login2
-     */
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(login2.class.getName());
+
     public login2() {
         initComponents();
-        txtCorreo.putClientProperty("txtCorreo.placeholderText","Correo electrónico");
-        txtPassword.putClientProperty("txtPassword.placeholderText","...............");
-        
-        
-        
-         this.setSize(800,700);
-         this.setLocationRelativeTo(null);
-        
-        try {
-            
-            java.net.URL rutaImg = getClass().getResource("/imagenes/icono.jpeg");
-            
-            if (rutaImg != null) {
-                ImageIcon iconoOriginal = new ImageIcon(rutaImg);
-               
-                panelredondo1.setImage(iconoOriginal.getImage());
-                System.out.println(" Imagen asignada con éxito a panelredondo1");
-            } else {
-                System.out.println("ERROR: No se encontró el archivo en /imagenes/icono.jpeg");
-            }
-        } catch (Exception e) {
-            System.out.println("Error al cargar la imagen: " + e.getMessage());
-        }
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false); jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton3.setSize(42, 42);
-        jButton3.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
 
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false); 
+        this.setSize(800, 700);
+        this.setLocationRelativeTo(null);
+
+        // Placeholders
+        txtCorreo.putClientProperty("FlatLaf.placeholderText", "Email");
+        txtPassword.putClientProperty("FlatLaf.placeholderText", "Password");
+
+        // Load image
+        try {
+            java.net.URL imagePath = getClass().getResource("/imagenes/icono.jpeg");
+
+            if (imagePath != null) {
+                ImageIcon icon = new ImageIcon(imagePath);
+                panelredondo1.setImage(icon.getImage());
+            } else {
+                System.out.println("ERROR: Image not found");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Image loading error: " + e.getMessage());
+        }
+
+        // Buttons style
+        jButton1.setContentAreaFilled(false);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+
+        jButton2.setContentAreaFilled(false);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
+
+        jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButton3.putClientProperty(
+                "FlatLaf.style",
+                "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
+        );
+
         jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton4.setSize(42, 42);
-        
-        
-        jButton4.setContentAreaFilled(false); 
-        jButton4.setBorderPainted(false);     
-        jButton4.setFocusPainted(false);  
-            
-        estilarCampoRedondeado(txtCorreo);
-        estilarCampoRedondeado(txtPassword);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setBorderPainted(false);
+        jButton4.setFocusPainted(false);
+
+        styleRoundedField(txtCorreo);
+        styleRoundedField(txtPassword);
     }
 
     
-    private void estilarCampoRedondeado(javax.swing.JTextField campo) {
-        
-        campo.setOpaque(true); 
-        
-        
-        campo.setBackground(java.awt.Color.WHITE);
-        
-       
-        campo.setBorder(new javax.swing.border.AbstractBorder() {
+    private void styleRoundedField(javax.swing.JTextField field) {
+
+        field.setOpaque(true);
+        field.setBackground(java.awt.Color.WHITE);
+
+        field.setBorder(new javax.swing.border.AbstractBorder() {
+
             @Override
-            public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
+            public void paintBorder(java.awt.Component c,
+                                    java.awt.Graphics g,
+                                    int x,
+                                    int y,
+                                    int width,
+                                    int height) {
+
                 java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-                
-                
+
+                g2.setRenderingHint(
+                        java.awt.RenderingHints.KEY_ANTIALIASING,
+                        java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+                );
+
                 java.awt.Container parent = c.getParent();
+
                 if (parent != null) {
                     g2.setColor(parent.getBackground());
-                    
-                    
-                    java.awt.geom.Area esquinaExterior = new java.awt.geom.Area(new java.awt.Rectangle(x, y, width, height));
-                    esquinaExterior.subtract(new java.awt.geom.Area(new java.awt.geom.RoundRectangle2D.Float(x, y, width, height, 15, 15)));
-                    g2.fill(esquinaExterior); 
+
+                    java.awt.geom.Area outside =
+                            new java.awt.geom.Area(
+                                    new java.awt.Rectangle(x, y, width, height));
+
+                    outside.subtract(
+                            new java.awt.geom.Area(
+                                    new java.awt.geom.RoundRectangle2D.Float(
+                                            x, y, width, height, 15, 15)));
+
+                    g2.fill(outside);
                 }
-                
-              
+
                 g2.setColor(new java.awt.Color(180, 180, 180));
                 g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15);
-                
+
                 g2.dispose();
             }
-            
-            
+
             @Override
             public java.awt.Insets getBorderInsets(java.awt.Component c) {
                 return new java.awt.Insets(6, 12, 6, 12);
             }
         });
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -263,61 +267,53 @@ public class login2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
         LOGIN nuevaVentana = new LOGIN();
         nuevaVentana.setVisible(true);
-        
-        
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    String correo = txtCorreo.getText().trim();
-    String contra = new String(txtPassword.getPassword()).trim();
+        String Email = txtCorreo.getText().trim();
+        String Password = new String(txtPassword.getPassword()).trim();
 
-if (correo.isEmpty() || contra.isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
-    return;
-}
-
-try {
-    java.sql.Connection con = com.mycompany.verdesmart.ConexionBaseDatos.getInstancia().getConexion();
-    if (con != null) {
-        String sql = "SELECT * FROM user_user WHERE e_mail = ? AND Password_user = ?";
-        java.sql.PreparedStatement pst = con.prepareStatement(sql);
-        pst.setString(1, correo);
-        pst.setString(2, contra);
-        
-        java.sql.ResultSet rs = pst.executeQuery();
-        
-        if (rs.next()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!");
-            grounds CARD = new grounds();
-            CARD.setVisible(true);
-            this.dispose();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Correo o contrasena incorrectos.");
+        if (Email.isEmpty() || Password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
+            return;
         }
-        
-        rs.close();
-        pst.close();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: No hay conexion con la base de datos.");
-    }
-} catch (java.sql.SQLException e) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
-}
+
+        try {
+            java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM users WHERE e_mail = ? AND User_Password = ?";
+                try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                    pst.setString(1, Email);
+                    pst.setString(2, Password);
+
+                    try (java.sql.ResultSet rs = pst.executeQuery()) {
+                        if (rs.next()) {
+                            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!");
+                            grounds CARD = new grounds();
+                            CARD.setVisible(true);
+                            this.dispose();
+                        } else {
+                            javax.swing.JOptionPane.showMessageDialog(this, "Correo o contrasena incorrectos.");
+                        }
+                    }
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: No hay conexion con la base de datos.");
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-forgotten_password password = new forgotten_password();
-password.setVisible(true);
-this.dispose();
+    forgotten_password password = new forgotten_password();
+    password.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

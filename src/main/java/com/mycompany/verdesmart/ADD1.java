@@ -1,74 +1,109 @@
 package com.mycompany.verdesmart;
-
+import javax.swing.JOptionPane;
 public class ADD1 extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ADD1.class.getName());
 
-    private grounds pantallaPrincipal;
+    private grounds mainScreen;
 
-    public ADD1(grounds pantallaPrincipal) {
-        this.pantallaPrincipal = pantallaPrincipal;
+    public ADD1(grounds mainScreen) {
+
+        this.mainScreen = mainScreen;
+
         initComponents();
-        
+
         this.setSize(800, 705);
-        
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
-        
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
-        
+
+        jButton1.setContentAreaFilled(false);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+
+        jButton2.setContentAreaFilled(false);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
+
         jButton3.putClientProperty("FlatLaf.style",
-        "background:#1B5E20;" +
-        "foreground:#FFFFFF;" +
-        "borderWidth:0;" +
-        "focusWidth:0;" +
-        "arc:999;");
-        jButton4.setContentAreaFilled(false); 
-        jButton4.setBorderPainted(false);     
-        jButton4.setFocusPainted(false);  
-        
-        jButton7.setContentAreaFilled(false); 
-        jButton7.setBorderPainted(false);     
-        jButton7.setFocusPainted(false);  
-        
+                "background:#1B5E20;" +
+                "foreground:#FFFFFF;" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "arc:999;");
+
+        jButton4.setContentAreaFilled(false);
+        jButton4.setBorderPainted(false);
+        jButton4.setFocusPainted(false);
+
+        jButton7.setContentAreaFilled(false);
+        jButton7.setBorderPainted(false);
+        jButton7.setFocusPainted(false);
+
         jButton5.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton5.setSize(42, 42);
-        jButton5.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-        
+        jButton5.putClientProperty("FlatLaf.style",
+                "background:#1B4D2F;" +
+                "arc:999;" +
+                "borderWidth:0;" +
+                "focusWidth:0;");
+
         jButton6.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton6.setSize(42, 42);
-        jButton6.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-        
-        estilarCampoRedondeado(jTextField1);
-        estilarCampoRedondeado(jTextField2);
-        estilarCampoRedondeado(jTextField3);
-        
-        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
-        jPanel4.putClientProperty("FlatLaf.style", "arc: 30;");
+        jButton6.putClientProperty("FlatLaf.style",
+                "background:#1B4D2F;" +
+                "arc:999;" +
+                "borderWidth:0;" +
+                "focusWidth:0;");
+
+        styleRoundedField(jTextField1);
+        styleRoundedField(jTextField2);
+        styleRoundedField(jTextField3);
+
+        jPanel3.putClientProperty("FlatLaf.style", "arc:30;");
+        jPanel4.putClientProperty("FlatLaf.style", "arc:30;");
     }
 
-    private void estilarCampoRedondeado(javax.swing.JTextField campo) {
-        campo.setOpaque(true); 
-        campo.setBackground(java.awt.Color.WHITE);
-        campo.setBorder(new javax.swing.border.AbstractBorder() {
+    private void styleRoundedField(javax.swing.JTextField field) {
+
+        field.setOpaque(true);
+        field.setBackground(java.awt.Color.WHITE);
+
+        field.setBorder(new javax.swing.border.AbstractBorder() {
+
             @Override
-            public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-                
+            public void paintBorder(java.awt.Component c,
+                                    java.awt.Graphics g,
+                                    int x,
+                                    int y,
+                                    int width,
+                                    int height) {
+
+                java.awt.Graphics2D g2 =
+                        (java.awt.Graphics2D) g.create();
+
+                g2.setRenderingHint(
+                        java.awt.RenderingHints.KEY_ANTIALIASING,
+                        java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
                 java.awt.Container parent = c.getParent();
+
                 if (parent != null) {
+
                     g2.setColor(parent.getBackground());
-                    java.awt.geom.Area esquinaExterior = new java.awt.geom.Area(new java.awt.Rectangle(x, y, width, height));
-                    esquinaExterior.subtract(new java.awt.geom.Area(new java.awt.geom.RoundRectangle2D.Float(x, y, width, height, 15, 15)));
-                    g2.fill(esquinaExterior); 
+
+                    java.awt.geom.Area outside =
+                            new java.awt.geom.Area(
+                                    new java.awt.Rectangle(x, y, width, height));
+
+                    outside.subtract(
+                            new java.awt.geom.Area(
+                                    new java.awt.geom.RoundRectangle2D.Float(
+                                            x, y, width, height, 15, 15)));
+
+                    g2.fill(outside);
                 }
-                
+
                 g2.setColor(new java.awt.Color(180, 180, 180));
                 g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15);
+
                 g2.dispose();
             }
         });
@@ -160,9 +195,6 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel5.setText("Nombre");
 
         jTextField1.setColumns(60);
-        jTextField1.setText("Nombre");
-
-        jTextField2.setText("Medidas");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -179,7 +211,7 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
         jLabel7.setText("X");
 
-        jTextField3.setText("Medidas");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
@@ -312,54 +344,93 @@ public class ADD1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    ADD1 add = new ADD1(this.pantallaPrincipal);
+    ADD1 add = new ADD1(this.mainScreen);
         add.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    ADD1 add = new ADD1(this.pantallaPrincipal);
+    ADD1 add = new ADD1(this.mainScreen);
         add.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String nombre = jTextField1.getText();
-        String ladoX = jTextField2.getText();
-        String ladoY = jTextField3.getText();
-        String areaCalculada = "0";
+        String gardenName = jTextField1.getText().trim();
+        String lengthText = jTextField2.getText().trim();
+        String widthText = jTextField3.getText().trim();
 
-    try {
-        double x = Double.parseDouble(ladoX);
-        double y = Double.parseDouble(ladoY);
-        areaCalculada = String.valueOf(x * y);
-    } catch (NumberFormatException e) {
-        areaCalculada = ladoX; 
-    }
+        if (gardenName.isEmpty() || lengthText.isEmpty() || widthText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete all fields.");
+            return;
+        }
 
-    
-    PLANTS ventanaPlantas = new PLANTS(this.pantallaPrincipal, nombre, areaCalculada);
-    ventanaPlantas.setVisible(true);
-    this.dispose(); 
+        if (!gardenName.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ]+$")) {
+            JOptionPane.showMessageDialog(this,
+                    "Garden name contains invalid characters.");
+            return;
+        }
+
+        double length;
+        double width;
+
+        try {
+            length = Double.parseDouble(lengthText);
+            width = Double.parseDouble(widthText);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Length and Width must be numeric values.");
+            return;
+        }
+
+        // No permitir negativos o cero
+        if (length <= 0 || width <= 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Length and Width must be greater than zero.");
+        }
+
+        // Area
+        String totalArea = String.valueOf(length * width);
+
+        PLANTS plantsWindow = new PLANTS(
+                this.mainScreen,
+                gardenName,
+                totalArea
+        );
+
+        plantsWindow.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
    
-class PanelRedondeado extends javax.swing.JPanel {
-    private int radio;
-    public PanelRedondeado(int radio) {
-        this.radio = radio;
-        setOpaque(false); 
+class RoundedPanel extends javax.swing.JPanel {
+
+    private int radius;
+
+    public RoundedPanel(int radius) {
+        this.radius = radius;
+        setOpaque(false);
     }
+
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
+
         java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
-        g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(
+                java.awt.RenderingHints.KEY_ANTIALIASING,
+                java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2d.setColor(getBackground());
-        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radio, radio);
+        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
     }
 }
 

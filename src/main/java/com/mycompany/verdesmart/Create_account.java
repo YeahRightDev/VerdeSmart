@@ -1,102 +1,104 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.verdesmart;
-
-/**
- *
- * @author sopes
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 public class Create_account extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Create_account.class.getName());
-
-    /**
-     * Creates new form Create_account
-     */
     public Create_account() {
         initComponents();
-        this.setSize(800,700);
-        
-        estilarCampoRedondeado(txtNombre);
-        estilarCampoRedondeado(txtEdad);
-        estilarCampoRedondeado(txtFechaNacimiento);
-        estilarCampoRedondeado(txtCorreo);
-        estilarCampoRedondeado(txtContrasena);
-        estilarCampoRedondeado(txtConfirmarContrasena);
-   
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);
-        
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);
-        
-        btnRegistrar.setPreferredSize(new java.awt.Dimension(40, 40));
-        btnRegistrar.setSize(42, 42);
-        btnRegistrar.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-        
-        jButton4.setContentAreaFilled(false); 
-        jButton4.setBorderPainted(false);     
-        jButton4.setFocusPainted(false);
-        jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton4.setSize(42, 42);
-        jButton4.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-    }
+        this.setSize(800, 700);
 
+        styleRoundedField(txtNombre);
+        styleRoundedField(txtEdad);
+        styleRoundedField(birthDateField);
+        styleRoundedField(emailField);
+        styleRoundedField(passwordField);
+        styleRoundedField(confirmPasswordField);
+
+        jButton1.setContentAreaFilled(false);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+
+        jButton2.setContentAreaFilled(false);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
+
+        registerButton.setPreferredSize(new java.awt.Dimension(40, 40));
+        registerButton.setSize(42, 42);
+        registerButton.putClientProperty(
+                "FlatLaf.style",
+                "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
+        );
+
+        registerButton.setContentAreaFilled(false);
+        registerButton.setBorderPainted(false);
+        registerButton.setFocusPainted(false);
+        registerButton.setPreferredSize(new java.awt.Dimension(40, 40));
+        registerButton.setSize(42, 42);
+        registerButton.putClientProperty(
+                "FlatLaf.style",
+                "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
+        );
+    }
    
-    private void estilarCampoRedondeado(javax.swing.JTextField campo) {
-       
-        campo.setOpaque(true); 
-        
-       
-        campo.setBackground(java.awt.Color.WHITE);
-        
-       txtNombre.putClientProperty("FlatLaf.placeholderText", "Nombre");
-        txtEdad.putClientProperty("FlatLaf.placeholderText", "00");
-        txtFechaNacimiento.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
-        txtCorreo.putClientProperty("FlatLaf.placeholderText", "Correo");
-        txtContrasena.putClientProperty("FlatLaf.placeholderText", "••••••••••••");
-        txtConfirmarContrasena.putClientProperty("FlatLaf.placeholderText", "••••••••••••");
-        
-        campo.setBorder(new javax.swing.border.AbstractBorder() {
+    private void styleRoundedField(javax.swing.JTextField field) {
+        field.setOpaque(true);
+        field.setBackground(java.awt.Color.WHITE);
+
+        txtNombre.putClientProperty("FlatLaf.placeholderText", "Name");
+        birthDateField.putClientProperty("FlatLaf.placeholderText", "00");
+        birthDateField.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
+        emailField.putClientProperty("FlatLaf.placeholderText", "Email");
+        passwordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
+        confirmPasswordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
+
+        field.setBorder(new javax.swing.border.AbstractBorder() {
+
             @Override
-            public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
+            public void paintBorder(java.awt.Component c,
+                                    java.awt.Graphics g,
+                                    int x,
+                                    int y,
+                                    int width,
+                                    int height) {
+
                 java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-                
-            
+
+                g2.setRenderingHint(
+                        java.awt.RenderingHints.KEY_ANTIALIASING,
+                        java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
                 java.awt.Container parent = c.getParent();
+
                 if (parent != null) {
                     g2.setColor(parent.getBackground());
-                    
-                    
-                    java.awt.geom.Area esquinaExterior = new java.awt.geom.Area(new java.awt.Rectangle(x, y, width, height));
-                    esquinaExterior.subtract(new java.awt.geom.Area(new java.awt.geom.RoundRectangle2D.Float(x, y, width, height, 15, 15)));
-                    g2.fill(esquinaExterior); 
+
+                    java.awt.geom.Area outside =
+                            new java.awt.geom.Area(
+                                    new java.awt.Rectangle(x, y, width, height));
+
+                    outside.subtract(
+                            new java.awt.geom.Area(
+                                    new java.awt.geom.RoundRectangle2D.Float(
+                                            x, y, width, height, 15, 15)));
+
+                    g2.fill(outside);
                 }
-                
-                
+
                 g2.setColor(new java.awt.Color(180, 180, 180));
                 g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15);
-                
+
                 g2.dispose();
             }
-            
-           
+
             @Override
             public java.awt.Insets getBorderInsets(java.awt.Component c) {
                 return new java.awt.Insets(6, 12, 6, 12);
             }
         });
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -109,12 +111,12 @@ public class Create_account extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
-        txtFechaNacimiento = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JPasswordField();
-        txtConfirmarContrasena = new javax.swing.JPasswordField();
-        btnRegistrar = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        birthDateField = new javax.swing.JTextField();
+        emailField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
+        confirmPasswordField = new javax.swing.JPasswordField();
+        logIn = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -167,7 +169,6 @@ public class Create_account extends javax.swing.JFrame {
 
         txtNombre.setBackground(new java.awt.Color(102, 102, 102));
         txtNombre.setColumns(55);
-        txtNombre.setText("Nombre");
         txtNombre.setBorder(null);
         txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -176,30 +177,26 @@ public class Create_account extends javax.swing.JFrame {
         });
         txtNombre.addActionListener(this::txtNombreActionPerformed);
 
-        txtEdad.setText("00");
         txtEdad.addActionListener(this::txtEdadActionPerformed);
 
-        txtFechaNacimiento.setColumns(60);
-        txtFechaNacimiento.setText("YYYY-MM-DD");
-        txtFechaNacimiento.addActionListener(this::txtFechaNacimientoActionPerformed);
+        birthDateField.setColumns(60);
+        birthDateField.setText("YYYY-MM-DD");
+        birthDateField.addActionListener(this::birthDateFieldActionPerformed);
 
-        txtCorreo.setColumns(60);
-        txtCorreo.setText("Correo");
-        txtCorreo.addActionListener(this::txtCorreoActionPerformed);
+        emailField.setColumns(60);
+        emailField.addActionListener(this::emailFieldActionPerformed);
 
-        txtContrasena.setColumns(60);
-        txtContrasena.setText("jPasswordField1");
-        txtContrasena.addActionListener(this::txtContrasenaActionPerformed);
+        passwordField.setColumns(60);
+        passwordField.addActionListener(this::passwordFieldActionPerformed);
 
-        txtConfirmarContrasena.setColumns(60);
-        txtConfirmarContrasena.setText("jPasswordField2");
-        txtConfirmarContrasena.addActionListener(this::txtConfirmarContrasenaActionPerformed);
+        confirmPasswordField.setColumns(60);
+        confirmPasswordField.addActionListener(this::confirmPasswordFieldActionPerformed);
 
-        btnRegistrar.setText("Iniciar Sesion");
-        btnRegistrar.addActionListener(this::btnRegistrarActionPerformed);
+        logIn.setText("Iniciar Sesion");
+        logIn.addActionListener(this::logInActionPerformed);
 
-        jButton4.setText("¿Ya tienes cuenta?");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        registerButton.setText("¿Ya tienes cuenta?");
+        registerButton.addActionListener(this::registerButtonActionPerformed);
 
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Nombre");
@@ -232,32 +229,33 @@ public class Create_account extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel8)
-                            .addComponent(txtConfirmarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(63, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel8)
+                                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel5)
+                                .addComponent(birthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(284, 284, 284)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(155, 187, Short.MAX_VALUE))
+                            .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logIn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(142, 142, 142))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,23 +274,23 @@ public class Create_account extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(birthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtConfirmarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logIn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
         );
 
@@ -317,9 +315,9 @@ public class Create_account extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtConfirmarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmarContrasenaActionPerformed
+    private void confirmPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtConfirmarContrasenaActionPerformed
+    }//GEN-LAST:event_confirmPasswordFieldActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
@@ -329,49 +327,95 @@ public class Create_account extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEdadActionPerformed
 
-    private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
-        // TODO add your handling code here:
+    private void birthDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDateFieldActionPerformed
+        
     
-    }//GEN-LAST:event_txtFechaNacimientoActionPerformed
+    }//GEN-LAST:event_birthDateFieldActionPerformed
 
-    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_txtCorreoActionPerformed
+    }//GEN-LAST:event_emailFieldActionPerformed
 
-    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContrasenaActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtContrasenaActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-        grounds gro = new grounds();
-        gro.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (txtNombre.getText().trim().isEmpty()
+                || emailField.getText().trim().isEmpty()
+                || String.valueOf(passwordField.getPassword()).trim().isEmpty()
+                || String.valueOf(confirmPasswordField.getPassword()).trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Complete all fields.");
+            return;
+        }
+
+        String email = emailField.getText().trim();
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Enter a valid email.");
+            return;
+        }
+
+        if (!String.valueOf(passwordField.getPassword())
+                .equals(String.valueOf(confirmPasswordField.getPassword()))) {
+
+            JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            return;
+        }
+
+        if (String.valueOf(passwordField.getPassword()).length() < 8) {
+
+            JOptionPane.showMessageDialog(this, "Password must contain at least 8 characters.");
+            return;
+        }
+
+        String sql = "INSERT INTO users (User_name, User_Password, e_mail) VALUES (?, ?, ?)";
+
+        try {
+
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, txtNombre.getText().trim());
+                ps.setString(2, String.valueOf(passwordField.getPassword()));
+                ps.setString(3, email);
+                
+                ps.executeUpdate();
+                
+                JOptionPane.showMessageDialog(this, "Account created successfully.");
+            }
+
+            LOGIN log = new LOGIN();
+            log.setVisible(true);
+            this.dispose();
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+
+        }
+    }//GEN-LAST:event_logInActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
         login2 log = new login2();
         log.setVisible(true);
          this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     private void txtNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMouseClicked
         // TODO add your handling code here:
          txtNombre.setText("");
     }//GEN-LAST:event_txtNombreMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JTextField birthDateField;
+    private javax.swing.JPasswordField confirmPasswordField;
+    private javax.swing.JTextField emailField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -382,11 +426,10 @@ public class Create_account extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField txtConfirmarContrasena;
-    private javax.swing.JPasswordField txtContrasena;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JButton logIn;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton registerButton;
     private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
