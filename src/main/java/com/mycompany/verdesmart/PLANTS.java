@@ -1,10 +1,11 @@
 package com.mycompany.verdesmart;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import org.netbeans.lib.awtextra.*;
-public class PLANTS extends javax.swing.JFrame {
+    import java.sql.Connection;
+    import java.sql.PreparedStatement;
+    import java.sql.ResultSet;
+    import org.netbeans.lib.awtextra.*;
+
+ public class PLANTS extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PLANTS.class.getName());
     
@@ -195,7 +196,7 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // Validate plant selection
+
         if (selectedPlant == null || selectedPlant.equals("No plant selected")) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a plant first.");
             return;
@@ -203,7 +204,6 @@ public class PLANTS extends javax.swing.JFrame {
 
         if (groundsScreen != null) {
 
-            // Create new card
             card newCard = new card(
                     groundName,
                     groundArea,
@@ -215,19 +215,16 @@ public class PLANTS extends javax.swing.JFrame {
             newCard.setMinimumSize(new java.awt.Dimension(650, 150));
             newCard.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
 
-            // Add to main panel
             groundsScreen.getJPanel3().add(newCard);
             groundsScreen.getJPanel3().add(javax.swing.Box.createVerticalStrut(10));
 
-            // Refresh UI
             groundsScreen.getJPanel3().revalidate();
             groundsScreen.getJPanel3().repaint();
 
-            // Show main screen
             groundsScreen.setVisible(true);
         }
 
-        // Close this window
+        // Cerrar la ventana actual
         dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 

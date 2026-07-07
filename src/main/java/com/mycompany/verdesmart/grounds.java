@@ -62,9 +62,22 @@ public class grounds extends javax.swing.JFrame {
        
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
     }
+    public void agregarNuevaTarjeta(String name, String area, String plant) {
+        card newCard = new card(name, area, plant);
+        newCard.setMaximumSize(new java.awt.Dimension(650, 150));
+        newCard.setPreferredSize(new java.awt.Dimension(650, 150));
+        newCard.setMinimumSize(new java.awt.Dimension(650, 150));
+        newCard.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+
+        this.jPanel3.add(newCard);
+        this.jPanel3.add(javax.swing.Box.createVerticalStrut(10));
+
+        this.jPanel3.revalidate();
+        this.jPanel3.repaint();
+    }
     
     public javax.swing.JPanel getJPanel3() {
-        return this.jPanel3;
+        return jPanel3;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -211,4 +224,6 @@ public class grounds extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+
 }
