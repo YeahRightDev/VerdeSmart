@@ -42,9 +42,9 @@ public class login2 extends javax.swing.JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
 
-        jButton2.setContentAreaFilled(false);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusPainted(false);
+        btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
 
         btnlogin.setPreferredSize(new java.awt.Dimension(40, 40));
         btnlogin.putClientProperty(
@@ -123,7 +123,7 @@ public class login2 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
@@ -145,8 +145,8 @@ public class login2 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
 
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -154,7 +154,7 @@ public class login2 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnback)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,7 +166,7 @@ public class login2 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(btnback)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
@@ -276,11 +276,11 @@ public class login2 extends javax.swing.JFrame {
      * Action handler triggered when the back navigation button (jButton2) is selected.
      * Restores window focus to the primary LOGIN layout workspace before disposing of this frame.
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         LOGIN nuevaVentana = new LOGIN();
         nuevaVentana.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
     /**
      * Action handler triggered when the primary login submit action button (jButton3) is clicked.
@@ -330,10 +330,10 @@ public class login2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnpasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnback;
     private javax.swing.JButton btnlogin;
     private javax.swing.JButton btnpassword;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

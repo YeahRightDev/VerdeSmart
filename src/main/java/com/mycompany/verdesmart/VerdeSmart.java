@@ -23,18 +23,18 @@ public class VerdeSmart {
 
         // --- Database Connection Verification Test ---
         try {
-            System.out.println("Connecting to MySQL server...");
+            System.out.println("Conectando al servidor MySQL...");
 
             Connection connection = DatabaseConnection.getInstance().getConnection();
 
             if (connection != null && !connection.isClosed()) {
-                System.out.println("Connection established successfully.");
-                System.out.println("Database 'verde_smart' is ready.");
+                System.out.println("Conexión establecida correctamente.");
+                System.out.println("La base de datos 'verde_smart' está lista.");
             }
 
         } catch (SQLException e) {
 
-            System.out.println("\nConnection failed.");
+            System.out.println("\nConecxión fallida.");
             System.out.println("Error: " + e.getMessage());
         }
         

@@ -32,7 +32,7 @@ public class DatabaseConnection {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
             // Translate driver missing exception into a standard database query exception
-            throw new SQLException("MySQL Driver not found: " + e.getMessage());
+            throw new SQLException("No se encontró el controlador de MySQL: " + e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class DatabaseConnection {
         // Check if the Singleton context instance hasn't been created yet
         if (instance == null) {
             instance = new DatabaseConnection();
-            System.out.println("Database connection established.");
+            System.out.println("Conexión a la base de datos establecida.");
         // If it exists but the channel was closed unexpectedly, rebuild the bridge
         } else if (instance.getConnection().isClosed()) {
             instance = new DatabaseConnection();

@@ -379,7 +379,7 @@ public class Create_account extends javax.swing.JFrame {
                 || String.valueOf(passwordField.getPassword()).trim().isEmpty()
                 || String.valueOf(confirmPasswordField.getPassword()).trim().isEmpty()) {
 
-            JOptionPane.showMessageDialog(this, "Complete all fields.");
+            JOptionPane.showMessageDialog(this, "Complete todos los campos.");
             return;
         }
 
@@ -387,7 +387,7 @@ public class Create_account extends javax.swing.JFrame {
 
         // 2. Structural regular expression filter ensuring correct electronic mail mapping formats
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            JOptionPane.showMessageDialog(this, "Enter a valid email.");
+            JOptionPane.showMessageDialog(this, "Introduce un correo electrónico válido.");
             return;
         }
 
@@ -395,14 +395,14 @@ public class Create_account extends javax.swing.JFrame {
         if (!String.valueOf(passwordField.getPassword())
                 .equals(String.valueOf(confirmPasswordField.getPassword()))) {
 
-            JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
             return;
         }
 
         // 4. Length security policy verification (Must exceed 7 characters minimum)
         if (String.valueOf(passwordField.getPassword()).length() < 8) {
 
-            JOptionPane.showMessageDialog(this, "Password must contain at least 8 characters.");
+            JOptionPane.showMessageDialog(this, "La contraseña debe contener al menos 8 caracteres.");
             return;
         }
 
@@ -420,7 +420,7 @@ public class Create_account extends javax.swing.JFrame {
                 
                 ps.executeUpdate();
                 
-                JOptionPane.showMessageDialog(this, "Account created successfully.");
+                JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
             }
 
             LOGIN log = new LOGIN();

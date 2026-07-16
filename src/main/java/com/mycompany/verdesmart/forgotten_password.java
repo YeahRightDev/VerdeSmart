@@ -360,13 +360,13 @@ public class forgotten_password extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String email = mailTxt.getText().trim();
         if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Enter your email.");
+            JOptionPane.showMessageDialog(this, "Introduce tu correo electrónico.");
             return;
         }
 
         // Basic structural validation check via modern regex string pattern matching loops
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid email format.");
+            JOptionPane.showMessageDialog(this, "Formato de correo electrónico no válido.");
             return;
         }
 
@@ -384,7 +384,7 @@ public class forgotten_password extends javax.swing.JFrame {
                     emailVerified = true;
                     
                     JOptionPane.showMessageDialog(this,
-                            "Email verified. Now enter your new password.");
+                            "Correo electrónico verificado. Ahora introduce tu nueva contraseña.");
                     
                     // Unlock entry capabilities across sub-layer password fields
                     newPassword.setEnabled(true);
@@ -407,7 +407,7 @@ public class forgotten_password extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             logger.log(java.util.logging.Level.SEVERE, "DB error", e);
-            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

@@ -49,7 +49,7 @@ public class MONITORING extends javax.swing.JFrame {
             psM.setString(1, nombreJardin);
             try (java.sql.ResultSet rsM = psM.executeQuery()) {
                 if (rsM.next()) {
-                    float humedad = rsM.getFloat("Humidity");
+                    float humedad = rsM.getFloat("Humedad");
                     jLabel4.setText(String.format("%.1f%%", humedad));
                 } else {
                     jLabel4.setText("N/D"); // Not Available
@@ -62,7 +62,7 @@ public class MONITORING extends javax.swing.JFrame {
             psR.setString(1, nombreJardin);
             try (java.sql.ResultSet rsR = psR.executeQuery()) {
                 if (rsR.next()) {
-                    java.sql.Timestamp ts = rsR.getTimestamp("Date_time");
+                    java.sql.Timestamp ts = rsR.getTimestamp("Fecha y hora");
                     
                     // Specific date and time mask pattern formattings for split visualizations
                     java.text.SimpleDateFormat sdfFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");

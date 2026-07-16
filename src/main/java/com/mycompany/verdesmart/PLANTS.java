@@ -294,12 +294,12 @@ public class PLANTS extends javax.swing.JFrame {
             this.mainScreen.repaint();
         }
         
-        javax.swing.JOptionPane.showMessageDialog(this, "Garden configured and saved successfully!");
+        javax.swing.JOptionPane.showMessageDialog(this, "¡El jardín se ha configurado y guardado correctamente!");
         this.mainScreen.setVisible(true);
         this.dispose();
 
     } catch (SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error saving setup parameters: " + e.getMessage(), "SQL Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar los parámetros de configuración: " + e.getMessage(), "SQL Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -319,7 +319,7 @@ public class PLANTS extends javax.swing.JFrame {
     private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
     String plantName = "Corona de Cristo";
         if (selectedPlantNames.contains(plantName)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "This plant is already selected.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
             return;
         }
 
@@ -344,13 +344,13 @@ public class PLANTS extends javax.swing.JFrame {
                             int generatedId = generatedKeys.getInt(1);
                             selectedPlantIds.add(generatedId);
                             selectedPlantNames.add(plantName);
-                            javax.swing.JOptionPane.showMessageDialog(this, "Plant '" + plantName + "' added and saved!");
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "¡Añadido y guardado!");
                         }
                     }
                 }
             }
         } catch (java.sql.SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Database exception encountered: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnCoronaCristoActionPerformed
@@ -359,7 +359,7 @@ public class PLANTS extends javax.swing.JFrame {
 
         String plantName = "Diffenbachia";
         if (selectedPlantNames.contains(plantName)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "This plant is already selected.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
             return;
         }
                 
@@ -384,13 +384,13 @@ public class PLANTS extends javax.swing.JFrame {
                             int generatedId = generatedKeys.getInt(1);
                             selectedPlantIds.add(generatedId);
                             selectedPlantNames.add(plantName);
-                            javax.swing.JOptionPane.showMessageDialog(this, "Plant '" + plantName + "' added and saved!");
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "'¡Añadido y guardado!");
                         }
                     }
                 }
             }
         } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Database exception encountered: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos:" + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnDiffenbachiaActionPerformed
@@ -398,7 +398,7 @@ public class PLANTS extends javax.swing.JFrame {
     private void btnDurantiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDurantiaActionPerformed
        String plantName = "Durantia";
         if (selectedPlantNames.contains(plantName)) {
-            javax.swing.JOptionPane.showMessageDialog(this, "This plant is already selected.");
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
             return;
         }
                 
@@ -423,13 +423,13 @@ public class PLANTS extends javax.swing.JFrame {
                             int generatedId = generatedKeys.getInt(1);
                             selectedPlantIds.add(generatedId);
                             selectedPlantNames.add(plantName);
-                            javax.swing.JOptionPane.showMessageDialog(this, "Plant '" + plantName + "' added and saved!");
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "¡Añadido y guardado!");
                         }
                     }
                 }
             }
         } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Database exception encountered: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnDurantiaActionPerformed
