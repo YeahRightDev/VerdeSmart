@@ -1,5 +1,6 @@
 package com.mycompany.verdesmart;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 public class VerdeSmart {
 
     public static void main(String[] args) {
+        FlatLightLaf.setup();
     // --- Look and Feel Initialization ---
         try {
             com.formdev.flatlaf.FlatLightLaf.setup(); // Usa FlatDarkLaf.setup(); si prefieres tema oscuro
@@ -35,7 +37,7 @@ public class VerdeSmart {
             System.out.println("\nConnection failed.");
             System.out.println("Error: " + e.getMessage());
         }
-
+        
         // --- View Instantiation and Navigation Lifecycle ---
         LOGIN loginWindow = new LOGIN();
         loginWindow.setVisible(true);

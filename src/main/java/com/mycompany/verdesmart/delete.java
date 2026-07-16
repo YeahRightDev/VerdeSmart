@@ -23,6 +23,20 @@ public class delete extends javax.swing.JFrame {
         this.home_page = page_home;
         this.idGardenEliminar = idGarden;
         initComponents();
+        
+        btncancel.putClientProperty("FlatLaf.style", ""
+                + "background: #1B4D2F;"
+                + "foreground: #FFFFFF;"
+                + "borderWidth: 0;"
+                + "focusWidth: 0;"
+                + "arc: 999;");
+  
+        btndelete.putClientProperty("FlatLaf.style", ""
+                + "background: #1B4D2F;"
+                + "foreground: #FFFFFF;"
+                + "borderWidth: 0;"
+                + "focusWidth: 0;"
+                + "arc: 999;");
     }
 
     
@@ -37,8 +51,8 @@ public class delete extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btncancel = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -49,37 +63,37 @@ public class delete extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(27, 77, 47));
         jLabel1.setText("Eliminar Jardín");
 
-        jButton1.setText("Canclar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btncancel.setText("Canclar");
+        btncancel.addActionListener(this::btncancelActionPerformed);
 
-        jButton2.setText("Eliminar");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btndelete.setText("Eliminar");
+        btndelete.addActionListener(this::btndeleteActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(jLabel1)
-                .addContainerGap(204, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jButton1)
+                .addGap(46, 46, 46)
+                .addComponent(btncancel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(83, 83, 83))
+                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(97, 97, 97))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(jLabel1)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(38, 38, 38))
+                    .addComponent(btncancel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,20 +114,20 @@ public class delete extends javax.swing.JFrame {
      * Action handler for the cancel button.
      * Redirects the user back to the primary dashboard view without dropping database data.
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
     // CAMBIADO: Regresar a grounds al cancelar
         if (this.home_page != null) {
             this.home_page.setVisible(true); 
         }
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btncancelActionPerformed
 
     /**
      * Action handler for the delete button.
      * Prompts for final validation confirmation before dropping the specified record context 
      * using safe SQL transaction rollbacks.
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
 
             // Display confirmation alert before performing permanent cascading data removal
         int respuesta = javax.swing.JOptionPane.showConfirmDialog(
@@ -170,7 +184,7 @@ public class delete extends javax.swing.JFrame {
             }
         }
     
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btndeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,8 +192,8 @@ public class delete extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btncancel;
+    private javax.swing.JButton btndelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

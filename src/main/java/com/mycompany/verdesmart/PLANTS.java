@@ -155,17 +155,21 @@ public class PLANTS extends javax.swing.JFrame {
         btnDiffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         btnDiffenbachia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dieffenbachia.png")); // NOI18N
         btnDiffenbachia.setText(" Diffenbachia                                                                                                  ");
+        btnDiffenbachia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnDiffenbachia.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnDiffenbachia.addActionListener(this::btnDiffenbachiaActionPerformed);
 
         btnArbolAbundancia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         btnArbolAbundancia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\arbol-convertido-de-jpg (1).png")); // NOI18N
         btnArbolAbundancia.setText("Arbol abundancia                                                                                ");
         btnArbolAbundancia.setToolTipText("");
+        btnArbolAbundancia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnArbolAbundancia.addActionListener(this::btnArbolAbundanciaActionPerformed);
 
         btnCoronaCristo.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         btnCoronaCristo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\corona (2).jpeg")); // NOI18N
         btnCoronaCristo.setText("Corona de Cristo                                                                                ");
+        btnCoronaCristo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCoronaCristo.addActionListener(this::btnCoronaCristoActionPerformed);
 
         btnDurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
@@ -179,13 +183,12 @@ public class PLANTS extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCoronaCristo, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDiffenbachia)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDurantia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnDurantia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDiffenbachia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnCoronaCristo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

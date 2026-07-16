@@ -178,15 +178,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnCoronaCristo" min="-2" pref="657" max="-2" attributes="0"/>
-                          <Component id="btnDiffenbachia" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="btnArbolAbundancia" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnDurantia" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnDurantia" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnDiffenbachia" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnCoronaCristo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnArbolAbundancia" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -216,6 +214,8 @@
                   <Image iconType="2" name="C:\Users\Brith\Documents\GitHub\VerdeSmart\src\main\resources\imagenes\dieffenbachia.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value=" Diffenbachia                                                                                                  "/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="verticalAlignment" type="int" value="1"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDiffenbachiaActionPerformed"/>
@@ -231,6 +231,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Arbol abundancia                                                                                "/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArbolAbundanciaActionPerformed"/>
@@ -245,6 +246,7 @@
                   <Image iconType="2" name="C:\Users\Brith\Documents\GitHub\VerdeSmart\src\main\resources\imagenes\corona (2).jpeg"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Corona de Cristo                                                                                "/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCoronaCristoActionPerformed"/>

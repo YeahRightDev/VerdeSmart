@@ -46,17 +46,17 @@ public class login2 extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
 
-        jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton3.putClientProperty(
+        btnlogin.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnlogin.putClientProperty(
                 "FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
         );
 
         // Apply interactive behavior properties for the recovery access action button link
-        jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton4.setContentAreaFilled(false);
-        jButton4.setBorderPainted(false);
-        jButton4.setFocusPainted(false);
+        btnpassword.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnpassword.setContentAreaFilled(false);
+        btnpassword.setBorderPainted(false);
+        btnpassword.setFocusPainted(false);
 
         // Enforce anti-aliased geometry overrides across text input structures5
         styleRoundedField(txtCorreo);
@@ -128,8 +128,8 @@ public class login2 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnlogin = new javax.swing.JButton();
+        btnpassword = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
         panelredondo1 = new com.mycompany.verdesmart.ROUND_PANEL();
 
@@ -189,11 +189,11 @@ public class login2 extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(27, 77, 47));
         jLabel4.setText("Contraseña");
 
-        jButton3.setText("Iniciar Sesión");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnlogin.setText("Iniciar Sesión");
+        btnlogin.addActionListener(this::btnloginActionPerformed);
 
-        jButton4.setText("Olvidé Contraseña");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        btnpassword.setText("Olvidé Contraseña");
+        btnpassword.addActionListener(this::btnpasswordActionPerformed);
 
         txtPassword.setColumns(67);
 
@@ -218,8 +218,8 @@ public class login2 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(297, 297, 297)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,9 +252,9 @@ public class login2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
 
@@ -287,7 +287,7 @@ public class login2 extends javax.swing.JFrame {
      * Validates field integrity, secures connection access, maps parameters against active parameters,
      * and forwards successful authentication tokens to the grounds visual dashboard frame.
      */
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
         String Email = txtCorreo.getText().trim();
         String Password = new String(txtPassword.getPassword()).trim();
 
@@ -321,19 +321,19 @@ public class login2 extends javax.swing.JFrame {
         } catch (java.sql.SQLException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnloginActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpasswordActionPerformed
     forgotten_password password = new forgotten_password();
     password.setVisible(true);
     this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnpasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnlogin;
+    private javax.swing.JButton btnpassword;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
