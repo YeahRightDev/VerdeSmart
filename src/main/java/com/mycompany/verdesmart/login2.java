@@ -1,23 +1,24 @@
 package com.mycompany.verdesmart;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class login2 extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(login2.class.getName());
 
+    /**
+     * Creates a new instance form of login2.
+     * Manages window boundaries, establishes FlatLaf placeholders, resolves application branding assets, 
+     * strips native button decoration contexts, and applies anti-aliased border configurations.
+     */
     public login2() {
         initComponents();
 
         this.setSize(800, 700);
         this.setLocationRelativeTo(null);
 
-        // Placeholders
+       // Inject inline context guidance text placeholders using FlatLaf engine keys
         txtCorreo.putClientProperty("FlatLaf.placeholderText", "Email");
         txtPassword.putClientProperty("FlatLaf.placeholderText", "Password");
 
@@ -36,26 +37,28 @@ public class login2 extends javax.swing.JFrame {
             System.out.println("Image loading error: " + e.getMessage());
         }
 
-        // Buttons style
+        // Configure transparent interaction behaviors across navigation button instances
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
 
-        jButton2.setContentAreaFilled(false);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusPainted(false);
+        btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
 
-        jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton3.putClientProperty(
+        btnlogin.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnlogin.putClientProperty(
                 "FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
         );
 
-        jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton4.setContentAreaFilled(false);
-        jButton4.setBorderPainted(false);
-        jButton4.setFocusPainted(false);
+        // Apply interactive behavior properties for the recovery access action button link
+        btnpassword.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnpassword.setContentAreaFilled(false);
+        btnpassword.setBorderPainted(false);
+        btnpassword.setFocusPainted(false);
 
+        // Enforce anti-aliased geometry overrides across text input structures5
         styleRoundedField(txtCorreo);
         styleRoundedField(txtPassword);
     }
@@ -120,13 +123,13 @@ public class login2 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnlogin = new javax.swing.JButton();
+        btnpassword = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
         panelredondo1 = new com.mycompany.verdesmart.ROUND_PANEL();
 
@@ -137,10 +140,13 @@ public class login2 extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
 
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,7 +154,7 @@ public class login2 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnback)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,7 +166,7 @@ public class login2 extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(btnback)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
@@ -183,11 +189,11 @@ public class login2 extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(27, 77, 47));
         jLabel4.setText("Contraseña");
 
-        jButton3.setText("Iniciar Sesión");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnlogin.setText("Iniciar Sesión");
+        btnlogin.addActionListener(this::btnloginActionPerformed);
 
-        jButton4.setText("Olvidé Contraseña");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        btnpassword.setText("Olvidé Contraseña");
+        btnpassword.addActionListener(this::btnpasswordActionPerformed);
 
         txtPassword.setColumns(67);
 
@@ -212,8 +218,8 @@ public class login2 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(297, 297, 297)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,9 +252,9 @@ public class login2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
 
@@ -266,13 +272,22 @@ public class login2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    /**
+     * Action handler triggered when the back navigation button (jButton2) is selected.
+     * Restores window focus to the primary LOGIN layout workspace before disposing of this frame.
+     */
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         LOGIN nuevaVentana = new LOGIN();
         nuevaVentana.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    /**
+     * Action handler triggered when the primary login submit action button (jButton3) is clicked.
+     * Validates field integrity, secures connection access, maps parameters against active parameters,
+     * and forwards successful authentication tokens to the grounds visual dashboard frame.
+     */
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
         String Email = txtCorreo.getText().trim();
         String Password = new String(txtPassword.getPassword()).trim();
 
@@ -306,19 +321,19 @@ public class login2 extends javax.swing.JFrame {
         } catch (java.sql.SQLException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnloginActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpasswordActionPerformed
     forgotten_password password = new forgotten_password();
     password.setVisible(true);
     this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnpasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnback;
+    private javax.swing.JButton btnlogin;
+    private javax.swing.JButton btnpassword;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

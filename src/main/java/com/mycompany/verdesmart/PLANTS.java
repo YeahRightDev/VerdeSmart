@@ -1,28 +1,41 @@
 package com.mycompany.verdesmart;
 
-    import java.sql.Connection;
-    import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
-    import org.netbeans.lib.awtextra.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
- public class PLANTS extends javax.swing.JFrame {
+/**
+ * PLANTS Frame class.
+ * Handles the selection of different plant species to assign to a specific garden 
+ * instance, interacting directly with the database to maintain relational records.
+ */
+public class PLANTS extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PLANTS.class.getName());
+    private grounds mainScreen;          // Reference to the main control dashboard frame
+    private int idGarden;                // Internal unique identifier for the targeted garden
+    private String gardenName;           // Text name of the current working garden
+    private String gardenArea;           // Text measurement area of the garden
     
-    private grounds groundsScreen;
-    private String groundName;
-    private String groundArea;
-    private String selectedPlant = "No plant selected";
-
-    
-    public PLANTS(grounds groundsScreen, String groundName, String groundArea) {
-        this.groundsScreen = groundsScreen;
-        this.groundName = groundName;
-        this.groundArea = groundArea;
-
+    // Tracking Collections for Selection States 
+    private List<Integer> selectedPlantIds = new ArrayList<>();
+    private List<String> selectedPlantNames = new ArrayList<>();
+    /**
+     * Initializes a new PLANTS frame layout context linked to a garden dataset.
+     */
+   public PLANTS(grounds groundsScreen, int idGarden, String groundName, String groundArea){
         initComponents();
         this.setSize(800,700);
-        
+        this.mainScreen = groundsScreen;
+        this.idGarden = idGarden;
+        this.gardenName = groundName;
+        this.gardenArea = groundArea;
+    
+        // Remove standard native borders and selection fills for standard buttons
         jButton1.setContentAreaFilled(false); 
         jButton1.setBorderPainted(false);     
         jButton1.setFocusPainted(false);  
@@ -35,18 +48,32 @@ package com.mycompany.verdesmart;
         jButton3.setBorderPainted(false);     
         jButton3.setFocusPainted(false);  
         
-         jButton4.putClientProperty("FlatLaf.style",
+        // Apply FlatLaf look and feel styles for modern visual designs
+        jButton4.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
         "foreground:#FFFFFF;" +
         "borderWidth:0;" +
         "focusWidth:0;" +
         "arc:999;");
-         
-       btnSave.setPreferredSize(new java.awt.Dimension(40, 40));
-       btnSave.setSize(42, 42);
-       btnSave.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        btnCoronaCristo.putClientProperty("FlatLaf.style",
+        "background:#C7DDB5");
         
-        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
+       btnArbolAbundancia.putClientProperty("FlatLaf.style",
+        "background:#C7DDB5");
+       
+       btnDiffenbachia.putClientProperty("FlatLaf.style",
+        "background:#C7DDB5");
+       
+       btnDurantia.putClientProperty("FlatLaf.style",
+        "background:#C7DDB5");
+
+        btnSave.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnSave.setSize(42, 42);
+        btnSave.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
+        // Apply rounded design using FlatLaf capabilities natively
+        jPanel3.putClientProperty("FlatLaf.style", "arc: 30; background: #FFFFFF;");
+        jPanel3.setOpaque(true);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -76,7 +103,10 @@ package com.mycompany.verdesmart;
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -92,7 +122,7 @@ package com.mycompany.verdesmart;
                 .addComponent(jButton2)
                 .addGap(54, 54, 54)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(391, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,6 +138,7 @@ package com.mycompany.verdesmart;
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, -1));
 
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\matematicas.png")); // NOI18N
         jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
@@ -115,23 +146,36 @@ package com.mycompany.verdesmart;
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 250, 40));
+
+        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dos.png")); // NOI18N
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
+        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
+
         btnDiffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDiffenbachia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dieffenbachia.png")); // NOI18N
         btnDiffenbachia.setText(" Diffenbachia                                                                                                  ");
+        btnDiffenbachia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnDiffenbachia.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnDiffenbachia.addActionListener(this::btnDiffenbachiaActionPerformed);
 
         btnArbolAbundancia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnArbolAbundancia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\arbol-convertido-de-jpg (1).png")); // NOI18N
         btnArbolAbundancia.setText("Arbol abundancia                                                                                ");
         btnArbolAbundancia.setToolTipText("");
+        btnArbolAbundancia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnArbolAbundancia.addActionListener(this::btnArbolAbundanciaActionPerformed);
 
         btnCoronaCristo.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnCoronaCristo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\corona (2).jpeg")); // NOI18N
         btnCoronaCristo.setText("Corona de Cristo                                                                                ");
+        btnCoronaCristo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCoronaCristo.addActionListener(this::btnCoronaCristoActionPerformed);
 
         btnDurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDurantia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\DURANTIA.png")); // NOI18N
         btnDurantia.setText("Durantia                                                                                                         ");
+        btnDurantia.addActionListener(this::btnDurantiaActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -139,25 +183,23 @@ package com.mycompany.verdesmart;
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnArbolAbundancia)
-                    .addComponent(btnDiffenbachia)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btnCoronaCristo, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDurantia))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnDurantia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDiffenbachia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnCoronaCristo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(btnCoronaCristo)
-                .addGap(49, 49, 49)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnDiffenbachia)
-                .addGap(36, 36, 36)
+                .addGap(38, 38, 38)
                 .addComponent(btnArbolAbundancia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(btnDurantia)
                 .addGap(33, 33, 33))
         );
@@ -190,93 +232,210 @@ package com.mycompany.verdesmart;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Triggered when selecting "Árbol de la Abundancia".
+     * Assigns a hardcoded ID instance and tracks validation selections.
+     */
     private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
-        // TODO add your handling code here:
-        selectedPlant = "Arbol abundancia";
+      int plantId = 2; // Fixed ID 2 map assignment
+        String plantName = "Árbol abundancia";
+
+        if (!selectedPlantIds.contains(plantId)) {
+            selectedPlantIds.add(plantId);
+            selectedPlantNames.add(plantName);
+            javax.swing.JOptionPane.showMessageDialog(this, "'" + plantName + "' selected for this garden!");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "This plant is already selected.");
+        }
     }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+     if (selectedPlantIds.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select at least one plant.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        if (selectedPlant == null || selectedPlant.equals("No plant selected")) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please select a plant first.");
-            return;
+    String sqlInsertRelation = "INSERT INTO garden_plant (id_Plant, id_Garden) VALUES (?, ?)";
+    
+    try (Connection con = DatabaseConnection.getInstance().getConnection();
+         PreparedStatement pst = con.prepareStatement(sqlInsertRelation)) {
+        
+        for (int plantId : selectedPlantIds) {
+            pst.setInt(1, plantId);
+            pst.setInt(2, this.idGarden); 
+            pst.addBatch(); 
         }
+        
+        pst.executeBatch(); 
 
-        if (groundsScreen != null) {
-
-            card newCard = new card(
-                    groundName,
-                    groundArea,
-                    selectedPlant
-            );
-
+        if (this.mainScreen != null) {
+            String plantsFormattedText = String.join(", ", selectedPlantNames);
+            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText);
+            
+            // Set explicit card sizes
             newCard.setMaximumSize(new java.awt.Dimension(650, 150));
             newCard.setPreferredSize(new java.awt.Dimension(650, 150));
             newCard.setMinimumSize(new java.awt.Dimension(650, 150));
             newCard.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-
-            groundsScreen.getJPanel3().add(newCard);
-            groundsScreen.getJPanel3().add(javax.swing.Box.createVerticalStrut(10));
-
-            groundsScreen.getJPanel3().revalidate();
-            groundsScreen.getJPanel3().repaint();
-
-            groundsScreen.setVisible(true);
+            
+            // TARGET CONTAINER CONFIGURATION: 
+            // We force the main container panel to be non-opaque so it doesn't draw a gray square background under our card
+            javax.swing.JPanel targetPanel = this.mainScreen.getJPanel3();
+            targetPanel.setOpaque(false); 
+            
+            // Add the component
+            targetPanel.add(newCard);
+            targetPanel.add(javax.swing.Box.createVerticalStrut(10)); 
+            
+            // Force Layout Validation UI recalculation
+            targetPanel.revalidate();
+            targetPanel.repaint();
+            this.mainScreen.revalidate();
+            this.mainScreen.repaint();
         }
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "¡El jardín se ha configurado y guardado correctamente!");
+        this.mainScreen.setVisible(true);
+        this.dispose();
 
-        // Cerrar la ventana actual
-        dispose();
+    } catch (SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar los parámetros de configuración: " + e.getMessage(), "SQL Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ADD1 addWindow = new ADD1(groundsScreen);
-        addWindow.setVisible(true);
-        dispose();
+       ADD1 add = new ADD1(this.mainScreen);
+        add.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ADD1 addWindow = new ADD1(groundsScreen);
+       ADD1 addWindow = new ADD1(this.mainScreen);
         addWindow.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
-        // TODO add your handling code here:
-        selectedPlant = "Corona de Cristo";
+    String plantName = "Corona de Cristo";
+        if (selectedPlantNames.contains(plantName)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
+            return;
+        }
+
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description,id_Garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try {
+            java.sql.Connection con = com.mycompany.verdesmart.DatabaseConnection.getInstance().getConnection();
+            try (java.sql.PreparedStatement pst = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                pst.setString(1, plantName);
+                pst.setString(2, "Euphorbia milii");
+                pst.setFloat(3, 0.5f);
+                pst.setFloat(4, 0.36f);
+                pst.setFloat(5, 10.0f);
+                pst.setString(6, "Madagascar");
+                pst.setString(7, "Suculenta / Arbusto");
+                pst.setString(8, "Arbusto espinoso muy resistente al sol directo. Produce vistosas brácteas de colores casi todo el año.");
+                pst.setInt(9, this.idGarden);
+                
+                int affectedRows = pst.executeUpdate();
+                if (affectedRows > 0) {
+                    try (java.sql.ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int generatedId = generatedKeys.getInt(1);
+                            selectedPlantIds.add(generatedId);
+                            selectedPlantNames.add(plantName);
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "¡Añadido y guardado!");
+                        }
+                    }
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnCoronaCristoActionPerformed
 
     private void btnDiffenbachiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiffenbachiaActionPerformed
-        // TODO add your handling code here:
-        selectedPlant = "Diffenbachia";
+
+        String plantName = "Diffenbachia";
+        if (selectedPlantNames.contains(plantName)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
+            return;
+        }
+                
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            try (PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                pst.setString(1, plantName);
+                pst.setString(2, "Dieffenbachia seguine");
+                pst.setFloat(3, 0.8f);
+                pst.setFloat(4, 0.25f);
+                pst.setFloat(5, 15.0f);
+                pst.setString(6, "América Central y del Sur");
+                pst.setString(7, "Planta de Interior / Follaje");
+                pst.setString(8, "Planta tropical de interior con grandes hojas matizadas en tonos verdes y blancos.");
+                
+                int affectedRows = pst.executeUpdate();
+                if (affectedRows > 0) {
+                    try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int generatedId = generatedKeys.getInt(1);
+                            selectedPlantIds.add(generatedId);
+                            selectedPlantNames.add(plantName);
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "'¡Añadido y guardado!");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos:" + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnDiffenbachiaActionPerformed
 
-    class RoundedPanel extends javax.swing.JPanel {
-    private int cornerRadius;
-    public RoundedPanel(int cornerRadius) {
-        this.cornerRadius = cornerRadius;
-        setOpaque(false);
-    }
-    @Override
-    protected void paintComponent(java.awt.Graphics g) {
-        super.paintComponent(g);
+    private void btnDurantiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDurantiaActionPerformed
+       String plantName = "Durantia";
+        if (selectedPlantNames.contains(plantName)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
+            return;
+        }
+                
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
-        g2d.setRenderingHint(
-                java.awt.RenderingHints.KEY_ANTIALIASING,
-                java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            try (PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                pst.setString(1, plantName);
+                pst.setString(2, "Duranta erecta");
+                pst.setFloat(3, 1.5f);
+                pst.setFloat(4, 1.0f);
+                pst.setFloat(5, 10.0f);
+                pst.setString(6, "América Tropical");
+                pst.setString(7, "Arbusto de Exterior / Ornamental");
+                pst.setString(8, "Arbusto vigoroso ideal para cercas vivas. Produce hermosas flores moradas o azules en racimos.");
+                
+                int affectedRows = pst.executeUpdate();
+                if (affectedRows > 0) {
+                    try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int generatedId = generatedKeys.getInt(1);
+                            selectedPlantIds.add(generatedId);
+                            selectedPlantNames.add(plantName);
+                            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "¡Añadido y guardado!");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnDurantiaActionPerformed
 
-        g2d.setColor(getBackground());
-        g2d.fillRoundRect(
-                0,
-                0,
-                getWidth() - 1,
-                getHeight() - 1,
-                cornerRadius,
-                cornerRadius
-        );
-    }
-
-}
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArbolAbundancia;
     private javax.swing.JButton btnCoronaCristo;

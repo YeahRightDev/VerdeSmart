@@ -3,27 +3,37 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
+/**
+ * forgotten_password Frame Class.
+ * Handles the user verification and password update lifecycle workflow within the system.
+ * It uses a two-step validation model: first matching user email records from the database,
+ * and subsequently granting safe write-access updates to cleartext credentials.
+ */
 public class forgotten_password extends javax.swing.JFrame {
 
-    private boolean emailVerified = false;
+    private boolean emailVerified = false;// Internal structural gate tracking if step 1 validation passed
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(forgotten_password.class.getName());
 
+    /**
+     * Creates new form forgotten_password.
+     * Establishes look-and-feel configurations, placeholders, and structural locks.
+     */
     public forgotten_password() {
         initComponents();
 
+        // Enforce dedicated frame boundaries
         this.setSize(800, 700);
 
-        // Placeholders
+       // UI Element Properties & FlatLaf Layout Placeholders
         mailTxt.putClientProperty("FlatLaf.placeholderText", "Email");
         newPassword.putClientProperty("FlatLaf.placeholderText", "New Password");
         confPassword.putClientProperty("FlatLaf.placeholderText", "Confirm Password");
 
-        // Top buttons
+       // Transparent Top Header Navigation Buttons
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
@@ -32,30 +42,33 @@ public class forgotten_password extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
 
-        // Verify button (PASO 1)
+        // Step 1: Email Verification Submission UI Setup
         jButton4.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton4.setSize(42, 42);
         jButton4.putClientProperty("FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;");
 
-        // Change password button (PASO 2)
+        // Step 2: Password Modification Confirmation UI Setup
         jButton3.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton3.setSize(42, 42);
         jButton3.putClientProperty("FlatLaf.style",
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;");
 
-        // Rounded fields
+        // Apply visual round border clipping rules across custom fields
         styleRoundedField(mailTxt);
         styleRoundedField(newPassword);
         styleRoundedField(confPassword);
 
-        // BLOQUEADO hasta verificar email
+       // Security Lock: Keep modification fields disabled until email verification completes
         newPassword.setEnabled(false);
         confPassword.setEnabled(false);
         jButton3.setEnabled(false);
     }
 
-   
+   /**
+     * Dynamically injects antialiased borders and corner radii configurations 
+     * matching custom parent component layouts.
+     */
     private void styleRoundedField(javax.swing.JTextField field) {
 
         field.setOpaque(true);
@@ -144,7 +157,10 @@ public class forgotten_password extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -184,11 +200,11 @@ public class forgotten_password extends javax.swing.JFrame {
 
         confPassword.setColumns(60);
 
-        jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Contraseña Nueva");
 
-        jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(27, 77, 47));
         jLabel4.setText("Confirmar");
 
@@ -199,7 +215,7 @@ public class forgotten_password extends javax.swing.JFrame {
 
         mailTxt.setColumns(60);
 
-        jLabel6.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(27, 77, 47));
         jLabel6.setText("Correo");
 
@@ -212,28 +228,28 @@ public class forgotten_password extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(confPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(275, Short.MAX_VALUE)
+                .addContainerGap(252, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(221, 221, 221))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(318, 318, 318))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(316, 316, 316))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(221, 221, 221))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(confPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(335, 335, 335)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,23 +257,23 @@ public class forgotten_password extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(3, 3, 3)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122)
+                .addGap(32, 32, 32)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(52, 52, 52)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(newPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(confPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(39, 39, 39)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,6 +290,11 @@ public class forgotten_password extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action handler for Step 2 (Save Button).
+     * Validates matching configurations, checks field constraints, edits matching user rows 
+     * from database schema, and transitions window frames back to Login view context.
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (!emailVerified) {
             JOptionPane.showMessageDialog(this, "First verify your email.");
@@ -298,7 +319,7 @@ public class forgotten_password extends javax.swing.JFrame {
             return;
         }
 
-        String sql = "UPDATE user SET Password = ? WHERE e_mail = ?";
+        String sql = "UPDATE users SET User_Password = ? WHERE e_mail = ?";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -321,25 +342,35 @@ public class forgotten_password extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * Action handler for the Back button.
+     * Closes the recovery frame and reverts display visibility to the login window layout.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         login2 loginWindow = new login2();
         loginWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Action handler for Step 1 (Confirm/Verify Email Button).
+     * Parses the field string against standard email regex patterns, performs a database
+     * lookup query, and enables password edit fields upon finding a structural record match.
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String email = mailTxt.getText().trim();
         if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Enter your email.");
+            JOptionPane.showMessageDialog(this, "Introduce tu correo electrónico.");
             return;
         }
 
+        // Basic structural validation check via modern regex string pattern matching loops
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            JOptionPane.showMessageDialog(this, "Invalid email format.");
+            JOptionPane.showMessageDialog(this, "Formato de correo electrónico no válido.");
             return;
         }
 
-        String sql = "SELECT * FROM user WHERE e_mail = ?";
+        String sql = "SELECT * FROM users WHERE e_mail = ?";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -353,12 +384,14 @@ public class forgotten_password extends javax.swing.JFrame {
                     emailVerified = true;
                     
                     JOptionPane.showMessageDialog(this,
-                            "Email verified. Now enter your new password.");
+                            "Correo electrónico verificado. Ahora introduce tu nueva contraseña.");
                     
+                    // Unlock entry capabilities across sub-layer password fields
                     newPassword.setEnabled(true);
                     confPassword.setEnabled(true);
                     jButton3.setEnabled(true);
                     
+                    // Lock down baseline identity components once successfully checked
                     mailTxt.setEnabled(false);
                     jButton4.setEnabled(false);
                     
@@ -374,7 +407,7 @@ public class forgotten_password extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             logger.log(java.util.logging.Level.SEVERE, "DB error", e);
-            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

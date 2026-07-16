@@ -3,16 +3,88 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+/**
+ * MONITORING Frame class.
+ * Displays real-time or historical soil status, humidity records, and 
+ * irrigation tracking parameters linked to a selected garden dashboard.
+ */
 public class MONITORING extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MONITORING.class.getName());
+
+    private grounds mainScreen; // Reference holder to maintain the active main screen instance
+
+
     public MONITORING(grounds mainScreen, String currentGroundName) {
         initComponents();
+        this.mainScreen = mainScreen;
+        
+        // 1. Apply core UI styling elements first
         styleLabels();
+        
+        // 2. Update view headers and query active metrics if a target garden reference is provided
+        if (currentGroundName != null && !currentGroundName.isEmpty()) {
+            jLabel1.setText(currentGroundName.toUpperCase());
+            consultarDatosMonitoreo(currentGroundName);
+        }
     }
     
-    private void styleLabels() {
+    private void consultarDatosMonitoreo(String nombreJardin) {
+    // Database query targeting the latest available monitoring history metric for this specific plot
+    String sqlMonitoreo = "SELECT m.Humidity FROM monitoring m "
+                        + "JOIN garden g ON m.id_Garden = g.id_Garden "
+                        + "WHERE g.Name = ? "
+                        + "ORDER BY m.Date_Time DESC LIMIT 1";
 
+  // Database query targeting the latest logged irrigation entry for scheduling updates
+    String sqlRiego = "SELECT i.Date_time FROM irrigation i "
+                    + "JOIN garden g ON i.id_Garden = g.id_Garden "
+                    + "WHERE g.Name = ? "
+                    + "ORDER BY i.Date_time DESC LIMIT 1";
+
+    try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection()) {
+        
+        // 1. EXTRACT RECENT HUMIDITY PERCENTAGES
+        try (java.sql.PreparedStatement psM = con.prepareStatement(sqlMonitoreo)) {
+            psM.setString(1, nombreJardin);
+            try (java.sql.ResultSet rsM = psM.executeQuery()) {
+                if (rsM.next()) {
+                    float humedad = rsM.getFloat("Humedad");
+                    jLabel4.setText(String.format("%.1f%%", humedad));
+                } else {
+                    jLabel4.setText("N/D"); // Not Available
+                }
+            }
+        }
+
+        // 2. EXTRACT PREVIOUS IRRIGATION RUN (DATE AND TIME PROPERTIES)
+        try (java.sql.PreparedStatement psR = con.prepareStatement(sqlRiego)) {
+            psR.setString(1, nombreJardin);
+            try (java.sql.ResultSet rsR = psR.executeQuery()) {
+                if (rsR.next()) {
+                    java.sql.Timestamp ts = rsR.getTimestamp("Fecha y hora");
+                    
+                    // Specific date and time mask pattern formattings for split visualizations
+                    java.text.SimpleDateFormat sdfFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                    java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("hh:mm a");
+                    
+                    lblFechaRiego.setText(sdfFecha.format(ts));
+                    lblHoraRiego.setText(sdfHora.format(ts));
+                } else {
+                    lblFechaRiego.setText("Sin registros");
+                    lblHoraRiego.setText("Sin registros");
+                }
+            }
+        }
+
+    } catch (java.sql.SQLException ex) {
+        logger.log(java.util.logging.Level.SEVERE, "Error al cargar datos de monitoreo", ex);
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Error al conectar con la base de datos: " + ex.getMessage(), 
+            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+}
+    private void styleLabels() {
         jLabel4.setOpaque(true);
         lblFechaRiego.setOpaque(true);
         lblHoraRiego.setOpaque(true);
@@ -38,21 +110,16 @@ public class MONITORING extends javax.swing.JFrame {
 
         javax.swing.border.AbstractBorder roundedBorder =
                 new javax.swing.border.AbstractBorder() {
-
             @Override
             public void paintBorder(java.awt.Component c, Graphics g,
                                     int x, int y, int width, int height) {
-
                 Graphics2D g2 = (Graphics2D) g.create();
-
                 g2.setRenderingHint(
                         RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
-
                 g2.setColor(new Color(27,77,47));
                 g2.setStroke(new java.awt.BasicStroke(2));
                 g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 20, 20);
-
                 g2.dispose();
             }
         };
@@ -89,10 +156,13 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\boton-x.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("MONITOREO");
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -111,10 +181,10 @@ public class MONITORING extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -219,9 +289,12 @@ public class MONITORING extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        grounds gr = new grounds();
-        gr.setVisible(true);
+       // Uses the existing window object instance instead of creating a blank 'new grounds()' screen
+        if (this.mainScreen != null) {
+            this.mainScreen.setVisible(true);
+        } else {
+            new grounds().setVisible(true);
+        }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -1,28 +1,34 @@
 package com.mycompany.verdesmart;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import javax.swing.JOptionPane;
+
 import javax.swing.ImageIcon;
+/**
+ * LOGIN Main Frame for the VerdeSmart application.
+ * Manages user authentication, navigation to registration, and view initializations.
+ */
 public class LOGIN extends javax.swing.JFrame {
     
+    // Logger instance for tracking login activity and potential exceptions
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LOGIN.class.getName());
+    /**
+     * Creates new form LOGIN
+     */
     public LOGIN() {
        
         initComponents();
         
+        // Window sizing and screen centering settings
         this.setSize(800, 700);
         this.setLocationRelativeTo(null); 
         
         try {
            
+            // Retrieve the application logo resource from the project structure
             java.net.URL rutaImg = getClass().getResource("/imagenes/icono.jpeg");
             
             if (rutaImg != null) {
                 ImageIcon iconoOriginal = new ImageIcon(rutaImg);
                 
+                // Assign the image to the custom rounded panel component
                 rOUND_PANEL1.setImage(iconoOriginal.getImage());
                 System.out.println("Imagen asignada con éxito a panelredondo1");
             } else {
@@ -33,6 +39,7 @@ public class LOGIN extends javax.swing.JFrame {
         }
         
         
+        // Button 1: Sign In styling via FlatLaf look and feel configuration
         logIn.putClientProperty("FlatLaf.style", ""
                 + "background: #1B4D2F;"
                 + "foreground: #FFFFFF;"
@@ -176,12 +183,20 @@ public class LOGIN extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Triggered when the user clicks 'Iniciar Sesión'.
+     * Displays the credential input window and disposes of this welcome screen.
+     */
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
         login2 nuevaVentana = new login2();
         nuevaVentana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logInActionPerformed
 
+    /**
+     * Triggered when the user clicks 'Crear cuenta'.
+     * Displays the account generation window and disposes of this welcome screen.
+     */
     private void newAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAccActionPerformed
         // TODO add your handling code here:
         Create_account create = new Create_account();
@@ -189,6 +204,10 @@ public class LOGIN extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_newAccActionPerformed
 
+    /**
+     * Triggered when the user clicks 'Salir'.
+     * Completely terminates the application execution environment.
+     */
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         System.exit(0); 
     }//GEN-LAST:event_ExitActionPerformed

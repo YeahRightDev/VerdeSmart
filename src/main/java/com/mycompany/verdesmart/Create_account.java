@@ -3,13 +3,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+/**
+ * Account creation window for the VerdeSmart application.
+ * Manages user registration UI and database insertion.
+ */
 public class Create_account extends javax.swing.JFrame {
     
+    // Logger instance for error tracking and debugging within the class
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Create_account.class.getName());
+    /**
+     * Creates new form Create_account and initializes customized UI styling.
+     */
     public Create_account() {
         initComponents();
-        this.setSize(800, 700);
+        this.setSize(800, 700);// Set window layout dimensions
 
+        // Apply custom rounded borders and backgrounds to text fields
         styleRoundedField(txtNombre);
         styleRoundedField(txtEdad);
         styleRoundedField(birthDateField);
@@ -17,6 +26,7 @@ public class Create_account extends javax.swing.JFrame {
         styleRoundedField(passwordField);
         styleRoundedField(confirmPasswordField);
 
+        // Make top navigation and icon buttons transparent by disabling default backgrounds and focus outlines
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
         jButton1.setFocusPainted(false);
@@ -25,6 +35,15 @@ public class Create_account extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
 
+        
+        // Configure FlatLaf styling properties for the logIn button (making it circular with dark green background)
+        logIn.setPreferredSize(new java.awt.Dimension(40, 40));
+        logIn.setSize(42, 42);
+        logIn.putClientProperty(
+                "FlatLaf.style",
+                "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
+        );
+        // Configure identical FlatLaf circular styling properties for the alternative registerButton
         registerButton.setPreferredSize(new java.awt.Dimension(40, 40));
         registerButton.setSize(42, 42);
         registerButton.putClientProperty(
@@ -32,21 +51,23 @@ public class Create_account extends javax.swing.JFrame {
                 "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
         );
 
+        // Adjust remaining visual parameters for the registerButton component
         registerButton.setContentAreaFilled(false);
         registerButton.setBorderPainted(false);
         registerButton.setFocusPainted(false);
         registerButton.setPreferredSize(new java.awt.Dimension(40, 40));
-        registerButton.setSize(42, 42);
-        registerButton.putClientProperty(
-                "FlatLaf.style",
-                "background:#1B4D2F; arc:999; borderWidth:0; focusWidth:0;"
-        );
+       
+        
     }
    
+    /**
+     * Helper method to dynamically render rounded borders and apply custom text field placeholders.
+     */
     private void styleRoundedField(javax.swing.JTextField field) {
         field.setOpaque(true);
         field.setBackground(java.awt.Color.WHITE);
 
+        // Initialize inline localized placeholder values via FlatLaf library attributes
         txtNombre.putClientProperty("FlatLaf.placeholderText", "Name");
         birthDateField.putClientProperty("FlatLaf.placeholderText", "00");
         birthDateField.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
@@ -54,6 +75,7 @@ public class Create_account extends javax.swing.JFrame {
         passwordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
         confirmPasswordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
 
+        // Override default rendering pipeline to paint manual modern anti-aliased text boundaries
         field.setBorder(new javax.swing.border.AbstractBorder() {
 
             @Override
@@ -66,6 +88,7 @@ public class Create_account extends javax.swing.JFrame {
 
                 java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
 
+                // Smooth edges out utilizing runtime anti-aliasing rendering hints
                 g2.setRenderingHint(
                         java.awt.RenderingHints.KEY_ANTIALIASING,
                         java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
@@ -73,6 +96,7 @@ public class Create_account extends javax.swing.JFrame {
                 java.awt.Container parent = c.getParent();
 
                 if (parent != null) {
+                    // Subtract area bounds to blend field edges seamlessly with background panels
                     g2.setColor(parent.getBackground());
 
                     java.awt.geom.Area outside =
@@ -87,6 +111,7 @@ public class Create_account extends javax.swing.JFrame {
                     g2.fill(outside);
                 }
 
+                // Draw external light gray outline stroke path
                 g2.setColor(new java.awt.Color(180, 180, 180));
                 g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15);
 
@@ -95,6 +120,7 @@ public class Create_account extends javax.swing.JFrame {
 
             @Override
             public java.awt.Insets getBorderInsets(java.awt.Component c) {
+                // Return internal component padding values to offset plain text fields properly
                 return new java.awt.Insets(6, 12, 6, 12);
             }
         });
@@ -131,7 +157,10 @@ public class Create_account extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText(" Verde Smart");
@@ -308,6 +337,7 @@ public class Create_account extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Closes current frame and opens up the main LOGIN view
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         LOGIN log = new LOGIN();
@@ -343,39 +373,45 @@ public class Create_account extends javax.swing.JFrame {
 
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
 
+        // 1. Mandatory input constraints evaluation
         if (txtNombre.getText().trim().isEmpty()
                 || emailField.getText().trim().isEmpty()
                 || String.valueOf(passwordField.getPassword()).trim().isEmpty()
                 || String.valueOf(confirmPasswordField.getPassword()).trim().isEmpty()) {
 
-            JOptionPane.showMessageDialog(this, "Complete all fields.");
+            JOptionPane.showMessageDialog(this, "Complete todos los campos.");
             return;
         }
 
         String email = emailField.getText().trim();
 
+        // 2. Structural regular expression filter ensuring correct electronic mail mapping formats
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-            JOptionPane.showMessageDialog(this, "Enter a valid email.");
+            JOptionPane.showMessageDialog(this, "Introduce un correo electrónico válido.");
             return;
         }
 
+        // 3. Confirm identical character sequence match across both password boxes
         if (!String.valueOf(passwordField.getPassword())
                 .equals(String.valueOf(confirmPasswordField.getPassword()))) {
 
-            JOptionPane.showMessageDialog(this, "Passwords do not match.");
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
             return;
         }
 
+        // 4. Length security policy verification (Must exceed 7 characters minimum)
         if (String.valueOf(passwordField.getPassword()).length() < 8) {
 
-            JOptionPane.showMessageDialog(this, "Password must contain at least 8 characters.");
+            JOptionPane.showMessageDialog(this, "La contraseña debe contener al menos 8 caracteres.");
             return;
         }
 
+        // Target insertion parameterized query string
         String sql = "INSERT INTO users (User_name, User_Password, e_mail) VALUES (?, ?, ?)";
 
         try {
 
+            // Establish database connection pool instance reference
             Connection con = DatabaseConnection.getInstance().getConnection();
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setString(1, txtNombre.getText().trim());
@@ -384,7 +420,7 @@ public class Create_account extends javax.swing.JFrame {
                 
                 ps.executeUpdate();
                 
-                JOptionPane.showMessageDialog(this, "Account created successfully.");
+                JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
             }
 
             LOGIN log = new LOGIN();

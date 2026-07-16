@@ -1,48 +1,52 @@
 package com.mycompany.verdesmart;
-
+/**
+ * Custom Swing component representing a visual card for a garden block (Ground).
+ * Displays information such as name, area, and crop type along with interaction buttons.
+ */
 public class GroundCard extends javax.swing.JPanel {
+    // Unique database primary key identifier representing this specific garden record
+    
+    private int id_Garden;
 
-    public GroundCard() {
+    // ONLY SAFE CONSTRUCTOR: Forces the reception of the real database ID
+    public GroundCard(int idGarden, String name, String area, String plant) {
         initComponents();
+        this.id_Garden = idGarden; 
+        jLabel1.setText(name);
+        jLabel2.setText("AREA: " + area + " m²");
+        jLabel3.setText(plant);
+        
         formatDesign();
     }
 
-    public GroundCard(String groundName, String groundArea, String plantName) {
-        initComponents();
-
-        jLabel1.setText(groundName);
-        jLabel2.setText("AREA: " + groundArea + " m²");
-        jLabel3.setText(plantName);
-
-        formatDesign();
-    }   
-
-    private void formatDesign() {
-
-        if (jPanel1 != null) {
-            jPanel1.setOpaque(false);
-            jPanel1.setEnabled(false);
-        }
-
-        jButton1.setPreferredSize(new java.awt.Dimension(42, 42));
-        jButton1.setSize(42, 42);
-        jButton1.putClientProperty("FlatLaf.style",
-                "background:#80C1DF; arc:999; borderWidth:0; focusWidth:0;");
-        jButton1.setContentAreaFilled(false);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
-
-        jButton3.setPreferredSize(new java.awt.Dimension(42, 42));
-        jButton3.setSize(42, 42);
-        jButton3.putClientProperty("FlatLaf.style",
-                "background:#EF9FBC; arc:999; borderWidth:0; focusWidth:0;");
-        jButton3.setContentAreaFilled(false);
-        jButton3.setBorderPainted(false);
-        jButton3.setFocusPainted(false);
-
-        jPanel1.setComponentZOrder(jButton1, 0);
-        jPanel1.setComponentZOrder(jButton3, 0);
+   private void formatDesign() {
+    // 1. Remove background rendering from the outer container
+    this.setOpaque(false); 
+    
+    // 2. Configure the core panel inner background with FlatLaf styling properties
+    if (jPanel1 != null) {
+        jPanel1.setOpaque(false); // Let FlatLaf paint the background bounds instead of standard Swing
+        jPanel1.putClientProperty("FlatLaf.style", "arc: 30; background: #FFFFFF;");
     }
+
+    // Button formatting styles (keeps your UI looking clean)
+    jButton1.setPreferredSize(new java.awt.Dimension(42, 42));
+    jButton1.setSize(42, 42);
+    jButton1.putClientProperty("FlatLaf.style", "background:#80C1DF; arc:999; borderWidth:0; focusWidth:0;");
+    jButton1.setContentAreaFilled(false);
+    jButton1.setBorderPainted(false);
+    jButton1.setFocusPainted(false);
+
+    jButton3.setPreferredSize(new java.awt.Dimension(42, 42));
+    jButton3.setSize(42, 42);
+    jButton3.putClientProperty("FlatLaf.style", "background:#EF9FBC; arc:999; borderWidth:0; focusWidth:0;");
+    jButton3.setContentAreaFilled(false);
+    jButton3.setBorderPainted(false);
+    jButton3.setFocusPainted(false);
+
+    jPanel1.setComponentZOrder(jButton1, 0);
+    jPanel1.setComponentZOrder(jButton3, 0);
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,43 +126,51 @@ public class GroundCard extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+     
         java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        if (!(parentWindow instanceof MONITORING)) {
+        
+        if (parentWindow instanceof MONITORING) {
+           // This block executes if you are deleting from the Monitoring screen
+            MONITORING monitoreoActual = (MONITORING) parentWindow;
             
-            delete deleteWindow = new delete(null);
-            deleteWindow.setVisible(true);
+           // Note: If you changed the 'delete' constructor to receive 'grounds',
+            // ideally monitoreoActual should have a reference to grounds or pass null if it is another logic.
+            // For now, to avoid compilation errors if 'delete' strictly requests grounds:
+            delete del = new delete(null, this.id_Garden);
+            del.setVisible(true);
+            monitoreoActual.setVisible(false);
+            
+        } else if (parentWindow instanceof grounds) {
+            // THIS IS THE BLOCK THAT EXECUTES ON YOUR GARDENS PAGE!
+            grounds home_page = (grounds) parentWindow;
+            
+          //We pass 'home_page' (the actual instance of grounds) to the delete window
+            delete del = new delete(home_page, this.id_Garden); 
+            del.setVisible(true);
+            
+            //You can temporarily hide the main screen while confirming
+            home_page.setVisible(false); 
+            
         } else {
-            
-            MONITORING monitoringWindow = (MONITORING) parentWindow;
-
-            delete deleteWindow = new delete(monitoringWindow);
-            deleteWindow.setVisible(true);
-
-            monitoringWindow.setVisible(false);
-
+            // Fallback case in case none of the above are found
+            delete del = new delete(null, this.id_Garden);
+            del.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Find the parent window dynamically
         java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (parentWindow instanceof grounds) {
-
             grounds mainScreen = (grounds) parentWindow;
-
             String currentGroundName = jLabel1.getText();
 
+            // MONITORING will now correctly receive the active instance and the name
             MONITORING monitoringWindow = new MONITORING(mainScreen, currentGroundName);
             monitoringWindow.setVisible(true);
-
             mainScreen.setVisible(false);
-
         } else {
-
             System.out.println("Error: Main window 'grounds' was not found.");
-
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -172,18 +184,14 @@ public class GroundCard extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
+     @Override
     protected void paintComponent(java.awt.Graphics g) {
-        super.paintComponent(g);
-
+        //Activate anti-aliasing for better rounded rendering
         java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-        g2.setRenderingHint(
-                java.awt.RenderingHints.KEY_ANTIALIASING,
-                java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g2.setColor(java.awt.Color.WHITE);
+        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(java.awt.Color.WHITE); 
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
-
         g2.dispose();
+        super.paintComponent(g);
     }
 }

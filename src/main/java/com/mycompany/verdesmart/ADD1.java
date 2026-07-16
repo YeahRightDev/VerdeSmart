@@ -1,112 +1,90 @@
 package com.mycompany.verdesmart;
-import javax.swing.JOptionPane;
+
 public class ADD1 extends javax.swing.JFrame {
 
+    // Logger instance to register and trace internal errors or system operations
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ADD1.class.getName());
+    // Reference to the main screen/frame of the application
+    private grounds Main_scren;
 
-    private grounds mainScreen;
-
-    public ADD1(grounds mainScreen) {
-
-        this.mainScreen = mainScreen;
-
+    /**
+     * Constructor of the class. Initializes UI components, window size, 
+     * and sets custom FlatLaf styles and styling behaviors.
+     */
+    public ADD1(grounds main_scren) {
+        this.Main_scren = main_scren;
         initComponents();
-
+        
+        // Setting the default dimensions for the frame
         this.setSize(800, 705);
-
-        jButton1.setContentAreaFilled(false);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
-
-        jButton2.setContentAreaFilled(false);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusPainted(false);
-
+        
+        // Making button backgrounds, borders, and focus rings transparent/hidden for a cleaner UI
+        jButton1.setContentAreaFilled(false); 
+        jButton1.setBorderPainted(false);     
+        jButton1.setFocusPainted(false);  
+        
+        jButton2.setContentAreaFilled(false); 
+        jButton2.setBorderPainted(false);     
+        jButton2.setFocusPainted(false);  
+        
+        // Styling a button using FlatLaf LookAndFeel client properties (custom background, colors, and fully rounded shape)
         jButton3.putClientProperty("FlatLaf.style",
-                "background:#1B5E20;" +
-                "foreground:#FFFFFF;" +
-                "borderWidth:0;" +
-                "focusWidth:0;" +
-                "arc:999;");
-
-        jButton4.setContentAreaFilled(false);
-        jButton4.setBorderPainted(false);
-        jButton4.setFocusPainted(false);
-
-        jButton7.setContentAreaFilled(false);
-        jButton7.setBorderPainted(false);
-        jButton7.setFocusPainted(false);
-
+        "background:#1B5E20;" +
+        "foreground:#FFFFFF;" +
+        "borderWidth:0;" +
+        "focusWidth:0;" +
+        "arc:999;");
+        jButton4.setContentAreaFilled(false); 
+        jButton4.setBorderPainted(false);     
+        jButton4.setFocusPainted(false);  
+        
+        jButton7.setContentAreaFilled(false); 
+        jButton7.setBorderPainted(false);     
+        jButton7.setFocusPainted(false);  
+        
+        // Defining dimensions and specific roundness attributes for navigation or control buttons
         jButton5.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton5.setSize(42, 42);
-        jButton5.putClientProperty("FlatLaf.style",
-                "background:#1B4D2F;" +
-                "arc:999;" +
-                "borderWidth:0;" +
-                "focusWidth:0;");
-
+        jButton5.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
         jButton6.setPreferredSize(new java.awt.Dimension(40, 40));
         jButton6.setSize(42, 42);
-        jButton6.putClientProperty("FlatLaf.style",
-                "background:#1B4D2F;" +
-                "arc:999;" +
-                "borderWidth:0;" +
-                "focusWidth:0;");
-
-        styleRoundedField(jTextField1);
-        styleRoundedField(jTextField2);
-        styleRoundedField(jTextField3);
-
-        jPanel3.putClientProperty("FlatLaf.style", "arc:30;");
-        jPanel4.putClientProperty("FlatLaf.style", "arc:30;");
+        jButton6.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
+        // Applying custom rounded border styles to all text fields
+        roundfield(jTextField1);
+        roundfield(jTextField2);
+        roundfield(jTextField3);
+        
+        jTextField1.setPreferredSize(new java.awt.Dimension(400, 37));
+        jTextField1.setMinimumSize(new java.awt.Dimension(200, 37));
+        
+        jTextField2.setPreferredSize(new java.awt.Dimension(120, 35));
+        jTextField2.setMinimumSize(new java.awt.Dimension(100, 35));
+        
+        jTextField3.setPreferredSize(new java.awt.Dimension(120, 35));
+        jTextField3.setMinimumSize(new java.awt.Dimension(100, 35));
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();
+        
+        // Customizing main content containers with a rounded corner factor of 30 pixels
+        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
+        jPanel4.putClientProperty("FlatLaf.style", "arc: 30;");
     }
 
-    private void styleRoundedField(javax.swing.JTextField field) {
-
-        field.setOpaque(true);
-        field.setBackground(java.awt.Color.WHITE);
-
-        field.setBorder(new javax.swing.border.AbstractBorder() {
-
-            @Override
-            public void paintBorder(java.awt.Component c,
-                                    java.awt.Graphics g,
-                                    int x,
-                                    int y,
-                                    int width,
-                                    int height) {
-
-                java.awt.Graphics2D g2 =
-                        (java.awt.Graphics2D) g.create();
-
-                g2.setRenderingHint(
-                        java.awt.RenderingHints.KEY_ANTIALIASING,
-                        java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                java.awt.Container parent = c.getParent();
-
-                if (parent != null) {
-
-                    g2.setColor(parent.getBackground());
-
-                    java.awt.geom.Area outside =
-                            new java.awt.geom.Area(
-                                    new java.awt.Rectangle(x, y, width, height));
-
-                    outside.subtract(
-                            new java.awt.geom.Area(
-                                    new java.awt.geom.RoundRectangle2D.Float(
-                                            x, y, width, height, 15, 15)));
-
-                    g2.fill(outside);
-                }
-
-                g2.setColor(new java.awt.Color(180, 180, 180));
-                g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15);
-
-                g2.dispose();
-            }
-        });
+    /**
+     * Custom method to design and paint standard text fields with rounded borders.
+     * It handles background transparency fixes, anti-aliasing, and customized pixel-by-pixel border drawing.
+     */
+    private void roundfield(javax.swing.JTextField campo) {
+     campo.putClientProperty("Component.roundRect", true);
+     campo.putClientProperty("FlatLaf.style", 
+            "background: #FFFFFF;" +
+            "borderColor: #B4B4B4;" +
+            "focusedBorderColor: #1B4D2F;" +
+            "arc: 15;");
+     campo.setMargin(new java.awt.Insets(5, 10, 5, 10));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -144,7 +122,10 @@ public class ADD1 extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -180,6 +161,9 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel2.setText("Agregar Terreno");
 
         jButton3.setBackground(new java.awt.Color(27, 77, 47));
+        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\matematicas.png")); // NOI18N
+
+        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dos.png")); // NOI18N
 
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
@@ -204,7 +188,7 @@ public class ADD1 extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
@@ -231,6 +215,7 @@ public class ADD1 extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel5)
                                 .addComponent(jLabel8)
@@ -241,8 +226,7 @@ public class ADD1 extends javax.swing.JFrame {
                                     .addComponent(jLabel7)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(17, 17, 17)))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(17, 17, 17))))))
                 .addGap(25, 25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -265,7 +249,7 @@ public class ADD1 extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(61, 61, 61))
         );
 
         jButton5.setText("Cerrar");
@@ -310,15 +294,15 @@ public class ADD1 extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(11, 11, 11))
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)))
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel3))))
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,95 +327,117 @@ public class ADD1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    ADD1 add = new ADD1(this.mainScreen);
-        add.setVisible(true);
-        this.dispose();
+       // TODO add your handling code here:
+        if (this.Main_scren != null) {
+        this.Main_scren.setVisible(true);
+    }
+    this.dispose();    
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    ADD1 add = new ADD1(this.mainScreen);
-        add.setVisible(true);
-        this.dispose();
+   if (this.Main_scren != null) {
+        this.Main_scren.setVisible(true);
+    }
+    this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    /**
+     * Action event handler for Button 6 ("Siguiente" / Next). 
+     * Validates numeric input values, calculates the field area, connects to the database using 
+     * the Singleton pattern, updates SQL entries, captures auto-generated keys, and triggers the next view.
+     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String gardenName = jTextField1.getText().trim();
-        String lengthText = jTextField2.getText().trim();
-        String widthText = jTextField3.getText().trim();
+  
+        // Extract inputs from GUI text elements and remove empty white spaces
+    String nombre = jTextField1.getText().trim();
+    String ladoX = jTextField2.getText().trim();
+    String ladoY = jTextField3.getText().trim();
+    double length = 0;
+    double wide = 0;
+    double totalArea = 0;
 
-        if (gardenName.isEmpty() || lengthText.isEmpty() || widthText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Complete all fields.");
-            return;
+    // 1. Data parsing and validation of numeric field bounds
+    try {
+        length = Double.parseDouble(ladoX);
+        wide = Double.parseDouble(ladoY);
+        totalArea = length * wide;
+    } catch (NumberFormatException e) {
+        // Show error notification window if inputs are not real valid numbers
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa medidas numéricas válidas para el terreno.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return; 
+    }
+
+    // 2. Map structural SQL query command
+    String sql = "INSERT INTO garden (Name, Length, Wide, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    // 3. Conectar usando tu Singleton
+    try {
+        java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
+        
+        // AÑADIDO: Le decimos al PreparedStatement que queremos recuperar las llaves generadas automáticamente
+        try (java.sql.PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            
+            ps.setString(1, nombre);
+            ps.setDouble(2, length);
+            ps.setDouble(3, wide);
+            ps.setDouble(4, totalArea);
+            ps.setString(5, "Rectangular"); 
+            ps.setString(6, "Normal");      
+            ps.setDouble(7, 0.0);           
+            ps.setInt(8, 1); // ID de usuario asignado por defecto temporalmente
+
+            // Ejecutar la inserción
+            int filasInsertadas = ps.executeUpdate();
+            
+            if (filasInsertadas > 0) {
+                int idGardenGenerado = 0;
+                
+                // 3. Open connection via custom Database Singleton and apply records
+                try (java.sql.ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        idGardenGenerado = generatedKeys.getInt(1);
+                    }
+                }
+
+                javax.swing.JOptionPane.showMessageDialog(this, "¡Terreno registrado con éxito en la base de datos!");
+                
+                // CORREGIDO: Ahora sí le pasamos los 4 parámetros requeridos, incluyendo el ID real
+                PLANTS ventanaPlantas = new PLANTS(this.Main_scren, idGardenGenerado, nombre, String.valueOf(totalArea));
+                ventanaPlantas.setVisible(true);
+                this.dispose(); 
+            }
         }
-
-        if (!gardenName.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ]+$")) {
-            JOptionPane.showMessageDialog(this,
-                    "Garden name contains invalid characters.");
-            return;
-        }
-
-        double length;
-        double width;
-
-        try {
-            length = Double.parseDouble(lengthText);
-            width = Double.parseDouble(widthText);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Length and Width must be numeric values.");
-            return;
-        }
-
-        // No permitir negativos o cero
-        if (length <= 0 || width <= 0) {
-            JOptionPane.showMessageDialog(this,
-                    "Length and Width must be greater than zero.");
-        }
-
-        // Area
-        String totalArea = String.valueOf(length * width);
-
-        PLANTS plantsWindow = new PLANTS(
-                this.mainScreen,
-                gardenName,
-                totalArea
-        );
-
-        plantsWindow.setVisible(true);
-        this.dispose();
+    } catch (java.sql.SQLException ex) {
+        // Trace database exceptions via local logging stack trace system
+        logger.log(java.util.logging.Level.SEVERE, "Error al insertar el jardín", ex);
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
-class RoundedPanel extends javax.swing.JPanel {
-
-    private int radius;
-
-    public RoundedPanel(int radius) {
-        this.radius = radius;
-        setOpaque(false);
+   /**
+     * Inner helper class defining a customized UI Panel structure.
+     * Manages canvas dimensions, overrides painting operations, and activates smooth rendering to display layout containers with round-shaped edges.
+     */
+class roundpanel extends javax.swing.JPanel {
+    private int radio;
+    public roundpanel(int radio) {
+        this.radio = radio;
+        setOpaque(false); 
     }
-
     @Override
     protected void paintComponent(java.awt.Graphics g) {
         super.paintComponent(g);
-
         java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
-        g2d.setRenderingHint(
-                java.awt.RenderingHints.KEY_ANTIALIASING,
-                java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
+        g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(getBackground());
-        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
+        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radio, radio);
     }
+}private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+   
+    jButton6ActionPerformed(evt);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
