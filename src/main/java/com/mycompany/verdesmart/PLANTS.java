@@ -323,7 +323,7 @@ public class PLANTS extends javax.swing.JFrame {
             return;
         }
 
-        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description,id_Garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try {
             java.sql.Connection con = com.mycompany.verdesmart.DatabaseConnection.getInstance().getConnection();
@@ -336,6 +336,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pst.setString(6, "Madagascar");
                 pst.setString(7, "Suculenta / Arbusto");
                 pst.setString(8, "Arbusto espinoso muy resistente al sol directo. Produce vistosas brácteas de colores casi todo el año.");
+                pst.setInt(9, this.idGarden);
                 
                 int affectedRows = pst.executeUpdate();
                 if (affectedRows > 0) {
