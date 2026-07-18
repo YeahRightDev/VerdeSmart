@@ -18,7 +18,7 @@ public class MONITORING extends javax.swing.JFrame {
     public MONITORING(grounds mainScreen, String currentGroundName) {
         initComponents();
         this.mainScreen = mainScreen;
-        
+        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
         // 1. Apply core UI styling elements first
         styleLabels();
         
@@ -27,14 +27,21 @@ public class MONITORING extends javax.swing.JFrame {
             jLabel1.setText(currentGroundName.toUpperCase());
             consultarDatosMonitoreo(currentGroundName);
         }
+        jButton1.setContentAreaFilled(false); 
+        jButton1.setBorderPainted(false);     
+        jButton1.setFocusPainted(false);  
+        
+        jButton2.setContentAreaFilled(false); 
+        jButton2.setBorderPainted(false);     
+        jButton2.setFocusPainted(false);  
     }
     
     private void consultarDatosMonitoreo(String nombreJardin) {
     // Database query targeting the latest available monitoring history metric for this specific plot
-    String sqlMonitoreo = "SELECT m.Humidity FROM monitoring m "
-                        + "JOIN garden g ON m.id_Garden = g.id_Garden "
-                        + "WHERE g.Name = ? "
-                        + "ORDER BY m.Date_Time DESC LIMIT 1";
+   String sqlUltimoMonitoreo = "SELECT m.Humidity, m.Date_Time, m.irrigation_alert FROM monitoring m "
+                                  + "JOIN garden g ON m.id_Garden = g.id_Garden "
+                                  + "WHERE g.Garden_Name = ? "
+                                  + "ORDER BY m.Date_Time DESC LIMIT 1";
 
   // Database query targeting the latest logged irrigation entry for scheduling updates
     String sqlRiego = "SELECT i.Date_time FROM irrigation i "
@@ -42,71 +49,84 @@ public class MONITORING extends javax.swing.JFrame {
                     + "WHERE g.Name = ? "
                     + "ORDER BY i.Date_time DESC LIMIT 1";
 
-    try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection()) {
-        
-        // 1. EXTRACT RECENT HUMIDITY PERCENTAGES
-        try (java.sql.PreparedStatement psM = con.prepareStatement(sqlMonitoreo)) {
+  try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
+             java.sql.PreparedStatement psM = con.prepareStatement(sqlUltimoMonitoreo)) {
+            
             psM.setString(1, nombreJardin);
+            
             try (java.sql.ResultSet rsM = psM.executeQuery()) {
                 if (rsM.next()) {
-                    float humedad = rsM.getFloat("Humedad");
-                    jLabel4.setText(String.format("%.1f%%", humedad));
+                    // 1. EXTRAER LA HUMEDAD
+                    float humedad = rsM.getFloat("Humidity");
+                    lbHumedad.setText(String.format("%.1f%%", humedad));
+
+                    // 2. EXTRAER LA FECHA Y HORA DEL MONITOREO
+                    java.sql.Timestamp fechaMonitoreoTS = rsM.getTimestamp("Date_Time");
+                    java.text.SimpleDateFormat formatoFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                    java.text.SimpleDateFormat formatoHora = new java.text.SimpleDateFormat("hh:mm a");
+
+                    String fechaString = formatoFecha.format(fechaMonitoreoTS);
+                    String horaString = formatoHora.format(fechaMonitoreoTS);
+
+                    // Mostramos la fecha y hora en la que el sensor midió los datos
+                    lblUltimoRiego.setText(fechaString + " - " + horaString); 
+                    lblFechaYHoraRiego.setText(fechaString + " - " + horaString);
+
+                    // 3. CONTROLAR EL PRÓXIMO RIEGO BASADO EN LA ALERTA DE MONITOREO
+                    String alerta = rsM.getString("irrigation_alert");
+                    
+                    // Si el estado del monitoreo dice que necesita agua o está programado:
+                    if (alerta != null && !alerta.isEmpty()) {
+                        lblProximoRiego.setText(alerta.toUpperCase());
+                    } else {
+                        lblProximoRiego.setText("Suelo Estable / Monitoreando");
+                    }
+                    
                 } else {
-                    jLabel4.setText("N/D"); // Not Available
+                    // Si el jardín es nuevo y no tiene ningún dato en la tabla 'monitoring'
+                    lbHumedad.setText("N/D");
+                    lblUltimoRiego.setText("Sin registros");
+                    lblFechaYHoraRiego.setText("Sin registros");
+                    lblProximoRiego.setText("Sin registros");
                 }
             }
+
+        } catch (java.sql.SQLException ex) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al cargar datos desde monitoreo", ex);
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al conectar con la base de datos: " + ex.getMessage(), 
+                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
-        // 2. EXTRACT PREVIOUS IRRIGATION RUN (DATE AND TIME PROPERTIES)
-        try (java.sql.PreparedStatement psR = con.prepareStatement(sqlRiego)) {
-            psR.setString(1, nombreJardin);
-            try (java.sql.ResultSet rsR = psR.executeQuery()) {
-                if (rsR.next()) {
-                    java.sql.Timestamp ts = rsR.getTimestamp("Fecha y hora");
-                    
-                    // Specific date and time mask pattern formattings for split visualizations
-                    java.text.SimpleDateFormat sdfFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    java.text.SimpleDateFormat sdfHora = new java.text.SimpleDateFormat("hh:mm a");
-                    
-                    lblFechaRiego.setText(sdfFecha.format(ts));
-                    lblHoraRiego.setText(sdfHora.format(ts));
-                } else {
-                    lblFechaRiego.setText("Sin registros");
-                    lblHoraRiego.setText("Sin registros");
-                }
-            }
-        }
-
-    } catch (java.sql.SQLException ex) {
-        logger.log(java.util.logging.Level.SEVERE, "Error al cargar datos de monitoreo", ex);
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Error al conectar con la base de datos: " + ex.getMessage(), 
-            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
 }
     private void styleLabels() {
-        jLabel4.setOpaque(true);
-        lblFechaRiego.setOpaque(true);
-        lblHoraRiego.setOpaque(true);
+        lbHumedad.setOpaque(true);
+        lblFechaYHoraRiego.setOpaque(true);
+        lblProximoRiego.setOpaque(true);
 
         jButton2.setContentAreaFilled(false);
         jButton2.setBorderPainted(false);
         jButton2.setFocusPainted(false);
 
-        jLabel4.setBackground(new Color(199,221,181));
-        jLabel4.setForeground(new Color(27,77,47));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("45%");
+        lbHumedad.setBackground(new Color(199,221,181));
+        lbHumedad.setForeground(new Color(27,77,47));
+        lbHumedad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbHumedad.setText("45%");
 
-        lblFechaRiego.setBackground(new Color(240,240,240));
-        lblFechaRiego.setForeground(new Color(27,77,47));
-        lblFechaRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFechaRiego.setText("30/06/2026");
+        lblFechaYHoraRiego.setBackground(new Color(240,240,240));
+        lblFechaYHoraRiego.setForeground(new Color(27,77,47));
+        lblFechaYHoraRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFechaYHoraRiego.setText("30/06/2026");
 
-        lblHoraRiego.setBackground(new Color(240,240,240));
-        lblHoraRiego.setForeground(new Color(27,77,47));
-        lblHoraRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHoraRiego.setText("10:50 PM");
+        lblProximoRiego.setBackground(new Color(240,240,240));
+        lblProximoRiego.setForeground(new Color(27,77,47));
+        lblProximoRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblProximoRiego.setText("10:50 PM");
+        
+        lblUltimoRiego.setBackground(new Color(240,240,240));
+        lblUltimoRiego.setForeground(new Color(27,77,47));
+        lblUltimoRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUltimoRiego.setText("30/06/2026");
 
         javax.swing.border.AbstractBorder roundedBorder =
                 new javax.swing.border.AbstractBorder() {
@@ -124,9 +144,10 @@ public class MONITORING extends javax.swing.JFrame {
             }
         };
 
-        jLabel4.setBorder(roundedBorder);
-        lblFechaRiego.setBorder(roundedBorder);
-        lblHoraRiego.setBorder(roundedBorder);
+        lbHumedad.setBorder(roundedBorder);
+        lblFechaYHoraRiego.setBorder(roundedBorder);
+        lblProximoRiego.setBorder(roundedBorder);
+        lblUltimoRiego.setBorder(roundedBorder);
     }
     
     @SuppressWarnings("unchecked")
@@ -141,12 +162,12 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lbHumedad = new javax.swing.JLabel();
         lblUltimoRiegoTitulo = new javax.swing.JLabel();
-        lblFechaRiego = new javax.swing.JLabel();
+        lblFechaYHoraRiego = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lblHoraRiego = new javax.swing.JLabel();
+        lblProximoRiego = new javax.swing.JLabel();
         lblUltimoRiego = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -198,7 +219,7 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("HUMEDAD");
 
-        jLabel4.setBackground(new java.awt.Color(199, 221, 181));
+        lbHumedad.setBackground(new java.awt.Color(199, 221, 181));
 
         lblUltimoRiegoTitulo.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         lblUltimoRiegoTitulo.setForeground(new java.awt.Color(27, 77, 47));
@@ -206,11 +227,11 @@ public class MONITORING extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("FECHA ");
+        jLabel7.setText("FECHA Y HORA");
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel8.setText("HORA");
+        jLabel8.setText("PROXIMO RIEGO");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -221,11 +242,11 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel8)
                     .addComponent(jLabel7)
-                    .addComponent(lblFechaRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addComponent(lblFechaYHoraRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
                     .addComponent(lblUltimoRiegoTitulo)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblHoraRiego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbHumedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblProximoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblUltimoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -234,21 +255,21 @@ public class MONITORING extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(lblUltimoRiegoTitulo)
-                .addGap(18, 18, 18)
-                .addComponent(lblUltimoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUltimoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(lblFechaRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFechaYHoraRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addGap(60, 60, 60)
-                .addComponent(lblHoraRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblProximoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(172, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -293,7 +314,7 @@ public class MONITORING extends javax.swing.JFrame {
         if (this.mainScreen != null) {
             this.mainScreen.setVisible(true);
         } else {
-            new grounds().setVisible(true);
+            new grounds(0).setVisible(true);
         }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -304,14 +325,14 @@ public class MONITORING extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lblFechaRiego;
-    private javax.swing.JLabel lblHoraRiego;
+    private javax.swing.JLabel lbHumedad;
+    private javax.swing.JLabel lblFechaYHoraRiego;
+    private javax.swing.JLabel lblProximoRiego;
     private javax.swing.JLabel lblUltimoRiego;
     private javax.swing.JLabel lblUltimoRiegoTitulo;
     // End of variables declaration//GEN-END:variables

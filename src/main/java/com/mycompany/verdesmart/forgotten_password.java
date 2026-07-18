@@ -14,15 +14,16 @@ import javax.swing.JOptionPane;
 public class forgotten_password extends javax.swing.JFrame {
 
     private boolean emailVerified = false;// Internal structural gate tracking if step 1 validation passed
-
+   
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(forgotten_password.class.getName());
-
+     private int iduser;
     /**
      * Creates new form forgotten_password.
      * Establishes look-and-feel configurations, placeholders, and structural locks.
      */
-    public forgotten_password() {
+    public forgotten_password(int idUser) {
+        this.iduser = idUser;
         initComponents();
 
         // Enforce dedicated frame boundaries
@@ -330,7 +331,7 @@ public class forgotten_password extends javax.swing.JFrame {
                 ps.executeUpdate();
                 
                 JOptionPane.showMessageDialog(this,
-                        "Password updated successfully.");
+                        "¡Contraseña cambiada!.");
                 
                 login2 log = new login2();
                 log.setVisible(true);

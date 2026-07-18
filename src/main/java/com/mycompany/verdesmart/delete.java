@@ -15,13 +15,14 @@ public class delete extends javax.swing.JFrame {
     private grounds home_page; // Reference to the main dashboard frame layout
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(delete.class.getName());
     private int idGardenEliminar;  // The target identifier key of the garden to be deleted
-
+    private int iduser;
    /**
      * Creates new form delete context mapped to a primary screen and a specific record ID.
      */
-    public delete(grounds page_home, int idGarden) {
+    public delete(grounds page_home, int idGarden, int idUser) {
         this.home_page = page_home;
         this.idGardenEliminar = idGarden;
+        this.iduser = idUser;
         initComponents();
         
         btncancel.putClientProperty("FlatLaf.style", ""
@@ -158,7 +159,7 @@ public class delete extends javax.swing.JFrame {
                     javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus datos asociados se eliminaron correctamente.");
                     
                     // MODIFICADO: Forzamos un reinicio limpio de la pantalla grounds para que se limpie por completo
-                    grounds nuevaPantalla = new grounds();
+                    grounds nuevaPantalla = new grounds(iduser);
                     nuevaPantalla.setVisible(true);
                     
                     // Cerramos la pantalla vieja que estaba en segundo plano

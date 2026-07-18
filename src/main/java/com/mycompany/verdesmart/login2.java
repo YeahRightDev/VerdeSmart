@@ -12,6 +12,7 @@ public class login2 extends javax.swing.JFrame {
      * Manages window boundaries, establishes FlatLaf placeholders, resolves application branding assets, 
      * strips native button decoration contexts, and applies anti-aliased border configurations.
      */
+    int iduser;
     public login2() {
         initComponents();
 
@@ -301,13 +302,16 @@ public class login2 extends javax.swing.JFrame {
             if (con != null) {
                 String sql = "SELECT * FROM users WHERE e_mail = ? AND User_Password = ?";
                 try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                
                     pst.setString(1, Email);
                     pst.setString(2, Password);
 
                     try (java.sql.ResultSet rs = pst.executeQuery()) {
+                        
                         if (rs.next()) {
-                            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!");
-                            grounds CARD = new grounds();
+                            this.iduser = rs.getInt("id_User");
+                            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!" );
+                            grounds CARD = new grounds(this.iduser);
                             CARD.setVisible(true);
                             this.dispose();
                         } else {
@@ -324,7 +328,7 @@ public class login2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btnpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpasswordActionPerformed
-    forgotten_password password = new forgotten_password();
+    forgotten_password password = new forgotten_password(iduser);
     password.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnpasswordActionPerformed

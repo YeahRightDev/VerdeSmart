@@ -7,15 +7,15 @@ public class GroundCard extends javax.swing.JPanel {
     // Unique database primary key identifier representing this specific garden record
     
     private int id_Garden;
-
+    private int iduser;
     // ONLY SAFE CONSTRUCTOR: Forces the reception of the real database ID
-    public GroundCard(int idGarden, String name, String area, String plant) {
+    public GroundCard(int idGarden, String name, String area, String plant, int idUser) {
         initComponents();
         this.id_Garden = idGarden; 
         jLabel1.setText(name);
         jLabel2.setText("AREA: " + area + " m²");
         jLabel3.setText(plant);
-        
+        this.iduser = idUser;
         formatDesign();
     }
 
@@ -136,7 +136,7 @@ public class GroundCard extends javax.swing.JPanel {
            // Note: If you changed the 'delete' constructor to receive 'grounds',
             // ideally monitoreoActual should have a reference to grounds or pass null if it is another logic.
             // For now, to avoid compilation errors if 'delete' strictly requests grounds:
-            delete del = new delete(null, this.id_Garden);
+            delete del = new delete(null, this.id_Garden,iduser);
             del.setVisible(true);
             monitoreoActual.setVisible(false);
             
@@ -145,7 +145,7 @@ public class GroundCard extends javax.swing.JPanel {
             grounds home_page = (grounds) parentWindow;
             
           //We pass 'home_page' (the actual instance of grounds) to the delete window
-            delete del = new delete(home_page, this.id_Garden); 
+            delete del = new delete(home_page, this.id_Garden,iduser); 
             del.setVisible(true);
             
             //You can temporarily hide the main screen while confirming
@@ -153,7 +153,7 @@ public class GroundCard extends javax.swing.JPanel {
             
         } else {
             // Fallback case in case none of the above are found
-            delete del = new delete(null, this.id_Garden);
+            delete del = new delete(null, this.id_Garden,iduser);
             del.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public class VerdeSmart {
 
     public static void main(String[] args) {
+        
         FlatLightLaf.setup();
     // --- Look and Feel Initialization ---
         try {
