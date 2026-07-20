@@ -156,13 +156,10 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\boton-x.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
-        jLabel1.setText("MONITOREO");
-
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+        jLabel1.setText("Monitoreo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -190,27 +187,27 @@ public class MONITORING extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("ESTADO DEL SUELO");
+        jLabel2.setText("Estado del suelo");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel3.setText("HUMEDAD");
+        jLabel3.setText("Humedad");
 
         jLabel4.setBackground(new java.awt.Color(199, 221, 181));
 
         lblUltimoRiegoTitulo.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         lblUltimoRiegoTitulo.setForeground(new java.awt.Color(27, 77, 47));
-        lblUltimoRiegoTitulo.setText("ULTIMO RIEGO");
+        lblUltimoRiegoTitulo.setText("Último riego");
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("FECHA ");
+        jLabel7.setText("Fecha ");
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel8.setText("HORA");
+        jLabel8.setText("Hora");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
