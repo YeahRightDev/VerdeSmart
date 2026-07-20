@@ -16,15 +16,15 @@ public class grounds extends javax.swing.JFrame {
         this.setSize(800,705);
        
         // Define dimension parameters for the Add Garden icon button component layer
-        jButton3.setPreferredSize(new java.awt.Dimension(55, 55));
-        jButton3.setSize(55, 55);
+        btnAdd.setPreferredSize(new java.awt.Dimension(55, 55));
+        btnAdd.setSize(55, 55);
 
         // Apply advanced FlatLaf-specific geometric properties for custom arcs
-        jButton3.putClientProperty("JButton.buttonType", "roundRect");
-        jButton3.putClientProperty("JComponent.customArc", 100);
+        btnAdd.putClientProperty("JButton.buttonType", "roundRect");
+        btnAdd.putClientProperty("JComponent.customArc", 100);
 
        // Inject FlatLaf-compliant global dark green styling properties directly
-        jButton3.putClientProperty("FlatLaf.style",
+        btnAdd.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
         "foreground:#FFFFFF;" +
          "borderWidth:0;" +
@@ -32,21 +32,21 @@ public class grounds extends javax.swing.JFrame {
         "arc:999;");
             
         // Configure transparent interaction behaviors across the structural navigation buttons
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
+        btnback.setContentAreaFilled(false); 
+        btnback.setBorderPainted(false);     
+        btnback.setFocusPainted(false);  
         
         jButton2.setContentAreaFilled(false); 
         jButton2.setBorderPainted(false);     
         jButton2.setFocusPainted(false);  
         
-        jButton3.setContentAreaFilled(false); 
-        jButton3.setBorderPainted(false);     
-        jButton3.setFocusPainted(false);  
+        btnAdd.setContentAreaFilled(false); 
+        btnAdd.setBorderPainted(false);     
+        btnAdd.setFocusPainted(false);  
         
-        jButton4.setContentAreaFilled(false); 
-        jButton4.setBorderPainted(false);     
-        jButton4.setFocusPainted(false);  
+        btnmenu.setContentAreaFilled(false); 
+        btnmenu.setBorderPainted(false);     
+        btnmenu.setFocusPainted(false);  
        // Define baseline theme color constant (Soft Olive/Green)
         java.awt.Color miColorVerde = new java.awt.Color(0xC7DDB5);
 
@@ -176,11 +176,11 @@ public class grounds extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnmenu = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
@@ -205,16 +205,16 @@ public class grounds extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
         jPanel2.setForeground(new java.awt.Color(27, 77, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
         jLabel2.setText("Verde Smart");
 
-        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\menu.png")); // NOI18N
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        btnmenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\menu.png")); // NOI18N
+        btnmenu.addActionListener(this::btnmenuActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -222,31 +222,31 @@ public class grounds extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnback)
                 .addGap(28, 28, 28)
                 .addComponent(jButton2)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(254, 254, 254)
-                .addComponent(jButton4)
+                .addComponent(btnmenu)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnback, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
+                    .addComponent(btnmenu)
                     .addComponent(jLabel2)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\agregar.png")); // NOI18N
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\agregar.png")); // NOI18N
+        btnAdd.addActionListener(this::btnAddActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
@@ -280,7 +280,7 @@ public class grounds extends javax.swing.JFrame {
                         .addGap(258, 258, 258)
                         .addComponent(jLabel3)
                         .addGap(181, 181, 181)
-                        .addComponent(jButton3))
+                        .addComponent(btnAdd))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -292,7 +292,7 @@ public class grounds extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(58, 58, 58)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
@@ -315,22 +315,22 @@ public class grounds extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         ADD1 add = new ADD1(this, this.iduser); 
         add.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         login2 log = new login2();
         log.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenuActionPerformed
         jPopupMenu1.setLightWeightPopupEnabled(false); 
-        jPopupMenu1.show(jButton4, 0, jButton4.getHeight());
-    }//GEN-LAST:event_jButton4ActionPerformed
+        jPopupMenu1.show(btnmenu, 0, btnmenu.getHeight());
+    }//GEN-LAST:event_btnmenuActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -348,10 +348,10 @@ public class grounds extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnback;
+    private javax.swing.JButton btnmenu;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuItem jMenuItem1;

@@ -20,7 +20,7 @@ public class VerdeSmart {
         } catch (Exception ex) {
             System.err.println("No se pudo inicializar el Look and Feel de FlatLaf: " + ex.getMessage());
         }
-        // ----------------------------------
+       
 
         // --- Database Connection Verification Test ---
         try {
