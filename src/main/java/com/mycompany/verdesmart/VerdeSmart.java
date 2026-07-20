@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public class VerdeSmart {
 
     public static void main(String[] args) {
+        
         FlatLightLaf.setup();
     // --- Look and Feel Initialization ---
         try {
@@ -19,7 +20,7 @@ public class VerdeSmart {
         } catch (Exception ex) {
             System.err.println("No se pudo inicializar el Look and Feel de FlatLaf: " + ex.getMessage());
         }
-        // ----------------------------------
+       
 
         // --- Database Connection Verification Test ---
         try {

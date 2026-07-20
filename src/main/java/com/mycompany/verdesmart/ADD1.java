@@ -6,13 +6,14 @@ public class ADD1 extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ADD1.class.getName());
     // Reference to the main screen/frame of the application
     private grounds Main_scren;
-
+    private int iduser;
     /**
      * Constructor of the class. Initializes UI components, window size, 
      * and sets custom FlatLaf styles and styling behaviors.
      */
-    public ADD1(grounds main_scren) {
+    public ADD1(grounds main_scren,int idUser) {
         this.Main_scren = main_scren;
+        this.iduser = idUser;
         initComponents();
         
         // Setting the default dimensions for the frame
@@ -52,18 +53,15 @@ public class ADD1 extends javax.swing.JFrame {
         jButton6.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
         
         // Applying custom rounded border styles to all text fields
-        roundfield(jTextField1);
+        roundfield(btnName);
         roundfield(jTextField2);
-        roundfield(jTextField3);
         
-        jTextField1.setPreferredSize(new java.awt.Dimension(400, 37));
-        jTextField1.setMinimumSize(new java.awt.Dimension(200, 37));
+        btnName.setPreferredSize(new java.awt.Dimension(400, 37));
+        btnName.setMinimumSize(new java.awt.Dimension(200, 37));
         
         jTextField2.setPreferredSize(new java.awt.Dimension(120, 35));
         jTextField2.setMinimumSize(new java.awt.Dimension(100, 35));
         
-        jTextField3.setPreferredSize(new java.awt.Dimension(120, 35));
-        jTextField3.setMinimumSize(new java.awt.Dimension(100, 35));
         
         jPanel3.revalidate();
         jPanel3.repaint();
@@ -104,11 +102,9 @@ public class ADD1 extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        btnName = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -178,7 +174,7 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(27, 77, 47));
         jLabel5.setText("Nombre");
 
-        jTextField1.setColumns(60);
+        btnName.setColumns(60);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -190,12 +186,6 @@ public class ADD1 extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 254, Short.MAX_VALUE)
         );
-
-        jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("X");
-
-        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
@@ -216,17 +206,11 @@ public class ADD1 extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel8)
-                                .addComponent(jTextField1)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(244, 244, 244)
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(17, 17, 17))))))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnName, javax.swing.GroupLayout.Alignment.LEADING)))))
                 .addGap(25, 25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -239,14 +223,11 @@ public class ADD1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -348,28 +329,23 @@ public class ADD1 extends javax.swing.JFrame {
      * the Singleton pattern, updates SQL entries, captures auto-generated keys, and triggers the next view.
      */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-  
+        System.out.println("Intentando guardar jardín para el usuario " + this.iduser);
+        String nombre;
+        Double totalArea;
         // Extract inputs from GUI text elements and remove empty white spaces
-    String nombre = jTextField1.getText().trim();
-    String ladoX = jTextField2.getText().trim();
-    String ladoY = jTextField3.getText().trim();
-    double length = 0;
-    double wide = 0;
-    double totalArea = 0;
-
+    
     // 1. Data parsing and validation of numeric field bounds
     try {
-        length = Double.parseDouble(ladoX);
-        wide = Double.parseDouble(ladoY);
-        totalArea = length * wide;
+        nombre = btnName.getText().trim();
+        totalArea = 0.0;
     } catch (NumberFormatException e) {
         // Show error notification window if inputs are not real valid numbers
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa medidas numéricas válidas para el terreno.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresael nombr del terreno.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
         return; 
     }
 
     // 2. Map structural SQL query command
-    String sql = "INSERT INTO garden (Name, Length, Wide, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO garden (Garden_Name, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES ( ?, ?, ?, ?, ?, ?)";
     // 3. Conectar usando tu Singleton
     try {
         java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
@@ -378,13 +354,11 @@ public class ADD1 extends javax.swing.JFrame {
         try (java.sql.PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setString(1, nombre);
-            ps.setDouble(2, length);
-            ps.setDouble(3, wide);
-            ps.setDouble(4, totalArea);
-            ps.setString(5, "Rectangular"); 
-            ps.setString(6, "Normal");      
-            ps.setDouble(7, 0.0);           
-            ps.setInt(8, 1); // ID de usuario asignado por defecto temporalmente
+            ps.setDouble(2, totalArea); //por el momento
+            ps.setString(3, "Rectangular");
+            ps.setString(4, "Normal");   
+            ps.setDouble(5, 0.0); 
+            ps.setInt(6, this.iduser); 
 
             // Ejecutar la inserción
             int filasInsertadas = ps.executeUpdate();
@@ -402,7 +376,7 @@ public class ADD1 extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "¡Terreno registrado con éxito en la base de datos!");
                 
                 // CORREGIDO: Ahora sí le pasamos los 4 parámetros requeridos, incluyendo el ID real
-                PLANTS ventanaPlantas = new PLANTS(this.Main_scren, idGardenGenerado, nombre, String.valueOf(totalArea));
+                PLANTS ventanaPlantas = new PLANTS(this.Main_scren, idGardenGenerado, nombre, String.valueOf(totalArea),this.iduser);
                 ventanaPlantas.setVisible(true);
                 this.dispose(); 
             }
@@ -441,6 +415,7 @@ class roundpanel extends javax.swing.JPanel {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField btnName;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -454,14 +429,11 @@ class roundpanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,26 +15,28 @@ import java.util.List;
  */
 public class PLANTS extends javax.swing.JFrame {
     
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PLANTS.class.getName());
     private grounds mainScreen;          // Reference to the main control dashboard frame
     private int idGarden;                // Internal unique identifier for the targeted garden
     private String gardenName;           // Text name of the current working garden
     private String gardenArea;           // Text measurement area of the garden
-    
+    private int iduser;
     // Tracking Collections for Selection States 
     private List<Integer> selectedPlantIds = new ArrayList<>();
     private List<String> selectedPlantNames = new ArrayList<>();
     /**
      * Initializes a new PLANTS frame layout context linked to a garden dataset.
      */
-   public PLANTS(grounds groundsScreen, int idGarden, String groundName, String groundArea){
+   public PLANTS(grounds groundsScreen, int idGarden, String groundName, String groundArea,int idUser){
         initComponents();
         this.setSize(800,700);
         this.mainScreen = groundsScreen;
         this.idGarden = idGarden;
         this.gardenName = groundName;
         this.gardenArea = groundArea;
-    
+        this.iduser = idUser;
+   
         // Remove standard native borders and selection fills for standard buttons
         jButton1.setContentAreaFilled(false); 
         jButton1.setBorderPainted(false);     
@@ -237,16 +239,44 @@ public class PLANTS extends javax.swing.JFrame {
      * Assigns a hardcoded ID instance and tracks validation selections.
      */
     private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
-      int plantId = 2; // Fixed ID 2 map assignment
+   
         String plantName = "Árbol abundancia";
-
-        if (!selectedPlantIds.contains(plantId)) {
-            selectedPlantIds.add(plantId);
-            selectedPlantNames.add(plantName);
-            javax.swing.JOptionPane.showMessageDialog(this, "'" + plantName + "' selected for this garden!");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "This plant is already selected.");
+    if (selectedPlantNames.contains(plantName)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está seleccionada.");
+        return;
+    }
+    String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, id_Garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+    
+    try {
+        java.sql.Connection con = com.mycompany.verdesmart.DatabaseConnection.getInstance().getConnection();
+        try (java.sql.PreparedStatement pst = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, plantName);
+            pst.setString(2, "Portulacaria afra");
+            pst.setFloat(3, 0.3f);
+            pst.setFloat(4, 0.5f);
+            pst.setFloat(5, 5.0f);
+            pst.setString(6, "Sudáfrica");
+            pst.setString(7, "Suculenta / Arbusto perenne");
+            pst.setString(8, "Arbusto suculento de hojas pequeñas, carnosas y brillantes con tallos rojizos. Muy resistente a la sequía y símbolo de la prosperidad.");
+            pst.setInt(9, this.idGarden);
+            
+            int affectedRows = pst.executeUpdate();
+            if (affectedRows > 0) {
+                try (java.sql.ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        selectedPlantIds.add(generatedId);
+                        selectedPlantNames.add(plantName);
+                        javax.swing.JOptionPane.showMessageDialog(this, "Planta" + plantName + "¡Añadida y guardada!");
+                    }
+                }
+            }
         }
+    } catch (SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    
     }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -255,10 +285,10 @@ public class PLANTS extends javax.swing.JFrame {
         return;
     }
 
-    String sqlInsertRelation = "INSERT INTO garden_plant (id_Plant, id_Garden) VALUES (?, ?)";
+    String sql = "INSERT INTO garden_plant (id_Plant, id_Garden) VALUES (?, ?)";
     
     try (Connection con = DatabaseConnection.getInstance().getConnection();
-         PreparedStatement pst = con.prepareStatement(sqlInsertRelation)) {
+         PreparedStatement pst = con.prepareStatement(sql)) {
         
         for (int plantId : selectedPlantIds) {
             pst.setInt(1, plantId);
@@ -270,7 +300,7 @@ public class PLANTS extends javax.swing.JFrame {
 
         if (this.mainScreen != null) {
             String plantsFormattedText = String.join(", ", selectedPlantNames);
-            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText);
+            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText,iduser);
             
             // Set explicit card sizes
             newCard.setMaximumSize(new java.awt.Dimension(650, 150));
@@ -299,19 +329,20 @@ public class PLANTS extends javax.swing.JFrame {
         this.dispose();
 
     } catch (SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar los parámetros de configuración: " + e.getMessage(), "SQL Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }
+            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+   
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       ADD1 add = new ADD1(this.mainScreen);
+       ADD1 add = new ADD1(this.mainScreen, this.mainScreen.getIdUser());
         add.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       ADD1 addWindow = new ADD1(this.mainScreen);
+       ADD1 addWindow = new ADD1(this.mainScreen, this.mainScreen.getIdUser());
         addWindow.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -323,7 +354,7 @@ public class PLANTS extends javax.swing.JFrame {
             return;
         }
 
-        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description,id_Garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, id_Garden) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)";
         
         try {
             java.sql.Connection con = com.mycompany.verdesmart.DatabaseConnection.getInstance().getConnection();
@@ -350,9 +381,9 @@ public class PLANTS extends javax.swing.JFrame {
                     }
                 }
             }
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
             javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
     }//GEN-LAST:event_btnCoronaCristoActionPerformed
 
@@ -364,7 +395,7 @@ public class PLANTS extends javax.swing.JFrame {
             return;
         }
                 
-        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, id_Garden) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -377,7 +408,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pst.setString(6, "América Central y del Sur");
                 pst.setString(7, "Planta de Interior / Follaje");
                 pst.setString(8, "Planta tropical de interior con grandes hojas matizadas en tonos verdes y blancos.");
-                
+                pst.setInt(9, this.idGarden);
                 int affectedRows = pst.executeUpdate();
                 if (affectedRows > 0) {
                     try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
@@ -391,8 +422,8 @@ public class PLANTS extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos:" + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDiffenbachiaActionPerformed
 
@@ -403,7 +434,7 @@ public class PLANTS extends javax.swing.JFrame {
             return;
         }
                 
-        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, id_Garden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -416,7 +447,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pst.setString(6, "América Tropical");
                 pst.setString(7, "Arbusto de Exterior / Ornamental");
                 pst.setString(8, "Arbusto vigoroso ideal para cercas vivas. Produce hermosas flores moradas o azules en racimos.");
-                
+                pst.setInt(9, this.idGarden);
                 int affectedRows = pst.executeUpdate();
                 if (affectedRows > 0) {
                     try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
@@ -430,8 +461,8 @@ public class PLANTS extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
             javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
         }
     }//GEN-LAST:event_btnDurantiaActionPerformed
 
@@ -453,4 +484,5 @@ public class PLANTS extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
 }

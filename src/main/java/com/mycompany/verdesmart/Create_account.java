@@ -11,6 +11,7 @@ public class Create_account extends javax.swing.JFrame {
     
     // Logger instance for error tracking and debugging within the class
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Create_account.class.getName());
+    
     /**
      * Creates new form Create_account and initializes customized UI styling.
      */

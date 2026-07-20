@@ -12,6 +12,7 @@ public class login2 extends javax.swing.JFrame {
      * Manages window boundaries, establishes FlatLaf placeholders, resolves application branding assets, 
      * strips native button decoration contexts, and applies anti-aliased border configurations.
      */
+    int iduser;
     public login2() {
         initComponents();
 
@@ -23,12 +24,12 @@ public class login2 extends javax.swing.JFrame {
         txtPassword.putClientProperty("FlatLaf.placeholderText", "Password");
 
         // Load image
-        try {
+      try {
             java.net.URL imagePath = getClass().getResource("/imagenes/icono.jpeg");
 
             if (imagePath != null) {
                 ImageIcon icon = new ImageIcon(imagePath);
-                panelredondo1.setImage(icon.getImage());
+                rOUND_PANEL1.setImage(icon.getImage());
             } else {
                 System.out.println("ERROR: Image not found");
             }
@@ -36,7 +37,6 @@ public class login2 extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Image loading error: " + e.getMessage());
         }
-
         // Configure transparent interaction behaviors across navigation button instances
         jButton1.setContentAreaFilled(false);
         jButton1.setBorderPainted(false);
@@ -131,7 +131,7 @@ public class login2 extends javax.swing.JFrame {
         btnlogin = new javax.swing.JButton();
         btnpassword = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
-        panelredondo1 = new com.mycompany.verdesmart.ROUND_PANEL();
+        rOUND_PANEL1 = new com.mycompany.verdesmart.ROUND_PANEL();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -197,15 +197,15 @@ public class login2 extends javax.swing.JFrame {
 
         txtPassword.setColumns(67);
 
-        javax.swing.GroupLayout panelredondo1Layout = new javax.swing.GroupLayout(panelredondo1);
-        panelredondo1.setLayout(panelredondo1Layout);
-        panelredondo1Layout.setHorizontalGroup(
-            panelredondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout rOUND_PANEL1Layout = new javax.swing.GroupLayout(rOUND_PANEL1);
+        rOUND_PANEL1.setLayout(rOUND_PANEL1Layout);
+        rOUND_PANEL1Layout.setHorizontalGroup(
+            rOUND_PANEL1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 201, Short.MAX_VALUE)
         );
-        panelredondo1Layout.setVerticalGroup(
-            panelredondo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
+        rOUND_PANEL1Layout.setVerticalGroup(
+            rOUND_PANEL1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 168, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -226,24 +226,23 @@ public class login2 extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelredondo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                .addGap(298, 298, 298))
+                            .addComponent(jLabel3)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(300, 300, 300)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rOUND_PANEL1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(12, 12, 12)
-                .addComponent(panelredondo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rOUND_PANEL1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(27, 27, 27)
                 .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,13 +300,16 @@ public class login2 extends javax.swing.JFrame {
             if (con != null) {
                 String sql = "SELECT * FROM users WHERE e_mail = ? AND User_Password = ?";
                 try (java.sql.PreparedStatement pst = con.prepareStatement(sql)) {
+                
                     pst.setString(1, Email);
                     pst.setString(2, Password);
 
                     try (java.sql.ResultSet rs = pst.executeQuery()) {
+                        
                         if (rs.next()) {
-                            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!");
-                            grounds CARD = new grounds();
+                            this.iduser = rs.getInt("id_User");
+                            javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido!" );
+                            grounds CARD = new grounds(this.iduser);
                             CARD.setVisible(true);
                             this.dispose();
                         } else {
@@ -324,7 +326,7 @@ public class login2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btnpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpasswordActionPerformed
-    forgotten_password password = new forgotten_password();
+    forgotten_password password = new forgotten_password(iduser);
     password.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnpasswordActionPerformed
@@ -340,7 +342,7 @@ public class login2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private com.mycompany.verdesmart.ROUND_PANEL panelredondo1;
+    private com.mycompany.verdesmart.ROUND_PANEL rOUND_PANEL1;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
