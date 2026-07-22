@@ -1,5 +1,10 @@
 package com.mycompany.verdesmart;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 public class ADD1 extends javax.swing.JFrame {
 
     // Logger instance to register and trace internal errors or system operations
@@ -11,7 +16,7 @@ public class ADD1 extends javax.swing.JFrame {
      * Constructor of the class. Initializes UI components, window size, 
      * and sets custom FlatLaf styles and styling behaviors.
      */
-    public ADD1(grounds main_scren,int idUser) {
+    public ADD1(grounds main_scren,int idUser) { 
         this.Main_scren = main_scren;
         this.iduser = idUser;
         initComponents();
@@ -330,19 +335,18 @@ public class ADD1 extends javax.swing.JFrame {
      */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         System.out.println("Intentando guardar jardín para el usuario " + this.iduser);
-        String nombre;
-        Double totalArea;
-        // Extract inputs from GUI text elements and remove empty white spaces
+       
+        String nombre = btnName.getText().trim();
+        Double totalArea = 0.0;
+      
     
-    // 1. Data parsing and validation of numeric field bounds
-    try {
-        nombre = btnName.getText().trim();
-        totalArea = 0.0;
-    } catch (NumberFormatException e) {
-        // Show error notification window if inputs are not real valid numbers
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresael nombr del terreno.", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
-        return; 
-    }
+          if (nombre.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor, ingrese el nombre que tendrá el terreno / jardín.", 
+            "Campo requerido", 
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; // Detiene el método por completo
+    }  
 
     // 2. Map structural SQL query command
     String sql = "INSERT INTO garden (Garden_Name, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES ( ?, ?, ?, ?, ?, ?)";
@@ -386,6 +390,7 @@ public class ADD1 extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al insertar el jardín", ex);
         javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

@@ -21,8 +21,8 @@ public class Create_account extends javax.swing.JFrame {
 
         // Apply custom rounded borders and backgrounds to text fields
         styleRoundedField(txtNombre);
-        styleRoundedField(txtEdad);
-        styleRoundedField(birthDateField);
+        styleRoundedField(age);
+        styleRoundedField(dateborn);
         styleRoundedField(emailField);
         styleRoundedField(passwordField);
         styleRoundedField(confirmPasswordField);
@@ -70,8 +70,8 @@ public class Create_account extends javax.swing.JFrame {
 
         // Initialize inline localized placeholder values via FlatLaf library attributes
         txtNombre.putClientProperty("FlatLaf.placeholderText", "Name");
-        birthDateField.putClientProperty("FlatLaf.placeholderText", "00");
-        birthDateField.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
+        age.putClientProperty("FlatLaf.placeholderText", "00");
+        dateborn.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
         emailField.putClientProperty("FlatLaf.placeholderText", "Email");
         passwordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
         confirmPasswordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
@@ -137,8 +137,8 @@ public class Create_account extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtEdad = new javax.swing.JTextField();
-        birthDateField = new javax.swing.JTextField();
+        age = new javax.swing.JTextField();
+        dateborn = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         confirmPasswordField = new javax.swing.JPasswordField();
@@ -158,10 +158,7 @@ public class Create_account extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText(" Verde Smart");
@@ -183,13 +180,14 @@ public class Create_account extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
 
@@ -207,11 +205,11 @@ public class Create_account extends javax.swing.JFrame {
         });
         txtNombre.addActionListener(this::txtNombreActionPerformed);
 
-        txtEdad.addActionListener(this::txtEdadActionPerformed);
+        age.addActionListener(this::ageActionPerformed);
 
-        birthDateField.setColumns(60);
-        birthDateField.setText("YYYY-MM-DD");
-        birthDateField.addActionListener(this::birthDateFieldActionPerformed);
+        dateborn.setColumns(60);
+        dateborn.setText("YYYY-MM-DD");
+        dateborn.addActionListener(this::datebornActionPerformed);
 
         emailField.setColumns(60);
         emailField.addActionListener(this::emailFieldActionPerformed);
@@ -270,13 +268,13 @@ public class Create_account extends javax.swing.JFrame {
                                 .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)
                                 .addComponent(jLabel5)
-                                .addComponent(birthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(dateborn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(age, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jLabel2))
@@ -300,11 +298,11 @@ public class Create_account extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(age, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(birthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateborn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -354,14 +352,14 @@ public class Create_account extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+    private void ageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
+    }//GEN-LAST:event_ageActionPerformed
 
-    private void birthDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDateFieldActionPerformed
+    private void datebornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datebornActionPerformed
         
     
-    }//GEN-LAST:event_birthDateFieldActionPerformed
+    }//GEN-LAST:event_datebornActionPerformed
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
@@ -374,17 +372,25 @@ public class Create_account extends javax.swing.JFrame {
 
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
 
-        // 1. Mandatory input constraints evaluation
-        if (txtNombre.getText().trim().isEmpty()
-                || emailField.getText().trim().isEmpty()
-                || String.valueOf(passwordField.getPassword()).trim().isEmpty()
-                || String.valueOf(confirmPasswordField.getPassword()).trim().isEmpty()) {
-
-            JOptionPane.showMessageDialog(this, "Complete todos los campos.");
-            return;
-        }
-
+        String nombre = txtNombre.getText().trim();
+        String edad = age.getText().trim();
+        String date = dateborn.getText().trim();
         String email = emailField.getText().trim();
+        String pass = String.valueOf(passwordField.getPassword()).trim();
+        String confirmPass = String.valueOf(confirmPasswordField.getPassword()).trim();
+    
+        // 1. Mandatory input constraints evaluation
+       if (nombre.isEmpty() 
+            || edad.isEmpty() 
+            || date.isEmpty() || date.equals("YYYY-MM-DD") 
+            || email.isEmpty() 
+            || pass.isEmpty() 
+            || confirmPass.isEmpty()) {
+            
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos .");
+        return;
+    }
+
 
         // 2. Structural regular expression filter ensuring correct electronic mail mapping formats
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
@@ -406,9 +412,14 @@ public class Create_account extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La contraseña debe contener al menos 8 caracteres.");
             return;
         }
+        //5
+       if (dateborn.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Por favor, ingresa una fecha de nacimiento.");
+    return;
+}
 
         // Target insertion parameterized query string
-        String sql = "INSERT INTO users (User_name, User_Password, e_mail) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (User_name, User_Password, e_mail, date_born, age) VALUES (?, ?, ?,?,?)";
 
         try {
 
@@ -418,7 +429,15 @@ public class Create_account extends javax.swing.JFrame {
                 ps.setString(1, txtNombre.getText().trim());
                 ps.setString(2, String.valueOf(passwordField.getPassword()));
                 ps.setString(3, email);
+                java.sql.Date dateb = java.sql.Date.valueOf(dateborn.getText().trim());
+                ps.setDate(4, dateb);
                 
+                try {
+                ps.setInt(5, Integer.parseInt(edad));
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "Por favor, introduce una edad válida en números.");
+                return;
+            }
                 ps.executeUpdate();
                 
                 JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
@@ -448,8 +467,9 @@ public class Create_account extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreMouseClicked
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField birthDateField;
+    private javax.swing.JTextField age;
     private javax.swing.JPasswordField confirmPasswordField;
+    private javax.swing.JTextField dateborn;
     private javax.swing.JTextField emailField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -466,7 +486,6 @@ public class Create_account extends javax.swing.JFrame {
     private javax.swing.JButton logIn;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton registerButton;
-    private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
