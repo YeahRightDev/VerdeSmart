@@ -16,6 +16,9 @@ public class LOGIN extends javax.swing.JFrame {
     public LOGIN() {
         initComponents();
         
+        //For enter
+        this.getRootPane().setDefaultButton(btnlogin);
+        
         // Window sizing and screen centering settings
         this.setSize(800, 700);
         this.setLocationRelativeTo(null); 
@@ -30,14 +33,14 @@ public class LOGIN extends javax.swing.JFrame {
  }
         
         // Button 1: Sign In styling via FlatLaf look and feel configuration
-        btnligin.putClientProperty("FlatLaf.style", ""
+        btnlogin.putClientProperty("FlatLaf.style", ""
                 + "background: #1B4D2F;"
                 + "foreground: #FFFFFF;"
                 + "borderWidth: 0;"
                 + "focusWidth: 0;"
                 + "arc: 999;");   
 
-        // Botón 2: Crear Cuenta
+        // Button 2: create account
         btnnewAcc.putClientProperty("FlatLaf.style", ""
                 + "background: #1B4D2F;"
                 + "foreground: #FFFFFF;"
@@ -45,7 +48,7 @@ public class LOGIN extends javax.swing.JFrame {
                 + "focusWidth: 0;"
                 + "arc: 999;");
 
-        // Botón 3: Salir
+        // Button:Exit
         btnExit.putClientProperty("FlatLaf.style", ""
                 + "background: #EF9FBC;"
                 + "foreground: #000000;"
@@ -53,26 +56,37 @@ public class LOGIN extends javax.swing.JFrame {
                 + "focusWidth: 0;"
                 + "arc: 999;");
         
-        instructions.setBorder(null);
-        instructions.setOpaque(false);
-        instructions.setBackground(new Color(0,0,0,0));
-        instructions.setLineWrap(true);
-        instructions.setWrapStyleWord(true);
-        
-        jScrollPane2.setBorder(null);
-        jScrollPane2.setOpaque(false);
-        jScrollPane2.getViewport().setOpaque(false);
-        jScrollPane2.getViewport().setBackground(new Color(0,0,0,0));
         
         
-        instructions.append("Introdución a Verde-Smart:");
-        instructions.append("\nVerde-Smart es una app dedicada a todos los jardineros que ");
-        instructions.append("\ngustan personalizar sus jardines y saber la medida exacta de");
-        instructions.append("\nsus terrenos irregularos o regulares.");
-        instructions.append("\n\n");
-        instructions.append("\n1. Crear cuenta: Sí es la primera vez que usted  utiliza nuestra app, ");
-        instructions.append("\nde click en crear cuenta para después introducir los datos  como:");
-        instructions.append("\nnombre, edad, fecha de nacimiento,correo, contraseña,  confirmar ");
+        //Button help
+        btnquestions.putClientProperty("FlatLaf.style", ""
+                + "background: 1B4D2F;"
+                + "foreground: FFFFFF;"
+                + "borderWidth: 0;"
+                + "focusWidth: 0;"
+                + "arc: 999;");
+       
+       //instructions for the app
+       instructions.setText("Normalmente, muchos jardineros tienen problemas para saber el ");
+       instructions.append("\ntamaño exacto de sus jardines de forma irregular y recordar qué  ");
+       instructions.append("\nplantas plantaron, así como los horarios o días en que regaron su ");
+       instructions.append("\njardín,  por eso Verde Smart s una app diseñada para ayudar y ");
+       instructions.append("\n facilitar las tarea a todos  los jardineros. Verde Smart ayuda  ");
+       instructions.append("\na los jardineros a conocer las medidas de su terreno irregular y "); 
+       instructions.append("\nllevar un registro detallado del nombre del jardín, las plantas ");
+       instructions.append("\nque contiene, recomendaciones para regar las plantas y el tipo de ");
+       instructions.append("\nsuelo que tiene.");
+       
+       instructions.setOpaque(false);
+       SPinstructions.setOpaque(false);
+       SPinstructions.getViewport().setOpaque(false);
+       SPinstructions.setBorder(null);
+       instructions.setForeground(java.awt.Color.WHITE);
+                               
+                                       
+                                               
+                                                      
+     
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -87,12 +101,17 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        btnquestions = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        SPinstructions = new javax.swing.JScrollPane();
         instructions = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         btnnewAcc = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        btnligin = new javax.swing.JButton();
+        btnlogin = new javax.swing.JButton();
         jPanel3 = new com.mycompany.verdesmart.ROUND_PANEL();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,12 +123,35 @@ public class LOGIN extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Instrucciones:");
+        jLabel2.setText("Introducción a verde smart:");
 
-        instructions.setEditable(false);
+        btnquestions.setBackground(new java.awt.Color(255, 0, 0));
+        btnquestions.setText("?");
+        btnquestions.setOpaque(true);
+        btnquestions.addActionListener(this::btnquestionsActionPerformed);
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("INSTRUCCIONES DE USO:");
+
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Verde Smart v1.0 |  Universidad Tecnológica de Calvillo");
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("¿Necesitas ayuda Técnica?");
+
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("UTC@verdesmart.com");
+
+        SPinstructions.setBorder(null);
+
         instructions.setColumns(20);
+        instructions.setLineWrap(true);
         instructions.setRows(5);
-        jScrollPane2.setViewportView(instructions);
+        instructions.setWrapStyleWord(true);
+        instructions.setOpaque(false);
+        SPinstructions.setViewportView(instructions);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,15 +162,30 @@ public class LOGIN extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(233, 233, 233)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(btnquestions, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(SPinstructions, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5)))
@@ -137,26 +194,38 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(SPinstructions, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(69, 69, 69)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnquestions))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
-                        .addGap(134, 134, 134)
+                        .addGap(45, 45, 45)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)))
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addGap(117, 117, 117)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
@@ -170,9 +239,9 @@ public class LOGIN extends javax.swing.JFrame {
         btnExit.setText("Salir");
         btnExit.addActionListener(this::btnExitActionPerformed);
 
-        btnligin.setBackground(new java.awt.Color(27, 77, 47));
-        btnligin.setText("Iniciar Sesión");
-        btnligin.addActionListener(this::btnliginActionPerformed);
+        btnlogin.setBackground(new java.awt.Color(27, 77, 47));
+        btnlogin.setText("Iniciar Sesión");
+        btnlogin.addActionListener(this::btnloginActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -198,7 +267,7 @@ public class LOGIN extends javax.swing.JFrame {
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnnewAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnligin, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(74, 74, 74))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -213,12 +282,12 @@ public class LOGIN extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(55, 55, 55)
-                .addComponent(btnligin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnnewAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+                .addGap(79, 79, 79)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -240,11 +309,11 @@ public class LOGIN extends javax.swing.JFrame {
      * Triggered when the user clicks 'Iniciar Sesión'.
      * Displays the credential input window and disposes of this welcome screen.
      */
-    private void btnliginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnliginActionPerformed
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
       login2 nuevaVentana = new login2();
       nuevaVentana.setVisible(true);
       this.dispose();
-    }//GEN-LAST:event_btnliginActionPerformed
+    }//GEN-LAST:event_btnloginActionPerformed
 
     /**
      * Triggered when the user clicks 'Crear cuenta'.
@@ -269,22 +338,54 @@ public class LOGIN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void newAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-       System.exit(0); 
-        // TODO add your handling code here:
+       int answer = javax.swing.JOptionPane.showConfirmDialog(
+        this, 
+        "¿Estás seguro de que deseas salir de Verde Smart?", 
+        "Confirmar Salida", 
+        javax.swing.JOptionPane.YES_NO_OPTION, 
+        javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+       if (answer == javax.swing.JOptionPane.YES_OPTION) {
+        System.exit(0);
+    }
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnquestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquestionsActionPerformed
+        // TODO add your handling code here:
+        //We implement HTML for the styles
+        
+
+        String mensaje = "<html><body style='width: 300px; font-family: SansSerif;'>"
+        + "<h2 style='color: #1B4D2F;'>Guía Rápida - Verde Smart</h2>"
+        + "<p><b>1. Crear cuenta:</b> Si es tu primera vez, haz clic en el botón <i>'Crear cuenta'</i> e ingresa tus datos (nombre, edad, correo y contraseña).</p><br>"
+        + "<p><b>2. Iniciar sesión:</b> Si ya tienes una cuenta, haz clic en el botón <i>'Iniciar Sesión'</i> para acceder.</p><br>"
+        + "<p><b>3. Recuperar contraseña:</b> Si olvidaste tu contraseña, podrás restablecerla con tu correo electrónico.</p>"
+        + "</body></html>";
+
+        
+        
+        javax.swing.JOptionPane.showMessageDialog(
+            this, 
+            mensaje, 
+            "Instrucciones de Uso", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+    }//GEN-LAST:event_btnquestionsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane SPinstructions;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnligin;
+    private javax.swing.JButton btnlogin;
     private javax.swing.JButton btnnewAcc;
+    private javax.swing.JButton btnquestions;
     private javax.swing.JTextArea instructions;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -294,6 +395,5 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

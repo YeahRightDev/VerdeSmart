@@ -25,47 +25,43 @@ public class ADD1 extends javax.swing.JFrame {
         this.setSize(800, 705);
         
         // Making button backgrounds, borders, and focus rings transparent/hidden for a cleaner UI
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
+        btnback.setContentAreaFilled(false); 
+        btnback.setBorderPainted(false);     
+        btnback.setFocusPainted(false);  
         
         jButton2.setContentAreaFilled(false); 
         jButton2.setBorderPainted(false);     
         jButton2.setFocusPainted(false);  
         
+        
+        
         // Styling a button using FlatLaf LookAndFeel client properties (custom background, colors, and fully rounded shape)
-        jButton3.putClientProperty("FlatLaf.style",
+        btnpage.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
         "foreground:#FFFFFF;" +
         "borderWidth:0;" +
         "focusWidth:0;" +
         "arc:999;");
-        jButton4.setContentAreaFilled(false); 
-        jButton4.setBorderPainted(false);     
-        jButton4.setFocusPainted(false);  
+        btnpage2.setContentAreaFilled(false); 
+        btnpage2.setBorderPainted(false);     
+        btnpage2.setFocusPainted(false);  
         
         jButton7.setContentAreaFilled(false); 
         jButton7.setBorderPainted(false);     
         jButton7.setFocusPainted(false);  
         
         // Defining dimensions and specific roundness attributes for navigation or control buttons
-        jButton5.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton5.setSize(42, 42);
-        jButton5.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        btnclose.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnclose.setSize(42, 42);
+        btnclose.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
         
-        jButton6.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton6.setSize(42, 42);
-        jButton6.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        btnnext.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnnext.setSize(42, 42);
+        btnnext.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
         
-        // Applying custom rounded border styles to all text fields
-        roundfield(btnName);
-        roundfield(jTextField2);
         
-        btnName.setPreferredSize(new java.awt.Dimension(400, 37));
-        btnName.setMinimumSize(new java.awt.Dimension(200, 37));
-        
-        jTextField2.setPreferredSize(new java.awt.Dimension(120, 35));
-        jTextField2.setMinimumSize(new java.awt.Dimension(100, 35));
+        textname.setPreferredSize(new java.awt.Dimension(400, 37));
+        textname.setMinimumSize(new java.awt.Dimension(200, 37));
         
         
         jPanel3.revalidate();
@@ -73,20 +69,21 @@ public class ADD1 extends javax.swing.JFrame {
         
         // Customizing main content containers with a rounded corner factor of 30 pixels
         jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
-        jPanel4.putClientProperty("FlatLaf.style", "arc: 30;");
     }
 
     /**
      * Custom method to design and paint standard text fields with rounded borders.
      * It handles background transparency fixes, anti-aliasing, and customized pixel-by-pixel border drawing.
      */
-    private void roundfield(javax.swing.JTextField campo) {
+    private void roundfield(javax.swing.JTextField campo, String placeholderText) {
      campo.putClientProperty("Component.roundRect", true);
      campo.putClientProperty("FlatLaf.style", 
             "background: #FFFFFF;" +
             "borderColor: #B4B4B4;" +
             "focusedBorderColor: #1B4D2F;" +
             "arc: 15;");
+     campo.putClientProperty("FlatLaf.placeholderText", placeholderText);
+    campo.setMargin(new java.awt.Insets(5, 10, 5, 10));
      campo.setMargin(new java.awt.Insets(5, 10, 5, 10));
     }
     @SuppressWarnings("unchecked")
@@ -96,23 +93,20 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnpage = new javax.swing.JButton();
+        btnpage2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btnName = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        textname = new javax.swing.JTextField();
+        btnclose = new javax.swing.JButton();
+        btnnext = new javax.swing.JButton();
 
         jLabel6.setText("jLabel6");
 
@@ -123,10 +117,7 @@ public class ADD1 extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -137,7 +128,7 @@ public class ADD1 extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnback)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
@@ -152,7 +143,7 @@ public class ADD1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -161,10 +152,7 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
         jLabel2.setText("Agregar Terreno");
 
-        jButton3.setBackground(new java.awt.Color(27, 77, 47));
-        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\matematicas.png")); // NOI18N
-
-        jButton4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dos.png")); // NOI18N
+        btnpage.setBackground(new java.awt.Color(27, 77, 47));
 
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
@@ -179,22 +167,7 @@ public class ADD1 extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(27, 77, 47));
         jLabel5.setText("Nombre");
 
-        btnName.setColumns(60);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
-        );
-
-        jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel8.setText("Medidas");
+        textname.setColumns(60);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -210,13 +183,9 @@ public class ADD1 extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnName, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addGap(25, 25, Short.MAX_VALUE))
+                            .addComponent(textname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(42, 42, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,21 +197,15 @@ public class ADD1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
+                .addComponent(textname, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(368, Short.MAX_VALUE))
         );
 
-        jButton5.setText("Cerrar");
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        btnclose.setText("Cerrar");
+        btnclose.addActionListener(this::btncloseActionPerformed);
 
-        jButton6.setText("Siguente");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
+        btnnext.setText("Siguente");
+        btnnext.addActionListener(this::btnnextActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,17 +221,17 @@ public class ADD1 extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addComponent(btnpage)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)))))
+                                .addComponent(btnpage2)))))
                 .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(74, 74, 74)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnclose, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnnext, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(101, 101, 101))
         );
         jPanel1Layout.setVerticalGroup(
@@ -281,20 +244,20 @@ public class ADD1 extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
+                            .addComponent(btnpage)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(jLabel3))))
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnpage2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnnext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnclose, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))))
         );
 
@@ -312,31 +275,31 @@ public class ADD1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
        // TODO add your handling code here:
         if (this.Main_scren != null) {
         this.Main_scren.setVisible(true);
     }
     this.dispose();    
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
    if (this.Main_scren != null) {
         this.Main_scren.setVisible(true);
     }
     this.dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btncloseActionPerformed
 
     /**
      * Action event handler for Button 6 ("Siguiente" / Next). 
      * Validates numeric input values, calculates the field area, connects to the database using 
      * the Singleton pattern, updates SQL entries, captures auto-generated keys, and triggers the next view.
      */
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
         System.out.println("Intentando guardar jardín para el usuario " + this.iduser);
        
-        String nombre = btnName.getText().trim();
+        String nombre = textname.getText().trim();
         Double totalArea = 0.0;
       
     
@@ -345,7 +308,7 @@ public class ADD1 extends javax.swing.JFrame {
             "Por favor, ingrese el nombre que tendrá el terreno / jardín.", 
             "Campo requerido", 
             javax.swing.JOptionPane.WARNING_MESSAGE);
-        return; // Detiene el método por completo
+        return; // Stops the method completely
     }  
 
     // 2. Map structural SQL query command
@@ -354,7 +317,7 @@ public class ADD1 extends javax.swing.JFrame {
     try {
         java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
         
-        // AÑADIDO: Le decimos al PreparedStatement que queremos recuperar las llaves generadas automáticamente
+        // We tell the PreparedStatement that we want to retrieve the automatically generated keys
         try (java.sql.PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setString(1, nombre);
@@ -364,7 +327,7 @@ public class ADD1 extends javax.swing.JFrame {
             ps.setDouble(5, 0.0); 
             ps.setInt(6, this.iduser); 
 
-            // Ejecutar la inserción
+            // Run the insertion
             int filasInsertadas = ps.executeUpdate();
             
             if (filasInsertadas > 0) {
@@ -379,7 +342,7 @@ public class ADD1 extends javax.swing.JFrame {
 
                 javax.swing.JOptionPane.showMessageDialog(this, "¡Terreno registrado con éxito en la base de datos!");
                 
-                // CORREGIDO: Ahora sí le pasamos los 4 parámetros requeridos, incluyendo el ID real
+                
                 PLANTS ventanaPlantas = new PLANTS(this.Main_scren, idGardenGenerado, nombre, String.valueOf(totalArea),this.iduser);
                 ventanaPlantas.setVisible(true);
                 this.dispose(); 
@@ -391,7 +354,7 @@ public class ADD1 extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnnextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,17 +379,16 @@ class roundpanel extends javax.swing.JPanel {
     }
 }private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
    
-    jButton6ActionPerformed(evt);
+    btnnextActionPerformed(evt);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField btnName;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnback;
+    private javax.swing.JButton btnclose;
+    private javax.swing.JButton btnnext;
+    private javax.swing.JButton btnpage;
+    private javax.swing.JButton btnpage2;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -434,11 +396,9 @@ class roundpanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField textname;
     // End of variables declaration//GEN-END:variables
 }

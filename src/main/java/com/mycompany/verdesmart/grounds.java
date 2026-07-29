@@ -51,30 +51,30 @@ public class grounds extends javax.swing.JFrame {
         java.awt.Color miColorVerde = new java.awt.Color(0xC7DDB5);
 
        // Strip default line borders away from the background viewport scroll pane elements
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder());
+        spgardens.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        spgardens.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder());
 
         
-        jScrollPane1.setOpaque(true);
-        jScrollPane1.setBackground(miColorVerde);
+        spgardens.setOpaque(true);
+        spgardens.setBackground(miColorVerde);
 
-        jScrollPane1.getViewport().setOpaque(true);
-        jScrollPane1.getViewport().setBackground(miColorVerde);
-
-        
-        jPanel3.setBackground(miColorVerde);
-        jPanel3.setOpaque(true);
+        spgardens.getViewport().setOpaque(true);
+        spgardens.getViewport().setBackground(miColorVerde);
 
         
-        jScrollPane1.getVerticalScrollBar().putClientProperty("JComponent.border", javax.swing.BorderFactory.createEmptyBorder());
-        jScrollPane1.getVerticalScrollBar().setBackground(miColorVerde);
-        jScrollPane1.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0));
+        gardens.setBackground(miColorVerde);
+        gardens.setOpaque(true);
+
+        
+        spgardens.getVerticalScrollBar().putClientProperty("JComponent.border", javax.swing.BorderFactory.createEmptyBorder());
+        spgardens.getVerticalScrollBar().setBackground(miColorVerde);
+        spgardens.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0));
 
         
         jPanel1.setBackground(miColorVerde);
         this.setBackground(miColorVerde);
        
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.Y_AXIS));
+        gardens.setLayout(new javax.swing.BoxLayout(gardens, javax.swing.BoxLayout.Y_AXIS));
         cargarJardinesDesdeBD();
        
     }
@@ -87,11 +87,11 @@ public class grounds extends javax.swing.JFrame {
      * with alignment parameters and spacer components.
      */
     public void cargarJardinesDesdeBD() {
-        jPanel3.removeAll();
+        gardens.removeAll();
         
         if (this.iduser <= 0) {
-            jPanel3.revalidate();
-            jPanel3.repaint();
+            gardens.revalidate();
+            gardens.repaint();
             return;
         }
         String sql = "SELECT id_Garden, Garden_Name, Total_Area, Shape FROM garden WHERE id_User = ?";
@@ -126,8 +126,8 @@ public class grounds extends javax.swing.JFrame {
                     contenedorTarjeta.setMaximumSize(tamanoFijo);
                     contenedorTarjeta.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
                 contenedorTarjeta.add(tarjetaJardin, java.awt.BorderLayout.CENTER);
-                jPanel3.add(contenedorTarjeta);
-                jPanel3.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 10)));
+                gardens.add(contenedorTarjeta);
+                gardens.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 10)));
             }
           }
         } catch (java.sql.SQLException ex) {
@@ -135,8 +135,8 @@ public class grounds extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar datos: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
-        jPanel3.revalidate();
-        jPanel3.repaint();
+        gardens.revalidate();
+        gardens.repaint();
         String sqlUsuario ="SELECT User_name, e_mail FROM users WHERE id_User = ?";
         try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
              java.sql.PreparedStatement ps = con.prepareStatement(sqlUsuario)) {
@@ -164,7 +164,7 @@ public class grounds extends javax.swing.JFrame {
     
     
     public javax.swing.JPanel getJPanel3() {
-        return this.jPanel3;
+        return this.gardens;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -182,8 +182,8 @@ public class grounds extends javax.swing.JFrame {
         btnmenu = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
+        spgardens = new javax.swing.JScrollPane();
+        gardens = new javax.swing.JPanel();
 
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jPopupMenu1.add(jMenuItem1);
@@ -245,22 +245,22 @@ public class grounds extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Mis Jardines");
 
-        jScrollPane1.setBackground(new java.awt.Color(199, 221, 181));
+        spgardens.setBackground(new java.awt.Color(199, 221, 181));
 
-        jPanel3.setBackground(new java.awt.Color(199, 221, 181));
+        gardens.setBackground(new java.awt.Color(199, 221, 181));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout gardensLayout = new javax.swing.GroupLayout(gardens);
+        gardens.setLayout(gardensLayout);
+        gardensLayout.setHorizontalGroup(
+            gardensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 749, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        gardensLayout.setVerticalGroup(
+            gardensLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 498, Short.MAX_VALUE)
         );
 
-        jScrollPane1.setViewportView(jPanel3);
+        spgardens.setViewportView(gardens);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -276,7 +276,7 @@ public class grounds extends javax.swing.JFrame {
                         .addComponent(btnAdd))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spgardens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(554, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -288,7 +288,7 @@ public class grounds extends javax.swing.JFrame {
                     .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(58, 58, 58)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                .addComponent(spgardens, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -344,6 +344,7 @@ public class grounds extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnback;
     private javax.swing.JButton btnmenu;
+    private javax.swing.JPanel gardens;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -352,9 +353,8 @@ public class grounds extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane spgardens;
     // End of variables declaration//GEN-END:variables
 
    public int getIdUser(){

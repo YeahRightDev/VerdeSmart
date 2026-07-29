@@ -30,22 +30,22 @@ public class GroundCard extends javax.swing.JPanel {
     }
 
     // Button formatting styles (keeps your UI looking clean)
-    jButton1.setPreferredSize(new java.awt.Dimension(42, 42));
-    jButton1.setSize(42, 42);
-    jButton1.putClientProperty("FlatLaf.style", "background:#80C1DF; arc:999; borderWidth:0; focusWidth:0;");
-    jButton1.setContentAreaFilled(false);
-    jButton1.setBorderPainted(false);
-    jButton1.setFocusPainted(false);
+    btnmonitoring.setPreferredSize(new java.awt.Dimension(42, 42));
+    btnmonitoring.setSize(42, 42);
+    btnmonitoring.putClientProperty("FlatLaf.style", "background:#80C1DF; arc:999; borderWidth:0; focusWidth:0;");
+    btnmonitoring.setContentAreaFilled(false);
+    btnmonitoring.setBorderPainted(false);
+    btnmonitoring.setFocusPainted(false);
 
-    jButton3.setPreferredSize(new java.awt.Dimension(42, 42));
-    jButton3.setSize(42, 42);
-    jButton3.putClientProperty("FlatLaf.style", "background:#EF9FBC; arc:999; borderWidth:0; focusWidth:0;");
-    jButton3.setContentAreaFilled(false);
-    jButton3.setBorderPainted(false);
-    jButton3.setFocusPainted(false);
+    btndelete.setPreferredSize(new java.awt.Dimension(42, 42));
+    btndelete.setSize(42, 42);
+    btndelete.putClientProperty("FlatLaf.style", "background:#EF9FBC; arc:999; borderWidth:0; focusWidth:0;");
+    btndelete.setContentAreaFilled(false);
+    btndelete.setBorderPainted(false);
+    btndelete.setFocusPainted(false);
 
-    jPanel1.setComponentZOrder(jButton1, 0);
-    jPanel1.setComponentZOrder(jButton3, 0);
+    jPanel1.setComponentZOrder(btnmonitoring, 0);
+    jPanel1.setComponentZOrder(btndelete, 0);
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -55,8 +55,8 @@ public class GroundCard extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnmonitoring = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -72,9 +72,9 @@ public class GroundCard extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Planta ");
 
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnmonitoring.addActionListener(this::btnmonitoringActionPerformed);
 
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btndelete.addActionListener(this::btndeleteActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,8 +89,8 @@ public class GroundCard extends javax.swing.JPanel {
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btndelete, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnmonitoring, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
@@ -99,7 +99,7 @@ public class GroundCard extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addComponent(btnmonitoring, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -108,7 +108,7 @@ public class GroundCard extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addContainerGap(35, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(16, 16, 16))))
         );
 
@@ -124,7 +124,7 @@ public class GroundCard extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
      
         java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
         
@@ -155,9 +155,9 @@ public class GroundCard extends javax.swing.JPanel {
             delete del = new delete(null, this.id_Garden,iduser);
             del.setVisible(true);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btndeleteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnmonitoringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmonitoringActionPerformed
         java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
         if (parentWindow instanceof grounds) {
@@ -169,14 +169,14 @@ public class GroundCard extends javax.swing.JPanel {
             monitoringWindow.setVisible(true);
             mainScreen.setVisible(false);
         } else {
-            System.out.println("Error: Main window 'grounds' was not found.");
+            System.out.println("Error: No se encontró la ventana principal 'grounds'.");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnmonitoringActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btndelete;
+    private javax.swing.JButton btnmonitoring;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

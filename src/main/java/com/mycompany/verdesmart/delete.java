@@ -25,6 +25,8 @@ public class delete extends javax.swing.JFrame {
         this.iduser = idUser;
         initComponents();
         
+        this.getRootPane().setDefaultButton(btndelete);
+        
         btncancel.putClientProperty("FlatLaf.style", ""
                 + "background: #1B4D2F;"
                 + "foreground: #FFFFFF;"
@@ -33,7 +35,7 @@ public class delete extends javax.swing.JFrame {
                 + "arc: 999;");
   
         btndelete.putClientProperty("FlatLaf.style", ""
-                + "background: #1B4D2F;"
+                + "background: #FF0000;"
                 + "foreground: #FFFFFF;"
                 + "borderWidth: 0;"
                 + "focusWidth: 0;"
@@ -64,7 +66,7 @@ public class delete extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(27, 77, 47));
         jLabel1.setText("Eliminar Jardín");
 
-        btncancel.setText("Canclar");
+        btncancel.setText("Cancelar");
         btncancel.addActionListener(this::btncancelActionPerformed);
 
         btndelete.setText("Eliminar");
@@ -130,8 +132,7 @@ public class delete extends javax.swing.JFrame {
      */
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
 
-            // Display confirmation alert before performing permanent cascading data removal
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
             this, 
             "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas, monitoreos e irrigaciones asociadas.", 
             "Confirmar Eliminación", 
@@ -158,11 +159,9 @@ public class delete extends javax.swing.JFrame {
                     con.commit(); 
                     javax.swing.JOptionPane.showMessageDialog(this, "El jardín y sus datos asociados se eliminaron correctamente.");
                     
-                    // MODIFICADO: Forzamos un reinicio limpio de la pantalla grounds para que se limpie por completo
                     grounds nuevaPantalla = new grounds(iduser);
                     nuevaPantalla.setVisible(true);
                     
-                    // Cerramos la pantalla vieja que estaba en segundo plano
                     if (this.home_page != null) {
                         this.home_page.dispose();
                     }
@@ -175,16 +174,23 @@ public class delete extends javax.swing.JFrame {
 
         } catch (java.sql.SQLException ex) {
             if (con != null) {
-                try { con.rollback(); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+                try { 
+                    con.rollback(); 
+                } catch (java.sql.SQLException e) { 
+                    logger.log(java.util.logging.Level.SEVERE, "Error al hacer rollback", e); 
+                }
             }
             logger.log(java.util.logging.Level.SEVERE, "Error en la transacción de eliminación", ex);
             javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
         } finally {
             if (con != null) {
-                try { con.setAutoCommit(true); } catch (java.sql.SQLException e) { logger.log(java.util.logging.Level.SEVERE, null, e); }
+                try { 
+                    con.setAutoCommit(true); 
+                } catch (java.sql.SQLException e) { 
+                    logger.log(java.util.logging.Level.SEVERE, "Error al restaurar autoCommit", e); 
+                }
             }
         }
-    
     }//GEN-LAST:event_btndeleteActionPerformed
 
     /**

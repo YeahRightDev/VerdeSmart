@@ -17,6 +17,8 @@ public class MONITORING extends javax.swing.JFrame {
 
     public MONITORING(grounds mainScreen, String currentGroundName) {
         initComponents();
+        
+        this.getRootPane().setDefaultButton(btnclose);
         this.mainScreen = mainScreen;
         jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
         // 1. Apply core UI styling elements first
@@ -27,13 +29,13 @@ public class MONITORING extends javax.swing.JFrame {
             jLabel1.setText(currentGroundName.toUpperCase());
             consultarDatosMonitoreo(currentGroundName);
         }
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
+        btnclose.setContentAreaFilled(false); 
+        btnclose.setBorderPainted(false);     
+        btnclose.setFocusPainted(false);  
         
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
+        btnback.setContentAreaFilled(false); 
+        btnback.setBorderPainted(false);     
+        btnback.setFocusPainted(false);  
     }
     
     private void consultarDatosMonitoreo(String nombreJardin) {
@@ -56,11 +58,11 @@ public class MONITORING extends javax.swing.JFrame {
             
             try (java.sql.ResultSet rsM = psM.executeQuery()) {
                 if (rsM.next()) {
-                    // 1. EXTRAER LA HUMEDAD
+                    // 1. Extract the moisture
                     float humedad = rsM.getFloat("Humidity");
                     lbHumedad.setText(String.format("%.1f%%", humedad));
 
-                    // 2. EXTRAER LA FECHA Y HORA DEL MONITOREO
+                    // 2. Extract the date and time of the monitoring
                     java.sql.Timestamp fechaMonitoreoTS = rsM.getTimestamp("Date_Time");
                     java.text.SimpleDateFormat formatoFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
                     java.text.SimpleDateFormat formatoHora = new java.text.SimpleDateFormat("hh:mm a");
@@ -68,14 +70,14 @@ public class MONITORING extends javax.swing.JFrame {
                     String fechaString = formatoFecha.format(fechaMonitoreoTS);
                     String horaString = formatoHora.format(fechaMonitoreoTS);
 
-                    // Mostramos la fecha y hora en la que el sensor midió los datos
+                    // We show the date and time when the sensor measured the data
                     lblUltimoRiego.setText(fechaString + " - " + horaString); 
                     lblFechaYHoraRiego.setText(fechaString + " - " + horaString);
 
-                    // 3. CONTROLAR EL PRÓXIMO RIEGO BASADO EN LA ALERTA DE MONITOREO
+                    // 3. control the next watering based on the monitoring alert
                     String alerta = rsM.getString("irrigation_alert");
                     
-                    // Si el estado del monitoreo dice que necesita agua o está programado:
+                    // If the monitoring status says it needs water or is scheduled
                     if (alerta != null && !alerta.isEmpty()) {
                         lblProximoRiego.setText(alerta.toUpperCase());
                     } else {
@@ -83,7 +85,7 @@ public class MONITORING extends javax.swing.JFrame {
                     }
                     
                 } else {
-                    // Si el jardín es nuevo y no tiene ningún dato en la tabla 'monitoring'
+                    // If the garden is new and doesn't have any data in the 'monitoring' table
                     lbHumedad.setText("N/D");
                     lblUltimoRiego.setText("Sin registros");
                     lblFechaYHoraRiego.setText("Sin registros");
@@ -104,9 +106,9 @@ public class MONITORING extends javax.swing.JFrame {
         lblFechaYHoraRiego.setOpaque(true);
         lblProximoRiego.setOpaque(true);
 
-        jButton2.setContentAreaFilled(false);
-        jButton2.setBorderPainted(false);
-        jButton2.setFocusPainted(false);
+        btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
 
         lbHumedad.setBackground(new Color(199,221,181));
         lbHumedad.setForeground(new Color(27,77,47));
@@ -156,9 +158,9 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnclose = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -177,7 +179,7 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnclose.addActionListener(this::btncloseActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Monitoreo");
@@ -188,11 +190,11 @@ public class MONITORING extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnback)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnclose)
                 .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
@@ -201,8 +203,8 @@ public class MONITORING extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnclose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -306,7 +308,7 @@ public class MONITORING extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
        // Uses the existing window object instance instead of creating a blank 'new grounds()' screen
         if (this.mainScreen != null) {
             this.mainScreen.setVisible(true);
@@ -314,11 +316,11 @@ public class MONITORING extends javax.swing.JFrame {
             new grounds(0).setVisible(true);
         }
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btncloseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnback;
+    private javax.swing.JButton btnclose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

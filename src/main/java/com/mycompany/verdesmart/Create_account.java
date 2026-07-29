@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 /**
  * Account creation window for the VerdeSmart application.
  * Manages user registration UI and database insertion.
@@ -18,19 +19,35 @@ public class Create_account extends javax.swing.JFrame {
     public Create_account() {
         initComponents();
         this.setSize(800, 700);// Set window layout dimensions
+        
+        //Clear default text from the fields
+        btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
+
+        jButton2.setContentAreaFilled(false);
+        jButton2.setBorderPainted(false);
+        jButton2.setFocusPainted(false);
 
         // Apply custom rounded borders and backgrounds to text fields
-        styleRoundedField(txtNombre);
-        styleRoundedField(age);
-        styleRoundedField(dateborn);
-        styleRoundedField(emailField);
-        styleRoundedField(passwordField);
-        styleRoundedField(confirmPasswordField);
+        styleRoundedField(txtNombre, "");
+        styleRoundedField(age, "");
+        styleRoundedField(dateborn, "");
+        styleRoundedField(emailField, "");
+        styleRoundedField(passwordField, "");
+        styleRoundedField(confirmPasswordField, "");
+       
+        setupPlaceholder(txtNombre, "Nombre completo");
+        setupPlaceholder(age, "Ej. 25");
+        setupPlaceholder(dateborn, "YYYY-MM-DD");
+        setupPlaceholder(emailField, "Email, por ejemplo: ejemplo@correo.com");
+        setupPlaceholder(passwordField, "Contraseña");
+        setupPlaceholder(confirmPasswordField, "Confirmar contraseña");
 
         // Make top navigation and icon buttons transparent by disabling default backgrounds and focus outlines
-        jButton1.setContentAreaFilled(false);
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
+        btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
 
         jButton2.setContentAreaFilled(false);
         jButton2.setBorderPainted(false);
@@ -57,24 +74,23 @@ public class Create_account extends javax.swing.JFrame {
         registerButton.setBorderPainted(false);
         registerButton.setFocusPainted(false);
         registerButton.setPreferredSize(new java.awt.Dimension(40, 40));
+        
+        this.getRootPane().setDefaultButton(logIn);
        
+        
         
     }
    
     /**
      * Helper method to dynamically render rounded borders and apply custom text field placeholders.
      */
-    private void styleRoundedField(javax.swing.JTextField field) {
+    private void styleRoundedField(javax.swing.JTextField field, String placeholderText) {
         field.setOpaque(true);
         field.setBackground(java.awt.Color.WHITE);
 
         // Initialize inline localized placeholder values via FlatLaf library attributes
-        txtNombre.putClientProperty("FlatLaf.placeholderText", "Name");
-        age.putClientProperty("FlatLaf.placeholderText", "00");
-        dateborn.putClientProperty("FlatLaf.placeholderText", "YYYY-MM-DD");
-        emailField.putClientProperty("FlatLaf.placeholderText", "Email");
-        passwordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
-        confirmPasswordField.putClientProperty("FlatLaf.placeholderText", "••••••••");
+        field.putClientProperty("FlatLaf.placeholderText", placeholderText);
+        
 
         // Override default rendering pipeline to paint manual modern anti-aliased text boundaries
         field.setBorder(new javax.swing.border.AbstractBorder() {
@@ -132,7 +148,7 @@ public class Create_account extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -158,7 +174,7 @@ public class Create_account extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText(" Verde Smart");
@@ -169,7 +185,7 @@ public class Create_account extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnback)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(36, 36, 36)
@@ -184,7 +200,7 @@ public class Create_account extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
@@ -337,12 +353,12 @@ public class Create_account extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Closes current frame and opens up the main LOGIN view
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         // TODO add your handling code here:
         LOGIN log = new LOGIN();
         log.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
     private void confirmPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordFieldActionPerformed
         // TODO add your handling code here:
@@ -350,28 +366,34 @@ public class Create_account extends javax.swing.JFrame {
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
+        // For enter 
+        logIn.doClick();
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void ageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageActionPerformed
         // TODO add your handling code here:
+        logIn.doClick();
     }//GEN-LAST:event_ageActionPerformed
 
     private void datebornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datebornActionPerformed
-        
+        logIn.doClick();
     
     }//GEN-LAST:event_datebornActionPerformed
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
+        logIn.doClick();
         
     }//GEN-LAST:event_emailFieldActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
+        logIn.doClick();
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
-
+        
+        
         String nombre = txtNombre.getText().trim();
         String edad = age.getText().trim();
         String date = dateborn.getText().trim();
@@ -412,11 +434,33 @@ public class Create_account extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "La contraseña debe contener al menos 8 caracteres.");
             return;
         }
-        //5
+        // 5. If the user puts letters instead of a number for the age, check their age, make sure it's not less than 0 or more than 130 ages
+      int Ageint;
+      try{
+          Ageint = Integer.parseInt(edad);
+          if (Ageint <= 0 || Ageint > 130) {
+                JOptionPane.showMessageDialog(this, "Por favor, introduce una edad válida entre 1 y 130 años.");
+                return;
+            }
+      }catch (NumberFormatException e){
+        JOptionPane.showMessageDialog(this, "Por favor, introduce un números para que sea válido.");
+        return;
+      }
+      
+      // 6. Validation dateborn
        if (dateborn.getText().trim().isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Por favor, ingresa una fecha de nacimiento.");
-    return;
-}
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa una fecha de nacimiento.");
+            return;
+        }
+       
+       // 7. Validate the Database
+       java.sql.Date dateb;
+       try{
+           dateb = java.sql.Date.valueOf(date);
+       }catch (IllegalArgumentException e){
+           JOptionPane.showMessageDialog(this, " Formato de fecha inválido, debe de ser YYYY-MM-DD, por ejemplo: 2007-10-29.");
+           return;
+       }
 
         // Target insertion parameterized query string
         String sql = "INSERT INTO users (User_name, User_Password, e_mail, date_born, age) VALUES (?, ?, ?,?,?)";
@@ -426,34 +470,36 @@ public class Create_account extends javax.swing.JFrame {
             // Establish database connection pool instance reference
             Connection con = DatabaseConnection.getInstance().getConnection();
             try (PreparedStatement ps = con.prepareStatement(sql)) {
-                ps.setString(1, txtNombre.getText().trim());
+                ps.setString(1, nombre);
                 ps.setString(2, String.valueOf(passwordField.getPassword()));
                 ps.setString(3, email);
-                java.sql.Date dateb = java.sql.Date.valueOf(dateborn.getText().trim());
+                //java.sql.Date dateb = java.sql.Date.valueOf(dateborn.getText().trim());
                 ps.setDate(4, dateb);
+                ps.setInt(5, Ageint);
                 
-                try {
+               /* try {
                 ps.setInt(5, Integer.parseInt(edad));
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(this, "Por favor, introduce una edad válida en números.");
                 return;
-            }
+            }*/
                 ps.executeUpdate();
                 
                 JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.");
             }
 
-            LOGIN log = new LOGIN();
+            LOGIN log = new LOGIN(); 
             log.setVisible(true);
             this.dispose();
-
         } catch (SQLException e) {
-
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-
+            if (e.getErrorCode() == 1062) { // Error 1062 duplicate entry
+                JOptionPane.showMessageDialog(this, "El correo electrónico ya está registrado. Por favor, utiliza otro correo o inicia sesión.","Correo duplicado", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+            "Error en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_logInActionPerformed
-
+    }
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
         login2 log = new login2();
@@ -466,12 +512,51 @@ public class Create_account extends javax.swing.JFrame {
          txtNombre.setText("");
     }//GEN-LAST:event_txtNombreMouseClicked
    
+    
+    private void setupPlaceholder(javax.swing.JTextField field, String placeholder) {
+    // Si es un campo de contraseña, configuramos el carácter de ocultación
+    boolean isPassword = field instanceof javax.swing.JPasswordField;
+    field.setText(placeholder);
+    field.setForeground(new java.awt.Color(150, 150, 150)); // Color gris para la guía
+    
+    if (isPassword) {
+        ((javax.swing.JPasswordField) field).setEchoChar((char) 0); // Texto visible para la guía
+    }
+
+    field.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent e) {
+            if (field.getText().equals(placeholder)) {
+                field.setText("");
+                field.setForeground(java.awt.Color.BLACK);
+                if (isPassword) {
+                    ((javax.swing.JPasswordField) field).setEchoChar('•');
+                }
+            }
+        }
+        @Override
+        public void focusLost(java.awt.event.FocusEvent e) {
+            if (field.getText().trim().isEmpty()) {
+                field.setText(placeholder);
+                field.setForeground(new java.awt.Color(150, 150, 150));
+                if (isPassword) {
+                    ((javax.swing.JPasswordField) field).setEchoChar((char) 0);
+                }
+            }
+        }
+    });
+}
+        
+        
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField age;
+    private javax.swing.JButton btnback;
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JTextField dateborn;
     private javax.swing.JTextField emailField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -488,4 +573,9 @@ public class Create_account extends javax.swing.JFrame {
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+    
+    //Error
+    /*private void styleRoundedField(JTextField txtNombre, String name) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
 }

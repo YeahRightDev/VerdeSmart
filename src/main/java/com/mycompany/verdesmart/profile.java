@@ -42,12 +42,12 @@ public class profile extends javax.swing.JFrame {
                     String email = rs.getString("e_mail");
                     String fecha = rs.getString("registration_date");
                     
-                    // Asignamos los datos reales a tus etiquetas de texto
+                    // We assign the real data to your text labels
                     lblname.setText("Nombre de Usuario: " + nombre);
                     lblmail.setText("Correo Electrónico: " + email);
                     lbldateandtime.setText("Miembro desde: " + fecha);
                     
-                    // Ocultamos o cambiamos el jLabel5 si no lo necesitas por ahora
+                    // We hide or change jLabel5 if you don't need it for now
                     lblstate.setText("Estado: Cuenta Activa");
                 } else {
                     lblname.setText("Usuario no encontrado");
@@ -200,7 +200,7 @@ public class profile extends javax.swing.JFrame {
         // TODO add your handling code here:
         grounds ventanaGrounds = new grounds(this.iduser);
         ventanaGrounds.setVisible(true);
-        // Cerramos la ventana actual de perfil
+        // We close the current profile window
         this.dispose();
     }//GEN-LAST:event_btnbackActionPerformed
 

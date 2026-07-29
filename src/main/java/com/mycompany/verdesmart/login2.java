@@ -19,9 +19,7 @@ public class login2 extends javax.swing.JFrame {
         this.setSize(800, 700);
         this.setLocationRelativeTo(null);
 
-       // Inject inline context guidance text placeholders using FlatLaf engine keys
-        txtCorreo.putClientProperty("FlatLaf.placeholderText", "Email");
-        txtPassword.putClientProperty("FlatLaf.placeholderText", "Password");
+       
 
         // Load image
       try {
@@ -31,11 +29,11 @@ public class login2 extends javax.swing.JFrame {
                 ImageIcon icon = new ImageIcon(imagePath);
                 rOUND_PANEL1.setImage(icon.getImage());
             } else {
-                System.out.println("ERROR: Image not found");
+                System.out.println("ERROR: Imagen no encontrada");
             }
 
         } catch (Exception e) {
-            System.out.println("Image loading error: " + e.getMessage());
+            System.out.println("Error al cargar la imagen: " + e.getMessage());
         }
         // Configure transparent interaction behaviors across navigation button instances
         jButton1.setContentAreaFilled(false);
@@ -59,8 +57,11 @@ public class login2 extends javax.swing.JFrame {
         btnpassword.setFocusPainted(false);
 
         // Enforce anti-aliased geometry overrides across text input structures5
-        styleRoundedField(txtCorreo);
+        styleRoundedField(txtemail);
         styleRoundedField(txtPassword);
+        
+        forplaceholder(txtemail, "Correo electrónico");
+        forplaceholder(txtPassword, "Contraseña");
     }
 
     
@@ -115,6 +116,36 @@ public class login2 extends javax.swing.JFrame {
             }
         });
     }
+        private void forplaceholder(javax.swing.JTextField field, String placeholder) {
+            boolean isPassword = field instanceof javax.swing.JPasswordField;
+            field.setText(placeholder);
+            field.setForeground(new java.awt.Color(160, 160, 160));
+            if (isPassword) {
+                ((javax.swing.JPasswordField) field).setEchoChar((char) 0);
+            }
+            field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+            if (field.getText().equals(placeholder)) {
+                field.setText("");
+                field.setForeground(java.awt.Color.BLACK);
+                if (isPassword) {
+                    ((javax.swing.JPasswordField) field).setEchoChar('•'); //Enable password hiding
+                }
+            }
+        }
+          @Override
+        public void focusLost(java.awt.event.FocusEvent e) {
+            if (field.getText().trim().isEmpty()) {
+                field.setText(placeholder);
+                field.setForeground(new java.awt.Color(160, 160, 160));
+                if (isPassword) {
+                    ((javax.swing.JPasswordField) field).setEchoChar((char) 0);
+                }
+            }
+        }
+    });          
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -126,7 +157,7 @@ public class login2 extends javax.swing.JFrame {
         btnback = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
+        txtemail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnlogin = new javax.swing.JButton();
         btnpassword = new javax.swing.JButton();
@@ -180,8 +211,8 @@ public class login2 extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Correo Electrónico");
 
-        txtCorreo.setColumns(67);
-        txtCorreo.setBorder(
+        txtemail.setColumns(67);
+        txtemail.setBorder(
             new javax.swing.border.AbstractBorder() { @Override public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) { java.awt.Graphics2D g2 = (java.awt.Graphics2D) g; g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(java.awt.Color.GRAY); g2.drawRoundRect(x, y, width - 1, height - 1, 15, 15); } @Override public java.awt.Insets getBorderInsets(java.awt.Component c) { return new java.awt.Insets(4, 10, 4, 10); } });
 
         jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
@@ -224,7 +255,7 @@ public class login2 extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(300, 300, 300)
@@ -244,7 +275,7 @@ public class login2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(27, 27, 27)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -286,12 +317,14 @@ public class login2 extends javax.swing.JFrame {
      * and forwards successful authentication tokens to the grounds visual dashboard frame.
      */
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        String Email = txtCorreo.getText().trim();
-        String Password = new String(txtPassword.getPassword()).trim();
+        String Email = txtemail.getText().equals("Correo electrónico") ? "" : txtemail.getText().trim();
+    
+        String rawPassword = new String(txtPassword.getPassword());
+        String Password = rawPassword.equals("Contraseña") ? "" : rawPassword.trim();
 
         if (Email.isEmpty() || Password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
-            return;
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
+        return;
         }
 
         try {
@@ -342,7 +375,7 @@ public class login2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private com.mycompany.verdesmart.ROUND_PANEL rOUND_PANEL1;
-    private javax.swing.JTextField txtCorreo;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtemail;
     // End of variables declaration//GEN-END:variables
 }

@@ -47,8 +47,8 @@
                   </Group>
                   <EmptySpace pref="192" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton3" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="1" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="btndelete" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnmonitoring" alignment="1" min="-2" pref="51" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
@@ -60,7 +60,7 @@
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" pref="38" max="32767" attributes="0"/>
+                      <Component id="btnmonitoring" pref="38" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -71,7 +71,7 @@
                           <EmptySpace pref="35" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jButton3" pref="0" max="32767" attributes="0"/>
+                          <Component id="btndelete" pref="0" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -113,14 +113,14 @@
             <Property name="text" type="java.lang.String" value="Planta "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnmonitoring">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnmonitoringActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="btndelete">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btndeleteActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  * PLANTS Frame class.
@@ -38,20 +40,20 @@ public class PLANTS extends javax.swing.JFrame {
         this.iduser = idUser;
    
         // Remove standard native borders and selection fills for standard buttons
-        jButton1.setContentAreaFilled(false); 
-        jButton1.setBorderPainted(false);     
-        jButton1.setFocusPainted(false);  
+        btnback.setContentAreaFilled(false); 
+        btnback.setBorderPainted(false);     
+        btnback.setFocusPainted(false);  
         
         jButton2.setContentAreaFilled(false); 
         jButton2.setBorderPainted(false);     
         jButton2.setFocusPainted(false);  
         
-        jButton3.setContentAreaFilled(false); 
-        jButton3.setBorderPainted(false);     
-        jButton3.setFocusPainted(false);  
+        btnpage1.setContentAreaFilled(false); 
+        btnpage1.setBorderPainted(false);     
+        btnpage1.setFocusPainted(false);  
         
         // Apply FlatLaf look and feel styles for modern visual designs
-        jButton4.putClientProperty("FlatLaf.style",
+        btnpage2.putClientProperty("FlatLaf.style",
         "background:#1B5E20;" +
         "foreground:#FFFFFF;" +
         "borderWidth:0;" +
@@ -83,12 +85,12 @@ public class PLANTS extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnback = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnpage1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnpage2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnDiffenbachia = new javax.swing.JButton();
         btnArbolAbundancia = new javax.swing.JButton();
@@ -105,7 +107,7 @@ public class PLANTS extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnback.addActionListener(this::btnbackActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -116,7 +118,7 @@ public class PLANTS extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnback)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(54, 54, 54)
@@ -133,20 +135,20 @@ public class PLANTS extends javax.swing.JFrame {
                 .addGap(8, 8, 8))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnback, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, -1));
 
-        jButton3.addActionListener(this::jButton3ActionPerformed);
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        btnpage1.addActionListener(this::btnpage1ActionPerformed);
+        jPanel1.add(btnpage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 250, 40));
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
+        jPanel1.add(btnpage2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, 20));
 
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -234,7 +236,7 @@ public class PLANTS extends javax.swing.JFrame {
 
          String plantName = "Árbol abundancia";
 
-    // 1. Validar en la lista local de la sesión actual
+    // 1. Validate in the local list of the current session
     if (selectedPlantNames.contains(plantName)) {
         javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
         return;
@@ -244,18 +246,18 @@ public class PLANTS extends javax.swing.JFrame {
         Connection con = DatabaseConnection.getInstance().getConnection();
         int plantId = -1;
 
-        // 2. Verificar si la planta YA existe en la tabla general 'plant'
+        // 2. Check if the plant already exists in the general 'plant' table
         String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
         try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
             pstCheck.setString(1, plantName);
             try (ResultSet rs = pstCheck.executeQuery()) {
                 if (rs.next()) {
-                    plantId = rs.getInt("id_Plant"); // La planta ya existía en la BD
+                    plantId = rs.getInt("id_Plant"); 
                 }
             }
         }
 
-        // 3. Si NO existe en el catálogo, la insertamos (sin pasar id_Garden)
+        // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
                     "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
@@ -281,20 +283,20 @@ public class PLANTS extends javax.swing.JFrame {
             }
         }
 
-        // 4. Verificar si esta planta ya está vinculada a ESTE jardín en la BD
+        // 4. Check if this plant is already linked to THIS garden in the DB
         String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
         try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
             pstGP.setInt(1, plantId);
             pstGP.setInt(2, this.idGarden);
             try (ResultSet rsGP = pstGP.executeQuery()) {
                 if (rsGP.next()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está registrada en este jardín.");
-                    return; // Detener flujo
+                    showMensaje("Esta planta ya está registrada...", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return; 
                 }
             }
         }
 
-        // 5. Si todo está bien, la agregamos a nuestras listas locales para el guardado final
+        // 5. If everything is fine, we add it to our local lists for the final save
         selectedPlantIds.add(plantId);
         selectedPlantNames.add(plantName);
         javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
@@ -363,23 +365,23 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
    
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnpage1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpage1ActionPerformed
        ADD1 add = new ADD1(this.mainScreen, this.mainScreen.getIdUser());
         add.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnpage1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
        ADD1 addWindow = new ADD1(this.mainScreen, this.mainScreen.getIdUser());
         addWindow.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnbackActionPerformed
 
     private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
                                                 
     String plantName = "Corona de Cristo";
 
-    // 1. Validar en la lista local de la sesión actual
+    // 1. Validate in the local list of the current session
     if (selectedPlantNames.contains(plantName)) {
         javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
         return;
@@ -389,18 +391,18 @@ public class PLANTS extends javax.swing.JFrame {
         Connection con = DatabaseConnection.getInstance().getConnection();
         int plantId = -1;
 
-        // 2. Verificar si la planta YA existe en la tabla general 'plant'
+        // 2. Check if the plant already exists in the general 'plant' table
         String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
         try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
             pstCheck.setString(1, plantName);
             try (ResultSet rs = pstCheck.executeQuery()) {
                 if (rs.next()) {
-                    plantId = rs.getInt("id_Plant"); // La planta ya existía en la BD
+                    plantId = rs.getInt("id_Plant"); 
                 }
             }
         }
 
-        // 3. Si NO existe en el catálogo, la insertamos (sin pasar id_Garden)
+        // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
                     "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
@@ -425,20 +427,20 @@ public class PLANTS extends javax.swing.JFrame {
             }
         }
 
-        // 4. Verificar si esta planta ya está vinculada a ESTE jardín en la BD
+        // 4. Check if this plant is already linked to THIS garden in the DB
         String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
         try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
             pstGP.setInt(1, plantId);
             pstGP.setInt(2, this.idGarden);
             try (ResultSet rsGP = pstGP.executeQuery()) {
                 if (rsGP.next()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está registrada en este jardín.");
+                    showMensaje("Esta planta ya está registrada...", "Aviso", JOptionPane.WARNING_MESSAGE);
                     return; // Detener flujo
                 }
             }
         }
 
-        // 5. Si todo está bien, la agregamos a nuestras listas locales para el guardado final
+        // 5. If everything is fine, we add it to our local lists for the final save
         selectedPlantIds.add(plantId);
         selectedPlantNames.add(plantName);
         javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
@@ -455,7 +457,7 @@ public class PLANTS extends javax.swing.JFrame {
                                                     
     String plantName = "Diffenbachia";
 
-    // 1. Validar en la lista local de la sesión actual
+    // 1. Validate in the local list of the current session
     if (selectedPlantNames.contains(plantName)) {
         javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
         return;
@@ -465,18 +467,18 @@ public class PLANTS extends javax.swing.JFrame {
         Connection con = DatabaseConnection.getInstance().getConnection();
         int plantId = -1;
 
-        // 2. Verificar si la planta YA existe en la tabla general 'plant'
-        String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
+        // 2. . Check if the plant already exists in the general 'plant' table
+       String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
         try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
             pstCheck.setString(1, plantName);
             try (ResultSet rs = pstCheck.executeQuery()) {
                 if (rs.next()) {
-                    plantId = rs.getInt("id_Plant"); // La planta ya existía en la BD
+                    plantId = rs.getInt("id_Plant"); 
                 }
             }
         }
 
-        // 3. Si NO existe en el catálogo, la insertamos (sin pasar id_Garden)
+        // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
                     "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
@@ -502,20 +504,20 @@ public class PLANTS extends javax.swing.JFrame {
             }
         }
 
-        // 4. Verificar si esta planta ya está vinculada a ESTE jardín en la BD
+        // 4. Check if this plant is already linked to THIS garden in the DB
         String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
         try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
             pstGP.setInt(1, plantId);
             pstGP.setInt(2, this.idGarden);
             try (ResultSet rsGP = pstGP.executeQuery()) {
                 if (rsGP.next()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está registrada en este jardín.");
+                    showMensaje("Esta planta ya está registrada...", "Aviso", JOptionPane.WARNING_MESSAGE);
                     return; // Detener flujo
                 }
             }
         }
 
-        // 5. Si todo está bien, la agregamos a nuestras listas locales para el guardado final
+        // 5. If everything is fine, we add it to our local lists for the final save
         selectedPlantIds.add(plantId);
         selectedPlantNames.add(plantName);
         javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
@@ -534,7 +536,7 @@ public class PLANTS extends javax.swing.JFrame {
                                                     
     String plantName = "Durantia";
 
-    // 1. Validar en la lista local de la sesión actual
+    // 1. Validate in the local list of the current session
     if (selectedPlantNames.contains(plantName)) {
         javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
         return;
@@ -544,18 +546,18 @@ public class PLANTS extends javax.swing.JFrame {
         Connection con = DatabaseConnection.getInstance().getConnection();
         int plantId = -1;
 
-        // 2. Verificar si la planta YA existe en la tabla general 'plant'
+        // 2. . Check if the plant already exists in the general 'plant' table
         String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
         try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
             pstCheck.setString(1, plantName);
             try (ResultSet rs = pstCheck.executeQuery()) {
                 if (rs.next()) {
-                    plantId = rs.getInt("id_Plant"); // La planta ya existía en la BD
+                    plantId = rs.getInt("id_Plant"); 
                 }
             }
         }
 
-        // 3. Si NO existe en el catálogo, la insertamos (sin pasar id_Garden)
+        // 3. . If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
                     "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
@@ -581,20 +583,20 @@ public class PLANTS extends javax.swing.JFrame {
             }
         }
 
-        // 4. Verificar si esta planta ya está vinculada a ESTE jardín en la BD
+        // 4. Check if this plant is already linked to THIS garden in the DB
         String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
         try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
             pstGP.setInt(1, plantId);
             pstGP.setInt(2, this.idGarden);
             try (ResultSet rsGP = pstGP.executeQuery()) {
                 if (rsGP.next()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Esta planta ya está registrada en este jardín.");
+                    showMensaje("Esta planta ya está registrada...", "Aviso", JOptionPane.WARNING_MESSAGE);
                     return; // Detener flujo
                 }
             }
         }
 
-        // 5. Si todo está bien, la agregamos a nuestras listas locales para el guardado final
+        // 5. If everything is fine, we add it to our local lists for the final save  
         selectedPlantIds.add(plantId);
         selectedPlantNames.add(plantName);
         javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
@@ -606,7 +608,17 @@ public class PLANTS extends javax.swing.JFrame {
         
                 
     }//GEN-LAST:event_btnDurantiaActionPerformed
-
+    private void showMensaje(String texto, String titulo, int tipoMensaje) {
+        JOptionPane optionPane = new JOptionPane(texto, tipoMensaje);
+        JDialog dialog = optionPane.createDialog(this, titulo);
+        dialog.addWindowFocusListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowGainedFocus(java.awt.event.WindowEvent e) {
+            optionPane.selectInitialValue();
+        }
+        });
+        dialog.setVisible(true);
+    }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArbolAbundancia;
@@ -614,10 +626,10 @@ public class PLANTS extends javax.swing.JFrame {
     private javax.swing.JButton btnDiffenbachia;
     private javax.swing.JButton btnDurantia;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnback;
+    private javax.swing.JButton btnpage1;
+    private javax.swing.JButton btnpage2;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
