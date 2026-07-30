@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+     <title>Verde Smart - Diseñador Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+          --bg-canvas: #FFFFFF; 
+            --panel-bg: #1B4D2F; 
+            --panel-border: #C7DDB5;
+            --card-bg: #FFFFFF;
+            --text-main: #FFFFFF;
+            --text-muted: #C7DDB5;
+            --accent-green: #C7DDB5; 
+            --accent-green-hover: #a8c493;
+            --accent-earth: #ef4444;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444;
+        }
+
+        body { 
+           margin: 0; background: #FFFFFF; color: var(--text-main); 
+            font-family: 'Poppins', sans-serif; 
+            height: 100vh; display: flex; overflow: hidden;
+        }
+
+        #canvas-zone { 
+           flex: 1; position: relative; 
+            background: #FFFFFF; 
+            cursor: crosshair;
+        }
+        
+        canvas { position: absolute; top:0; left:0; width: 100%; height: 100%; background: #FFFFFF;}
+        
+        #panel { 
+           width: 420px; background: var(--panel-bg); padding: 25px; 
+            overflow-y: auto; border-left: 1px solid var(--panel-border); 
+            z-index: 10; box-shadow: -5px 0 30px rgba(0,0,0,0.6);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+       
+        #panel::-webkit-scrollbar { width: 8px; }
+        #panel::-webkit-scrollbar-track { background: var(--panel-bg); }
+        #panel::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+        
+        h3 { 
+           margin: 0 0 5px 0; color: var(--accent-green); 
+            font-size: 1.6rem; display: flex; align-items: center; gap: 10px; 
+            letter-spacing: 0.5px;
+        }
+        
+        .tool-box { 
+          background: var(--card-bg); padding: 18px; 
+            border-radius: 12px; border: 1px solid var(--panel-border); 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            color: #000000;
+        }
+        .tool-box b { 
+            color: #000000; font-size: 0.85rem; margin-bottom: 12px; 
+            display: block; text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid #C7DDB5; padding-bottom: 8px;
+        }
+
+        .btn { 
+           width: 100%; padding: 12px; margin: 6px 0; border: none; 
+            cursor: pointer; color: white; font-weight: 600; font-size: 0.9rem;
+            border-radius: 8px; transition: all 0.2s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); filter: brightness(1.1); }
+        .btn:active { transform: translateY(0); }
+        
+        .btn-green { background: linear-gradient(135deg, #1B4D2F, #2A7347); color: #FFFFFF; }
+        .btn-earth { background: linear-gradient(135deg, #dc2626, var(--accent-earth)); }
+        .btn-purple { background: linear-gradient(135deg, #7c3aed, var(--accent-purple)); }
+        .btn-blue { background: linear-gradient(135deg, #2563eb, var(--accent-blue)); }
+        .btn-red { background: linear-gradient(135deg, #dc2626, var(--accent-red)); }
+        
+        .btn-outline { 
+            background: #C7DDB5; 
+            border: 1px solid #C7DDB5; 
+            color: #1B4D2F; 
+        }
+        .btn-outline:hover { 
+            background: #b2ce9d; 
+        }
+        .group-card { 
+            background: #121c15; padding: 12px 15px; margin-bottom: 10px; 
+            border-radius: 8px; border-left: 4px solid var(--accent-green); 
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: #FFFFFF;
+        }
+       .group-info { display: flex; align-items: center; gap: 10px; flex: 1; }
+        .group-actions { display: flex; gap: 5px; align-items: center;}
+        
+        .btn-icon { background: rgba(255,255,255,0.05); border: 1px solid var(--panel-border); color: white; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .btn-icon:hover { background: var(--panel-border); }
+        
+        .color-picker-circle {
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            width: 26px; height: 26px; border: none; border-radius: 50%;
+            cursor: pointer; padding: 0; background: transparent;
+            box-shadow: 0 0 0 1px var(--panel-border); transition: transform 0.2s;
+        }
+        .color-picker-circle:hover { transform: scale(1.1); }
+        .color-picker-circle::-webkit-color-swatch-wrapper { padding: 0; }
+        .color-picker-circle::-webkit-color-swatch { border: none; border-radius: 50%; }
+        .color-picker-circle::-moz-color-swatch { border: none; border-radius: 50%; }
+
+        input[type="file"] { 
+            width: 90%; padding: 10px; background: rgba(0,0,0,0.2); 
+            border-radius: 6px; border: 1px dashed var(--panel-border); 
+            color: var(--text-muted); font-size: 0.8rem; cursor: pointer;
+        }
+
+        select {
+            width: 100%; padding: 10px; margin-bottom: 12px; 
+            background: #0d140f; color: white; border: 1px solid var(--panel-border); 
+            border-radius: 6px; outline: none; font-family: 'Poppins', sans-serif; cursor: pointer;
+        }
+        select:focus { border-color: var(--accent-green); }
+        
+        label { font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 4px; }
+        .label-red { color: #fca5a5; }
+        .label-green { color: #86efac; }
+
+        hr { border: none; border-top: 1px solid var(--panel-border); margin: 15px 0; }
+        .flex-row { display: flex; gap: 10px; }
+
+        /* --- ESTILOS PARA LAS ALERTAS/PROMPTS CUSTOMIZADOS --- */
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(3px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: 0.2s;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box {
+            background: var(--panel-bg); border: 1px solid var(--panel-border);
+            padding: 24px; border-radius: 12px; width: 320px; max-width: 90%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 15px;
+        }
+        .modal-box h4 { margin: 0; color: var(--accent-green); font-size: 1.2rem; }
+        .modal-box p { margin: 0; font-size: 0.9rem; color: var(--text-muted); }
+        .modal-inputs { display: none; flex-direction: column; gap: 10px; }
+        .modal-inputs input {
+            background: #0d140f; color: white; border: 1px solid var(--panel-border);
+            padding: 10px; border-radius: 6px; font-family: 'Poppins', sans-serif; outline: none;
+        }
+        .modal-inputs input:focus { border-color: var(--accent-green); }
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+        .modal-buttons button { 
+            padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; 
+            font-weight: 600; font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+        }
+        .btn-modal-cancel { background: transparent; color: var(--text-muted); border: 1px solid var(--panel-border); }
+        .btn-modal-cancel:hover { background: rgba(255,255,255,0.05); }
+        .btn-modal-confirm { background: var(--accent-green); color: white; }
+        .btn-modal-confirm:hover { background: var(--accent-green-hover); }
+    </style>
+</head>
+<body>
+
+<!-- HTML DE LA VENTANA MODAL (Reemplaza a los alerts nativos) -->
+<div id="custom-modal" class="modal-overlay">
+    <div class="modal-box">
+        <h4 id="modal-title">Atención</h4>
+        <p id="modal-msg"></p>
+        <div id="modal-inputs-container" class="modal-inputs">
+            <input type="text" id="modal-input-1">
+            <input type="text" id="modal-input-2" style="display:none;">
+        </div>
+        <div class="modal-buttons">
+            <button id="modal-btn-cancel" class="btn-modal-cancel">Cancelar</button>
+            <button id="modal-btn-confirm" class="btn-modal-confirm">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<div id="canvas-zone"><canvas id="c"></canvas></div>
+
+<div id="panel">
+    <h3>🌿 VERDE SMART</h3>
+    
+    <button class="btn btn-green" onclick="prepararYDescargarPNG()">🗺️ EXPORTAR PLANO PNG</button>
+    
+    <div class="tool-box">
+        <b>📁 GESTIÓN DE PROYECTO</b>
+        <div class="flex-row">
+            <button id="verImagen" class="btn btn-outline">👁️ Previsualizar</button>
+            <button class="btn btn-purple" onclick="guardarProyectoEnServidor()">💾 Guardar JSON</button>
+        </div>
+        <hr>
+        <span style="font-size:0.8em; color:var(--text-muted);">Cargar Proyecto Anterior (.json):</span><br>
+        <input type="file" id="jsonLoader" accept=".json" style="margin-top:5px;">
+    </div>
+
+    <div class="tool-box">
+        <b>🖼️ IMAGEN BASE (TERRENO)</b>
+        <input type="file" id="bgInput" accept="image/*">
+    </div>
+
+    <div class="tool-box">
+        <b>📐 CALIBRACIÓN ESPACIAL</b>
+        <button class="btn btn-green" onclick="startCalibration()">📏 Definir Escala Manual</button>
+        <button class="btn btn-purple" onclick="fitToView()">🔍 Centrar en Calibración</button>
+        <div id="scale-info" style="font-size:0.8em; margin-top:10px; color:var(--accent-earth); text-align:center;">Escala no definida</div>
+    </div>
+
+    <div class="tool-box">
+        <b>🎯 ANÁLISIS DE DISTANCIAS</b>
+        <label class="label-red">Zona de Origen (Roja):</label>
+        <select id="polyA"></select>
+        
+        <label class="label-green">Zona de Destino (Segura):</label>
+        <select id="polyB"></select>
+        
+        <button class="btn btn-earth" onclick="calculateProjectedDistances()">⚡ CALCULAR TRAYECTOS</button>
+        <div id="analysis-results" style="font-size: 0.85em; margin-top:12px; color:#cbd5e1;"></div>
+    </div>
+
+    <button class="btn btn-blue" onclick="createNewGroup()">🪴 CREAR NUEVO GRUPO</button>
+    <div id="groups-stats"></div>
+    <button class="btn btn-red" onclick="clearAll()">🗑️ LIMPIAR LIENZO</button>
+</div>
+
+<script>
+    // --- LÓGICA DEL SISTEMA DE ALERTAS PERSONALIZADAS ---
+    function showModal({ type, title, msg, defaultVal, placeholder1, placeholder2, onConfirm, onCancel }) {
+        const modal = document.getElementById('custom-modal');
+        document.getElementById('modal-title').innerText = title || 'Atención';
+        document.getElementById('modal-msg').innerHTML = msg || '';
+        
+        const i1 = document.getElementById('modal-input-1');
+        const i2 = document.getElementById('modal-input-2');
+        const inputsDiv = document.getElementById('modal-inputs-container');
+        
+        const btnCancel = document.getElementById('modal-btn-cancel');
+        let btnConfirm = document.getElementById('modal-btn-confirm');
+        
+        // Limpiamos listeners viejos clonando el botón
+        const newBtnConfirm = btnConfirm.cloneNode(true);
+        btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm);
+        btnConfirm = newBtnConfirm;
+
+        // Reset visual
+        i1.style.display = 'none'; i2.style.display = 'none'; inputsDiv.style.display = 'none';
+        btnCancel.style.display = 'none'; i1.value = ''; i2.value = '';
+
+        const closeModal = () => modal.classList.remove('active');
+
+        btnCancel.onclick = () => { closeModal(); if(onCancel) onCancel(); };
+
+        if(type === 'alert') {
+            btnConfirm.onclick = () => { closeModal(); if(onConfirm) onConfirm(); };
+        } else if (type === 'confirm') {
+            btnCancel.style.display = 'block';
+            btnConfirm.onclick = () => { closeModal(); if(onConfirm) onConfirm(); };
+        } else if (type === 'prompt') {
+            inputsDiv.style.display = 'flex'; i1.style.display = 'block';
+            i1.value = defaultVal || ''; i1.placeholder = placeholder1 || 'Escribe aquí...';
+            btnCancel.style.display = 'block';
+            btnConfirm.onclick = () => { closeModal(); if(onConfirm) onConfirm(i1.value); };
+            setTimeout(() => i1.focus(), 100);
+        } else if (type === 'calibrate') {
+            inputsDiv.style.display = 'flex'; i1.style.display = 'block'; i2.style.display = 'block';
+            i1.placeholder = placeholder1 || 'Ancho'; i2.placeholder = placeholder2 || 'Alto';
+            i1.value = '2'; i2.value = '2';
+            btnCancel.style.display = 'block';
+            btnConfirm.onclick = () => { closeModal(); if(onConfirm) onConfirm(i1.value, i2.value); };
+            setTimeout(() => i1.focus(), 100);
+        }
+
+        modal.classList.add('active');
+    }
+
+    const customAlert = (msg) => showModal({ type: 'alert', title: 'Aviso', msg });
+    const customConfirm = (msg, onConfirm) => showModal({ type: 'confirm', title: 'Confirmar', msg, onConfirm });
+    const customPrompt = (msg, defaultVal, onConfirm) => showModal({ type: 'prompt', title: 'Ingresar Dato', msg, defaultVal, onConfirm });
+
+
+    // --- LÓGICA ORIGINAL ADAPTADA ---
+    const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
+    let groups = [], activeIndex = -1, currentPoints = [], mode = 'Borde';
+    let zoom = 1, offset = {x: 0, y: 0}, bgImg = null, isPanning = false, draggedNode = null;
+    let isCalibrating = false, calStart = null, calRect = null, persistentCalRect = null;
+    let pxPerMeterX = 50, pxPerMeterY = 50;
+    let analysisLines = [];
+    let isExporting = false;
+    let bgImgBase64 = null; 
+    
+    document.getElementById('jsonLoader').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            try {
+                const data = JSON.parse(event.target.result);
+                groups = data.groups;
+                pxPerMeterX = data.pxPerMeterX;
+                pxPerMeterY = data.pxPerMeterY;
+                persistentCalRect = data.persistentCalRect;
+                activeIndex = groups.length > 0 ? 0 : -1;
+                
+                if (data.bgImgBase64) {
+                    bgImgBase64 = data.bgImgBase64;
+                    bgImg = new Image();
+                    bgImg.onload = () => { draw(); };
+                    bgImg.src = bgImgBase64;
+                } else {
+                    bgImg = null; bgImgBase64 = null;
+                }
+                updateUI(); draw();
+                customAlert("Proyecto cargado exitosamente 🌿");
+            } catch (err) { customAlert("Error al cargar JSON: " + err); }
+        };
+        reader.readAsText(file);
+    });
+
+    function prepararYDescargarPNG() {
+        isExporting = true; draw(true); 
+        const enlace = document.createElement('a');
+        enlace.href = canvas.toDataURL('image/png');
+        enlace.download = 'plano_verde_smart.png';
+        enlace.click();
+        isExporting = false; draw(false); 
+    }
+
+    function calcularDistancia(p1, p2, pxX, pxY) { return Math.sqrt(Math.pow((p1.x - p2.x)/pxX, 2) + Math.pow((p1.y - p2.y)/pxY, 2)); }
+    
+    function calcularArea(points, pxX, pxY) {
+        let area = 0;
+        for (let i = 0; i < points.length; i++) {
+            let j = (i + 1) % points.length;
+            area += points[i].x * points[j].y;
+            area -= points[j].x * points[i].y;
+        }
+        return Math.abs(area / 2) / (pxX * pxY);
+    }
+
+    function calcularCentroide(points) {
+        let x = 0, y = 0;
+        points.forEach(p => { x += p.x; y += p.y; });
+        return { x: x / points.length, y: y / points.length };
+    }
+
+    function dibujarMedidasSegmentos(poligono) {
+        ctx.fillStyle = 'white'; ctx.font = '11px Poppins, sans-serif'; ctx.textAlign = 'center';
+        poligono.forEach((p1, i) => {
+            const p2 = poligono[(i + 1) % poligono.length];
+            const midX = (p1.x + p2.x) / 2; const midY = (p1.y + p2.y) / 2;
+            const distanciaEnMetros = calcularDistancia(p1, p2, pxPerMeterX, pxPerMeterY);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.6)'; ctx.fillRect(midX - 20, midY - 10, 40, 14);
+            ctx.fillStyle = 'white'; ctx.fillText(distanciaEnMetros.toFixed(2) + 'm', midX, midY + 1);
+        });
+    }
+
+    function dibujarEtiquetaArea(poligono, nombre, color) {
+        const area = calcularArea(poligono, pxPerMeterX, pxPerMeterY);
+        const centro = calcularCentroide(poligono);
+        ctx.fillStyle = 'rgba(10, 15, 12, 0.85)'; ctx.beginPath(); ctx.arc(centro.x, centro.y, 35, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = color; ctx.font = 'bold 12px Poppins, sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(nombre, centro.x, centro.y - 6);
+        ctx.fillStyle = '#e0e8e3'; ctx.fillText(area.toFixed(1) + ' m²', centro.x, centro.y + 10);
+    }
+
+    document.getElementById('bgInput').addEventListener('change', (e) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            bgImgBase64 = event.target.result;
+            bgImg = new Image();
+            bgImg.onload = () => draw();
+            bgImg.src = bgImgBase64;
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    });
+
+    canvas.onmousedown = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouse = {x: (e.clientX - rect.left - offset.x)/zoom, y: (e.clientY - rect.top - offset.y)/zoom};
+        
+        // Ignoramos clics si el modal está activo
+        if(document.getElementById('custom-modal').classList.contains('active')) return;
+
+        if(e.button === 2 || e.altKey) { isPanning = true; return; }
+        
+        for(let g of groups) { 
+            if(g.visible) { 
+                for(let s of g.shapes) { 
+                    for(let p of s.points) { 
+                        if(Math.hypot(p.x - mouse.x, p.y - mouse.y) < 15/zoom) { draggedNode = p; return; } 
+                    } 
+                } 
+            } 
+        }
+        
+        if(isCalibrating) { calStart = mouse; calRect = {x: mouse.x, y: mouse.y, w: 0, h: 0}; }
+        else if(activeIndex !== -1) { currentPoints.push(mouse); draw(); }
+        else { customAlert("Crea o selecciona un grupo primero para dibujar."); }
+    };
+
+    canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mouse = {x: (e.clientX - rect.left - offset.x)/zoom, y: (e.clientY - rect.top - offset.y)/zoom};
+        if(isPanning) { offset.x += e.movementX; offset.y += e.movementY; }
+        else if(draggedNode) { draggedNode.x = mouse.x; draggedNode.y = mouse.y; updateUI(); }
+        else if(isCalibrating && calStart) { calRect.w = mouse.x - calStart.x; calRect.h = mouse.y - calStart.y; }
+        draw();
+    };
+
+    canvas.onmouseup = () => {
+        if(isCalibrating && calRect) {
+            let tempRect = {...calRect};
+            let tempStart = {...calStart};
+            // Modal especial de doble input para la calibración
+            showModal({
+                type: 'calibrate',
+                title: '📐 Calibración Espacial',
+                msg: 'Indica la medida real de la selección:',
+                placeholder1: 'Metros de ANCHO',
+                placeholder2: 'Metros de ALTO',
+                onConfirm: (mX, mY) => {
+                    pxPerMeterX = Math.abs(tempRect.w) / (parseFloat(mX) || 2);
+                    pxPerMeterY = Math.abs(tempRect.h) / (parseFloat(mY) || 2);
+                    persistentCalRect = { ...tempRect, x: tempStart.x, y: tempStart.y };
+                    isCalibrating = false; calRect = null;
+                    document.getElementById('scale-info').innerHTML = `<b>Escala Activa:</b><br>1m X = ${pxPerMeterX.toFixed(1)}px | 1m Y = ${pxPerMeterY.toFixed(1)}px`;
+                    draw();
+                },
+                onCancel: () => { isCalibrating = false; calRect = null; draw(); }
+            });
+        }
+        isPanning = false; draggedNode = null; 
+        if(!isCalibrating) draw();
+    };
+
+    canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if(document.getElementById('custom-modal').classList.contains('active')) return;
+        const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        offset.x = mouseX - (mouseX - offset.x) * zoomFactor;
+        offset.y = mouseY - (mouseY - offset.y) * zoomFactor;
+        zoom *= zoomFactor; draw();
+    });
+
+    function calculateProjectedDistances() {
+        const idxA = document.getElementById('polyA').value;
+        const idxB = document.getElementById('polyB').value;
+        if(idxA === "" || idxB === "") return;
+        const interiorA = groups[idxA].shapes.filter(s => s.type === 'Interior');
+        const bordeB = groups[idxB].shapes.filter(s => s.type === 'Borde');
+        if (interiorA.length === 0 || bordeB.length === 0) { 
+            customAlert("Se requiere un área ROJA en la Zona Origen y un área VERDE en Destino."); 
+            return; 
+        }
+        const polyA = interiorA[0].points;
+        const polyB = bordeB[0].points;
+        analysisLines = []; let results = [];
+        polyA.forEach((pBase, i) => {
+            let minDist = Infinity, closestPoint = null;
+            for(let pTarget of polyB) {
+                let dx = (pBase.x - pTarget.x) / pxPerMeterX;
+                let dy = (pBase.y - pTarget.y) / pxPerMeterY;
+                let d = Math.sqrt(dx*dx + dy*dy);
+                if(d < minDist) { minDist = d; closestPoint = pTarget; }
+            }
+            analysisLines.push({x1: pBase.x, y1: pBase.y, x2: closestPoint.x, y2: closestPoint.y, d: minDist.toFixed(2)});
+            results.push(`Trayecto ${i+1}: <b>${minDist.toFixed(2)} m</b>`);
+        });
+        document.getElementById('analysis-results').innerHTML = `<div style="padding:10px; background:rgba(0,0,0,0.3); border-radius:6px;">` + results.join('<br>') + `</div>`;
+        draw();
+    }
+
+    function draw(exportMode = false) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
+        if(bgImg) ctx.drawImage(bgImg, 0, 0);
+        if(persistentCalRect) { ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)'; ctx.lineWidth = 2/zoom; ctx.strokeRect(persistentCalRect.x, persistentCalRect.y, persistentCalRect.w, persistentCalRect.h); }
+        if(calRect) { ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2/zoom; ctx.strokeRect(calRect.x, calRect.y, calRect.w, calRect.h); }
+        
+        groups.forEach((g, idx) => {
+            if(g.visible === false) return;
+            g.shapes.forEach(s => {
+                ctx.fillStyle = s.color + '44'; ctx.strokeStyle = s.color; ctx.lineWidth = (idx === activeIndex ? 4 : 3)/zoom;
+                ctx.beginPath();
+                s.points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+                
+                dibujarMedidasSegmentos(s.points);
+                dibujarEtiquetaArea(s.points, g.name, s.color);
+
+                if(!isExporting && !exportMode) s.points.forEach(p => { 
+                    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(p.x, p.y, 5/zoom, 0, Math.PI*2); ctx.fill(); 
+                });
+            });
+        });
+        
+        ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2.5/zoom; ctx.setLineDash([8, 6]);
+        analysisLines.forEach(l => { 
+            ctx.beginPath(); ctx.moveTo(l.x1, l.y1); ctx.lineTo(l.x2, l.y2); ctx.stroke();
+            const midX = (l.x1 + l.x2)/2; const midY = (l.y1 + l.y2)/2;
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.9)'; ctx.fillRect(midX - 25, midY - 12, 50, 20);
+            ctx.fillStyle = "#fff"; ctx.font = `bold ${12/zoom}px Poppins`; ctx.textAlign = 'center';
+            ctx.fillText(l.d + "m", midX, midY + 3);
+        });
+        ctx.setLineDash([]);
+        
+        if(currentPoints.length > 0) {
+            let previewColor = mode === 'Borde' ? (groups[activeIndex].color || '#10b981') : '#ef4444';
+            ctx.strokeStyle = previewColor; ctx.lineWidth = 3/zoom; ctx.beginPath();
+            currentPoints.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+            ctx.stroke();
+        }
+    }
+
+    function updateUI() {
+        let html = "";
+        groups.forEach((g, idx) => {
+            let area = g.shapes.reduce((a, s) => a + (s.type === 'Borde' ? 1 : -1) * (Math.abs(s.points.reduce((acc, p, i) => acc + (p.x * (s.points[(i+1)%s.points.length].y) - s.points[(i+1)%s.points.length].x * p.y), 0))/2) / (pxPerMeterX * pxPerMeterY), 0);
+            let isSelectedStyle = idx === activeIndex ? 'border-color: var(--accent-green); background: #182b20;' : '';
+            let groupColor = g.color || '#10b981';
+            
+            html += `<div class="group-card" style="${isSelectedStyle}">
+                        <div class="group-info" onclick="activeIndex = ${idx}; updateUI(); draw();" style="cursor:pointer;">
+                            <input type="checkbox" ${g.visible !== false ? 'checked' : ''} onchange="groups[${idx}].visible = this.checked; draw();" style="transform: scale(1.2); cursor: pointer;"> 
+                            <div>
+                                <b style="color:white;">${g.name.toUpperCase()}</b> ${idx === activeIndex ? '✨' : ''}<br>
+                                <span style="color:#6ee7b7; font-size: 0.8em;">Área: ${Math.max(0, area).toFixed(2)} m²</span>
+                            </div>
+                        </div>
+                        <div class="group-actions">
+                            <input type="color" class="color-picker-circle" value="${groupColor}" onchange="changeGroupColor(${idx}, this.value)" title="Cambiar color Zona Segura">
+                            <button class="btn-icon" onclick="editGroup(${idx})" title="Editar nombre">✏️</button>
+                            <button class="btn-icon" onclick="deleteGroup(${idx})" title="Eliminar grupo">🗑️</button>
+                        </div>
+                     </div>`;
+        });
+        document.getElementById('groups-stats').innerHTML = html;
+        let selA = document.getElementById('polyA'), selB = document.getElementById('polyB');
+        let optionsHtml = groups.map((g, i) => `<option value="${i}">${g.name}</option>`).join('');
+        selA.innerHTML = optionsHtml; selB.innerHTML = optionsHtml;
+    }
+
+    function changeGroupColor(idx, newColor) {
+        groups[idx].color = newColor;
+        groups[idx].shapes.forEach(s => { if(s.type === 'Borde') s.color = newColor; });
+        updateUI(); draw();
+    }
+
+    // ==========================================
+    // NUEVA LÓGICA DE TECLADO PARA CONECTAR CON JAVA
+    // ==========================================
+    window.forzarEnter = function() {
+        if(document.getElementById('custom-modal').classList.contains('active')) return false;
+
+        if(currentPoints.length > 2) {
+            if(activeIndex === -1) { customAlert("Selecciona un grupo primero."); return false; }
+            let shapeColor = mode === 'Borde' ? (groups[activeIndex].color || '#10b981') : '#ef4444';
+            groups[activeIndex].shapes.push({ points: [...currentPoints], type: mode, color: shapeColor });
+            mode = (mode === 'Borde') ? 'Interior' : 'Borde';
+            currentPoints = []; updateUI(); draw();
+            return true; // Le avisa a Java que consumimos la acción
+        }
+        return false;
+    };
+
+    window.forzarBorrar = function() {
+        if(document.getElementById('custom-modal').classList.contains('active')) return false;
+
+        if(currentPoints.length > 0) { 
+            currentPoints.pop(); draw(); 
+            return true; // Le avisa a Java que consumimos la acción
+        }
+        return false;
+    };
+
+    // Esto se mantiene para cuando lo abres directamente en el navegador (Chrome/Edge)
+    document.onkeydown = (e) => {
+        if(e.key === 'Enter') {
+            window.forzarEnter();
+        } else if(e.key === 'Backspace' || e.key === 'Delete') {
+            window.forzarBorrar();
+        }
+    };
+    // ==========================================
+
+    function createNewGroup() { 
+        customPrompt("Nombre de la nueva zona:", "Nueva Zona", (n) => {
+            if(n && n.trim() !== "") { 
+                groups.push({name: n.trim(), shapes: [], visible: true, color: '#10b981'}); 
+                activeIndex = groups.length - 1; mode = 'Borde'; updateUI(); draw();
+            }
+        });
+    }
+
+    function editGroup(idx) {
+        customPrompt("Editar nombre del grupo:", groups[idx].name, (nuevoNombre) => {
+            if(nuevoNombre && nuevoNombre.trim() !== "") {
+                groups[idx].name = nuevoNombre.trim();
+                updateUI(); draw();
+            }
+        });
+    }
+
+    function deleteGroup(idx) {
+        customConfirm(`¿Estás seguro de eliminar el grupo "${groups[idx].name}"?`, () => {
+            groups.splice(idx, 1);
+            if(activeIndex >= groups.length) activeIndex = groups.length - 1;
+            analysisLines = []; updateUI(); draw();
+        });
+    }
+
+    function startCalibration() { isCalibrating = true; }
+    function fitToView() { if (!persistentCalRect) return; let pad = 100; zoom = Math.min((canvas.width - pad) / Math.abs(persistentCalRect.w), (canvas.height - pad) / Math.abs(persistentCalRect.h)); offset.x = (canvas.width / 2) - ((persistentCalRect.x + persistentCalRect.w / 2) * zoom); offset.y = (canvas.height / 2) - ((persistentCalRect.y + persistentCalRect.h / 2) * zoom); draw(); }
+    
+    function clearAll() { 
+        customConfirm("¿Seguro que deseas limpiar todo el proyecto?", () => {
+            groups=[]; activeIndex=-1; analysisLines=[]; persistentCalRect = null; bgImg = null; bgImgBase64 = null; 
+            draw(); updateUI(); document.getElementById('scale-info').innerHTML = 'Escala no definida'; 
+        });
+    }
+    
+    window.onresize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; draw(); };
+    window.onresize();
+
+    document.getElementById('verImagen').addEventListener('click', () => { 
+        isExporting = true; draw(true);
+        const dataURL = canvas.toDataURL('image/png');
+        const newWindow = window.open();
+        if (newWindow) {
+            const imgHTML = `<img src="${dataURL}" style="max-width:100%; max-height:100%; box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);"/>`;
+            newWindow.document.write(imgHTML);
+            newWindow.document.body.style.cssText = "margin:0; background:#0a0f0c; display:flex; justify-content:center; align-items:center; height:100vh;";
+        } else {
+            customAlert("El navegador bloqueó la ventana emergente.");
+        }
+        isExporting = false; draw(false);
+    });
+
+    function guardarProyectoEnServidor() {
+        customPrompt("Nombre del archivo de proyecto:", "proyecto_verde", (n) => {
+            if(!n || n.trim() === "") return;
+            
+            const data = { nombre: n, groups, pxPerMeterX, pxPerMeterY, persistentCalRect, bgImgBase64 };
+            const jsonString = JSON.stringify(data);
+            
+            // Verificamos si estamos dentro de nuestra App Java
+            if (window.javaBridge) {
+                // Le pasamos el texto directamente a Java
+                window.javaBridge.guardarArchivo(n.trim(), jsonString);
+            } else {
+                // Comportamiento normal para navegador web externo
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url; a.download = n.trim() + ".json";
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
 /**
  * VerdeSmart Class.
  * This serves as the primary entry point for the application. It initializes the
@@ -11,6 +12,7 @@ import java.sql.SQLException;
  */
 public class VerdeSmart {
 
+    
     public static void main(String[] args) {
         
         FlatLightLaf.setup();

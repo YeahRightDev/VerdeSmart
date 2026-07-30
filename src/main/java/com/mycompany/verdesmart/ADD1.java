@@ -1,14 +1,178 @@
 package com.mycompany.verdesmart;
 
+import javafx.application.Platform;
+import javafx.concurrent.Worker;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import netscape.javascript.JSObject;
+
+import java.io.File;
+import java.io.FileWriter;
+import javax.swing.*;
+import java.awt.*;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.sql.Statement;
+
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class ADD1 extends javax.swing.JFrame {
+    
+    private static final Logger logger = Logger.getLogger(ADD1.class.getName());
+    
+    private JavaBridge miPuente = new JavaBridge();
+    private int idGardenGenerado;
+    
+    // ========================================================
+    // ¡ESTO ES CLAVE! Variable global para que Java no borre el puente
+    // ========================================================
+   
 
-    // Logger instance to register and trace internal errors or system operations
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ADD1.class.getName());
+    
+    public ADD1() {
+       
+       // setSize(1024, 768);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        jPanel1 = new JPanel();
+        jPanel1.setLayout(new BorderLayout());
+
+        cargarWebView();
+
+        this.add(jPanel1);
+    }
+
+    // CLASE PUENTE
+    public class JavaBridge {
+        public void guardarArchivo(String nombre, String contenidoJson) {
+            System.out.println("JS llamó a Java exitosamente. Abriendo ventana de guardado...");
+            
+            SwingUtilities.invokeLater(() -> {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Guardar Proyecto Verde Smart");
+                fileChooser.setSelectedFile(new File(nombre + ".json"));
+                
+                int userSelection = fileChooser.showSaveDialog(ADD1.this);
+                
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File fileToSave = fileChooser.getSelectedFile();
+                    try (FileWriter fw = new FileWriter(fileToSave)) {
+                        fw.write(contenidoJson);
+                        JOptionPane.showMessageDialog(ADD1.this, 
+                            "Proyecto guardado exitosamente en:\n" + fileToSave.getAbsolutePath(), 
+                            "Guardado Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("Archivo guardado en: " + fileToSave.getAbsolutePath());
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(ADD1.this, 
+                            "Error al guardar el archivo: " + e.getMessage(), 
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("El usuario canceló el guardado.");
+                }
+            });
+        }
+    }
+
+    private void cargarWebView() {
+        JFXPanel fxPanel = new JFXPanel();
+        jPanel1.add(fxPanel, BorderLayout.CENTER);
+
+        Platform.runLater(() -> {
+            WebView webView = new WebView();
+            WebEngine webEngine = webView.getEngine();
+            
+            webView.setContextMenuEnabled(false);
+            webView.setFocusTraversable(true);
+            
+            webView.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                webView.requestFocus();
+            });
+
+            webView.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    try {
+                        Object handled = webEngine.executeScript("window.forzarEnter();");
+                        if (Boolean.TRUE.equals(handled)) { event.consume(); }
+                    } catch (Exception ex) { }
+                } 
+                else if (event.getCode() == KeyCode.BACK_SPACE || event.getCode() == KeyCode.DELETE) {
+                    try {
+                        Object handled = webEngine.executeScript("window.forzarBorrar();");
+                        if (Boolean.TRUE.equals(handled)) { event.consume(); }
+                    } catch (Exception ex) { }
+                }
+            });
+            Button btnRegresar = new Button("⬅ Regresar");
+            
+            // Estilo flotante: fondo semitransparente u opaco, bordes redondeados y cursor de mano
+            btnRegresar.setStyle(
+                "-fx-background-color: rgba(40, 40, 40, 0.85);" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-font-size: 12px;" +
+                "-fx-padding: 8px 12px;" +
+                "-fx-background-radius: 6px;" +
+                "-fx-cursor: hand;" +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 6, 0, 0, 2);"
+            );
+
+            btnRegresar.setOnAction(e -> {
+                if (webEngine.getHistory().getCurrentIndex() > 0) {
+                    webEngine.getHistory().go(-1);
+                }
+            });
+            StackPane root = new StackPane();
+            
+            root.getChildren().add(webView);
+            
+            // 2. Añadimos el botón encima y lo posicionamos (ej. Arriba a la Izquierda con márgenes)
+            root.getChildren().add(btnRegresar);
+            StackPane.setAlignment(btnRegresar, Pos.TOP_LEFT);
+            StackPane.setMargin(btnRegresar, new Insets(15, 0, 0, 15)); // Margen superior e izquierdo de 15px
+
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED) {
+                    System.out.println("Página cargada. Inyectando el puente Java-JS...");
+                    JSObject window = (JSObject) webEngine.executeScript("window");
+                    window.setMember("javaBridge", miPuente); 
+                }
+            });
+            try {
+                java.net.URL url = getClass().getResource("/web/jardin.html");
+                if (url != null) {
+                    String urlLocal = url.toURI().toURL().toExternalForm();
+                    webEngine.load(urlLocal);
+                    System.out.println("HTML cargado correctamente desde recursos.");
+                } else {
+                    System.err.println("ERROR: No se encontró el HTML.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Asignamos el StackPane con el botón flotante a la escena
+            Scene scene = new Scene(root);
+            fxPanel.setScene(scene);
+        });
+    }
+
     // Reference to the main screen/frame of the application
     private grounds Main_scren;
     private int iduser;
@@ -198,7 +362,7 @@ public class ADD1 extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textname, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         btnclose.setText("Cerrar");
@@ -297,63 +461,56 @@ public class ADD1 extends javax.swing.JFrame {
      * the Singleton pattern, updates SQL entries, captures auto-generated keys, and triggers the next view.
      */
     private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
-        System.out.println("Intentando guardar jardín para el usuario " + this.iduser);
-       
-        String nombre = textname.getText().trim();
-        Double totalArea = 0.0;
-      
-    
-          if (nombre.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Por favor, ingrese el nombre que tendrá el terreno / jardín.", 
-            "Campo requerido", 
-            javax.swing.JOptionPane.WARNING_MESSAGE);
-        return; // Stops the method completely
-    }  
+                                         
+    String nombre = textname.getText().trim();
+    Double totalArea = 0.0;
 
-    // 2. Map structural SQL query command
-    String sql = "INSERT INTO garden (Garden_Name, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES ( ?, ?, ?, ?, ?, ?)";
-    // 3. Conectar usando tu Singleton
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+                "Por favor, ingrese el nombre que tendrá el terreno / jardín.",
+                "Campo requerido",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    String sql = "INSERT INTO garden (Garden_Name, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES (?, ?, ?, ?, ?, ?)";
+
     try {
-        java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
-        
-        // We tell the PreparedStatement that we want to retrieve the automatically generated keys
-        try (java.sql.PreparedStatement ps = con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
-            
-            ps.setString(1, nombre);
-            ps.setDouble(2, totalArea); //por el momento
-            ps.setString(3, "Rectangular");
-            ps.setString(4, "Normal");   
-            ps.setDouble(5, 0.0); 
-            ps.setInt(6, this.iduser); 
+        Connection con = DatabaseConnection.getInstance().getConnection();
 
-            // Run the insertion
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, nombre);
+            ps.setDouble(2, totalArea);
+            ps.setString(3, "Rectangular");
+            ps.setString(4, "Normal");
+            ps.setDouble(5, 0.0);
+            ps.setInt(6, this.iduser);
+
             int filasInsertadas = ps.executeUpdate();
-            
+
             if (filasInsertadas > 0) {
-                int idGardenGenerado = 0;
-                
-                // 3. Open connection via custom Database Singleton and apply records
-                try (java.sql.ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         idGardenGenerado = generatedKeys.getInt(1);
                     }
                 }
 
-                javax.swing.JOptionPane.showMessageDialog(this, "¡Terreno registrado con éxito en la base de datos!");
-                
-                
-                PLANTS ventanaPlantas = new PLANTS(this.Main_scren, idGardenGenerado, nombre, String.valueOf(totalArea),this.iduser);
-                ventanaPlantas.setVisible(true);
-                this.dispose(); 
+                JOptionPane.showMessageDialog(this, "¡Jardín guardado exitosamente!");
+
+                // CORRECCIÓN: Limpiamos el panel principal y cargamos el WebView dinámicamente
+                jPanel1.removeAll();
+                jPanel1.setLayout(new BorderLayout());
+                cargarWebView();
+                jPanel1.revalidate();
+                jPanel1.repaint();
             }
         }
-    } catch (java.sql.SQLException ex) {
-        // Trace database exceptions via local logging stack trace system
-        logger.log(java.util.logging.Level.SEVERE, "Error al insertar el jardín", ex);
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(), "Error SQL", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+    } catch (SQLException ex) {
+        logger.log(Level.SEVERE, "Error al insertar el jardín", ex);
+        JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + ex.getMessage(),
+                "Error SQL", JOptionPane.ERROR_MESSAGE);
     
+}
     }//GEN-LAST:event_btnnextActionPerformed
 
     /**
@@ -377,7 +534,8 @@ class roundpanel extends javax.swing.JPanel {
         g2d.setColor(getBackground());
         g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radio, radio);
     }
-}private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+}
+private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
    
     btnnextActionPerformed(evt);
 }
