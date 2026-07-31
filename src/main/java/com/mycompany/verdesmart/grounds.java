@@ -75,7 +75,7 @@ public class grounds extends javax.swing.JFrame {
         this.setBackground(miColorVerde);
        
         gardens.setLayout(new javax.swing.BoxLayout(gardens, javax.swing.BoxLayout.Y_AXIS));
-        cargarJardinesDesdeBD();
+        loadGardensFromDB();
        
     }
     
@@ -86,7 +86,7 @@ public class grounds extends javax.swing.JFrame {
      * generating individualized GroundCard display panels safely positioned 
      * with alignment parameters and spacer components.
      */
-    public void cargarJardinesDesdeBD() {
+    public void loadGardensFromDB() {
         gardens.removeAll();
         
         if (this.iduser <= 0) {
@@ -203,11 +203,15 @@ public class grounds extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
         jPanel2.setForeground(new java.awt.Color(27, 77, 47));
 
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         btnback.addActionListener(this::btnbackActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
         jLabel2.setText("Verde Smart");
 
+        btnmenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\menu.png")); // NOI18N
         btnmenu.addActionListener(this::btnmenuActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -239,6 +243,7 @@ public class grounds extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\agregar.png")); // NOI18N
         btnAdd.addActionListener(this::btnAddActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N

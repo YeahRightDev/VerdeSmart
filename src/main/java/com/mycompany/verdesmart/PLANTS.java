@@ -30,6 +30,12 @@ public class PLANTS extends javax.swing.JFrame {
     /**
      * Initializes a new PLANTS frame layout context linked to a garden dataset.
      */
+    
+    public PLANTS(grounds groundsScreen, int idUser) {
+        this(groundsScreen, 0, "Sin Jardín", "0m2", idUser);
+    }
+    
+  
    public PLANTS(grounds groundsScreen, int idGarden, String groundName, String groundArea,int idUser){
         initComponents();
         this.setSize(800,700);
@@ -107,7 +113,10 @@ public class PLANTS extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         btnback.addActionListener(this::btnbackActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -123,7 +132,7 @@ public class PLANTS extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(54, 54, 54)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addContainerGap(391, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,6 +150,7 @@ public class PLANTS extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, -1));
 
+        btnpage1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\matematicas.png")); // NOI18N
         btnpage1.addActionListener(this::btnpage1ActionPerformed);
         jPanel1.add(btnpage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
@@ -148,28 +158,34 @@ public class PLANTS extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("-----------------------------------------");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 250, 40));
-        jPanel1.add(btnpage2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, 20));
+
+        btnpage2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dos.png")); // NOI18N
+        jPanel1.add(btnpage2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 50, 40));
 
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         btnDiffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDiffenbachia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\dieffenbachia.png")); // NOI18N
         btnDiffenbachia.setText(" Diffenbachia                                                                                                  ");
         btnDiffenbachia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnDiffenbachia.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnDiffenbachia.addActionListener(this::btnDiffenbachiaActionPerformed);
 
         btnArbolAbundancia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnArbolAbundancia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\arbol-convertido-de-jpg (1).png")); // NOI18N
         btnArbolAbundancia.setText("Arbol abundancia                                                                                ");
         btnArbolAbundancia.setToolTipText("");
         btnArbolAbundancia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnArbolAbundancia.addActionListener(this::btnArbolAbundanciaActionPerformed);
 
         btnCoronaCristo.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnCoronaCristo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\corona (2).jpeg")); // NOI18N
         btnCoronaCristo.setText("Corona de Cristo                                                                                ");
         btnCoronaCristo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnCoronaCristo.addActionListener(this::btnCoronaCristoActionPerformed);
 
         btnDurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        btnDurantia.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\DURANTIA.png")); // NOI18N
         btnDurantia.setText("Durantia                                                                                                         ");
         btnDurantia.addActionListener(this::btnDurantiaActionPerformed);
 
@@ -180,23 +196,23 @@ public class PLANTS extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnDurantia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDiffenbachia, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnCoronaCristo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(btnDiffenbachia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDurantia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(btnCoronaCristo)
-                .addGap(49, 49, 49)
-                .addComponent(btnDiffenbachia)
-                .addGap(49, 49, 49)
-                .addComponent(btnArbolAbundancia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btnDurantia)
+                .addGap(27, 27, 27)
+                .addComponent(btnCoronaCristo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnDiffenbachia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(btnArbolAbundancia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(btnDurantia, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
 
@@ -232,6 +248,79 @@ public class PLANTS extends javax.swing.JFrame {
      * Triggered when selecting "Árbol de la Abundancia".
      * Assigns a hardcoded ID instance and tracks validation selections.
      */
+    
+    private void processPlantSelection(String plantName, String species, float waterLitres, float spaceSqM, float minTemp, String region, String plantType, String description) {
+        if (selectedPlantNames.contains(plantName)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
+            return;
+        }
+
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            int plantId = -1;
+
+
+            String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
+            try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
+                pstCheck.setString(1, plantName);
+                try (ResultSet rs = pstCheck.executeQuery()) {
+                    if (rs.next()) {
+                        plantId = rs.getInt("id_Plant"); 
+                    }
+                }
+            }
+
+           
+            if (plantId == -1) {
+                String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
+                        "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
+                    pstInsert.setString(1, plantName);
+                    pstInsert.setString(2, species);
+                    pstInsert.setFloat(3, waterLitres);
+                    pstInsert.setFloat(4, spaceSqM);
+                    pstInsert.setFloat(5, minTemp);
+                    pstInsert.setString(6, region);
+                    pstInsert.setString(7, plantType);
+                    pstInsert.setString(8, description);
+
+                    pstInsert.executeUpdate();
+                    try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            plantId = generatedKeys.getInt(1);
+                        }
+                    }
+                }
+            }
+
+         
+            if (this.idGarden > 0) {
+                String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
+                try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
+                    pstGP.setInt(1, plantId);
+                    pstGP.setInt(2, this.idGarden);
+                    try (ResultSet rsGP = pstGP.executeQuery()) {
+                        if (rsGP.next()) {
+                            showMensaje("Esta planta ya está registrada en este jardín.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                            return; 
+                        }
+                    }
+                }
+            }
+
+      // Temporarily save to the current session's lists
+            selectedPlantIds.add(plantId);
+            selectedPlantNames.add(plantName);
+            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
+
+        } catch (SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
 
          String plantName = "Árbol abundancia";
@@ -260,8 +349,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
             pstInsert.setString(1, plantName);
@@ -272,7 +361,7 @@ public class PLANTS extends javax.swing.JFrame {
             pstInsert.setString(6, "Sudáfrica");
             pstInsert.setString(7, "Suculenta / Arbusto perenne");
             pstInsert.setString(8, "Arbusto suculento de hojas pequeñas, carnosas y brillantes con tallos rojizos. Muy resistente a la sequía y símbolo de la prosperidad.");
-     
+            pstInsert.setString(9,"Cada 10 dïas");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
@@ -310,12 +399,20 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-     if (selectedPlantIds.isEmpty()) {
+
+        if (selectedPlantIds.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Please select at least one plant.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    String sql = "INSERT INTO garden_plant (id_Plant, id_Garden) VALUES (?, ?)";
+    // 1. We verify that idGarden is not 0 or invalid
+    if (this.idGarden <= 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El ID del jardín no es válido. Primero debe guardar el jardín.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 2. We include the mandatory 'url' field based on your garden_plant table.
+    String sql = "INSERT INTO garden_plant (id_Plant, id_Garden, url) VALUES (?, ?, ?)";
     
     try (Connection con = DatabaseConnection.getInstance().getConnection();
          PreparedStatement pst = con.prepareStatement(sql)) {
@@ -323,6 +420,7 @@ public class PLANTS extends javax.swing.JFrame {
         for (int plantId : selectedPlantIds) {
             pst.setInt(1, plantId);
             pst.setInt(2, this.idGarden); 
+            pst.setString(3, ""); // <-- Send an empty string or the image URL if you have it
             pst.addBatch(); 
         }
         
@@ -330,24 +428,19 @@ public class PLANTS extends javax.swing.JFrame {
 
         if (this.mainScreen != null) {
             String plantsFormattedText = String.join(", ", selectedPlantNames);
-            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText,iduser);
+            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText, iduser);
             
-            // Set explicit card sizes
             newCard.setMaximumSize(new java.awt.Dimension(650, 150));
             newCard.setPreferredSize(new java.awt.Dimension(650, 150));
             newCard.setMinimumSize(new java.awt.Dimension(650, 150));
             newCard.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
             
-            // TARGET CONTAINER CONFIGURATION: 
-            // We force the main container panel to be non-opaque so it doesn't draw a gray square background under our card
             javax.swing.JPanel targetPanel = this.mainScreen.getJPanel3();
             targetPanel.setOpaque(false); 
             
-            // Add the component
             targetPanel.add(newCard);
             targetPanel.add(javax.swing.Box.createVerticalStrut(10)); 
             
-            // Force Layout Validation UI recalculation
             targetPanel.revalidate();
             targetPanel.repaint();
             this.mainScreen.revalidate();
@@ -359,9 +452,9 @@ public class PLANTS extends javax.swing.JFrame {
         this.dispose();
 
     } catch (SQLException e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
-            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
+        javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnSaveActionPerformed
 
    
@@ -378,7 +471,8 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbackActionPerformed
 
     private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
-                                                
+   
+                                                 
     String plantName = "Corona de Cristo";
 
     // 1. Validate in the local list of the current session
@@ -405,8 +499,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -417,7 +511,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "Madagascar");
                 pstInsert.setString(7, "Suculenta / Arbusto");
                 pstInsert.setString(8, "Arbusto espinoso muy resistente al sol directo.");
-
+                pstInsert.setString(9,"Cada 10 días");
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -449,7 +543,6 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-
     }//GEN-LAST:event_btnCoronaCristoActionPerformed
 
     private void btnDiffenbachiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiffenbachiaActionPerformed
@@ -481,8 +574,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -493,7 +586,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "América Central y del Sur");
                 pstInsert.setString(7, "Planta de Interior / Follaje");
                 pstInsert.setString(8, "Planta tropical de interior con grandes hojas matizadas en tonos verdes y blancos.");
-         
+                pstInsert.setString(9,"Cada 6 días");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
@@ -526,13 +619,11 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-        
-               
+       
     }//GEN-LAST:event_btnDiffenbachiaActionPerformed
 
     private void btnDurantiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDurantiaActionPerformed
-      
-        
+         
                                                     
     String plantName = "Durantia";
 
@@ -560,8 +651,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. . If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?,?, ?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -572,7 +663,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "América Tropical");
                 pstInsert.setString(7, "Arbusto de Exterior / Ornamental");
                 pstInsert.setString(8, "Arbusto vigoroso ideal para cercas vivas. Produce hermosas flores moradas o azules en racimos.");
-             
+                pstInsert.setString(9,"Cada 3 días");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
@@ -605,8 +696,6 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-        
-                
     }//GEN-LAST:event_btnDurantiaActionPerformed
     private void showMensaje(String texto, String titulo, int tipoMensaje) {
         JOptionPane optionPane = new JOptionPane(texto, tipoMensaje);
