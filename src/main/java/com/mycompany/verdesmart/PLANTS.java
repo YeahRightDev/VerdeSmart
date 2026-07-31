@@ -30,6 +30,12 @@ public class PLANTS extends javax.swing.JFrame {
     /**
      * Initializes a new PLANTS frame layout context linked to a garden dataset.
      */
+    
+    public PLANTS(grounds groundsScreen, int idUser) {
+        this(groundsScreen, 0, "Sin Jardín", "0m2", idUser);
+    }
+    
+  
    public PLANTS(grounds groundsScreen, int idGarden, String groundName, String groundArea,int idUser){
         initComponents();
         this.setSize(800,700);
@@ -232,6 +238,79 @@ public class PLANTS extends javax.swing.JFrame {
      * Triggered when selecting "Árbol de la Abundancia".
      * Assigns a hardcoded ID instance and tracks validation selections.
      */
+    
+    private void processPlantSelection(String plantName, String species, float waterLitres, float spaceSqM, float minTemp, String region, String plantType, String description) {
+        if (selectedPlantNames.contains(plantName)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ya seleccionaste esta planta en esta sesión.");
+            return;
+        }
+
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            int plantId = -1;
+
+
+            String checkPlantSql = "SELECT id_Plant FROM plant WHERE Plant_Name = ?";
+            try (PreparedStatement pstCheck = con.prepareStatement(checkPlantSql)) {
+                pstCheck.setString(1, plantName);
+                try (ResultSet rs = pstCheck.executeQuery()) {
+                    if (rs.next()) {
+                        plantId = rs.getInt("id_Plant"); 
+                    }
+                }
+            }
+
+           
+            if (plantId == -1) {
+                String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
+                        "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
+                    pstInsert.setString(1, plantName);
+                    pstInsert.setString(2, species);
+                    pstInsert.setFloat(3, waterLitres);
+                    pstInsert.setFloat(4, spaceSqM);
+                    pstInsert.setFloat(5, minTemp);
+                    pstInsert.setString(6, region);
+                    pstInsert.setString(7, plantType);
+                    pstInsert.setString(8, description);
+
+                    pstInsert.executeUpdate();
+                    try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            plantId = generatedKeys.getInt(1);
+                        }
+                    }
+                }
+            }
+
+         
+            if (this.idGarden > 0) {
+                String checkGardenPlantSql = "SELECT id_Garden_Plant FROM garden_plant WHERE id_Plant = ? AND id_Garden = ?";
+                try (PreparedStatement pstGP = con.prepareStatement(checkGardenPlantSql)) {
+                    pstGP.setInt(1, plantId);
+                    pstGP.setInt(2, this.idGarden);
+                    try (ResultSet rsGP = pstGP.executeQuery()) {
+                        if (rsGP.next()) {
+                            showMensaje("Esta planta ya está registrada en este jardín.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                            return; 
+                        }
+                    }
+                }
+            }
+
+            // Guardar temporalmente en las listas de la sesión actual
+            selectedPlantIds.add(plantId);
+            selectedPlantNames.add(plantName);
+            javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
+
+        } catch (SQLException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void btnArbolAbundanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbolAbundanciaActionPerformed
 
          String plantName = "Árbol abundancia";
@@ -310,12 +389,20 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArbolAbundanciaActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-     if (selectedPlantIds.isEmpty()) {
+
+        if (selectedPlantIds.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Please select at least one plant.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    String sql = "INSERT INTO garden_plant (id_Plant, id_Garden) VALUES (?, ?)";
+    // 1. Verificamos que idGarden no sea 0 o inválido
+    if (this.idGarden <= 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "El ID del jardín no es válido. Primero debe guardar el jardín.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // 2. Incluimos el campo 'url' obligatorio según tu tabla garden_plant
+    String sql = "INSERT INTO garden_plant (id_Plant, id_Garden, url) VALUES (?, ?, ?)";
     
     try (Connection con = DatabaseConnection.getInstance().getConnection();
          PreparedStatement pst = con.prepareStatement(sql)) {
@@ -323,6 +410,7 @@ public class PLANTS extends javax.swing.JFrame {
         for (int plantId : selectedPlantIds) {
             pst.setInt(1, plantId);
             pst.setInt(2, this.idGarden); 
+            pst.setString(3, ""); // <-- Enviamos string vacío o la URL de la imagen si la tienes
             pst.addBatch(); 
         }
         
@@ -330,24 +418,19 @@ public class PLANTS extends javax.swing.JFrame {
 
         if (this.mainScreen != null) {
             String plantsFormattedText = String.join(", ", selectedPlantNames);
-            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText,iduser);
+            GroundCard newCard = new GroundCard(this.idGarden, gardenName, gardenArea, plantsFormattedText, iduser);
             
-            // Set explicit card sizes
             newCard.setMaximumSize(new java.awt.Dimension(650, 150));
             newCard.setPreferredSize(new java.awt.Dimension(650, 150));
             newCard.setMinimumSize(new java.awt.Dimension(650, 150));
             newCard.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
             
-            // TARGET CONTAINER CONFIGURATION: 
-            // We force the main container panel to be non-opaque so it doesn't draw a gray square background under our card
             javax.swing.JPanel targetPanel = this.mainScreen.getJPanel3();
             targetPanel.setOpaque(false); 
             
-            // Add the component
             targetPanel.add(newCard);
             targetPanel.add(javax.swing.Box.createVerticalStrut(10)); 
             
-            // Force Layout Validation UI recalculation
             targetPanel.revalidate();
             targetPanel.repaint();
             this.mainScreen.revalidate();
@@ -359,9 +442,9 @@ public class PLANTS extends javax.swing.JFrame {
         this.dispose();
 
     } catch (SQLException e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
-            javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+        logger.log(java.util.logging.Level.SEVERE, "Error al insertar planta", e);
+        javax.swing.JOptionPane.showMessageDialog(this, "Se ha producido una excepción de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnSaveActionPerformed
 
    
@@ -378,7 +461,8 @@ public class PLANTS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbackActionPerformed
 
     private void btnCoronaCristoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoronaCristoActionPerformed
-                                                
+   
+                                                 
     String plantName = "Corona de Cristo";
 
     // 1. Validate in the local list of the current session
@@ -449,7 +533,6 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-
     }//GEN-LAST:event_btnCoronaCristoActionPerformed
 
     private void btnDiffenbachiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiffenbachiaActionPerformed
@@ -526,13 +609,11 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-        
-               
+       
     }//GEN-LAST:event_btnDiffenbachiaActionPerformed
 
     private void btnDurantiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDurantiaActionPerformed
-      
-        
+         
                                                     
     String plantName = "Durantia";
 
@@ -605,8 +686,6 @@ public class PLANTS extends javax.swing.JFrame {
         logger.log(java.util.logging.Level.SEVERE, "Error al procesar planta", e);
         javax.swing.JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-        
-                
     }//GEN-LAST:event_btnDurantiaActionPerformed
     private void showMensaje(String texto, String titulo, int tipoMensaje) {
         JOptionPane optionPane = new JOptionPane(texto, tipoMensaje);

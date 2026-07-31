@@ -31,7 +31,64 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class ADD1 extends javax.swing.JFrame {
+    private grounds mainScreen;
+    private int idUser;
     
+    public ADD1(grounds main_scren,int idUser) { 
+        this.Main_scren = main_scren;
+        this.iduser = idUser;
+        initComponents();
+        
+        // Setting the default dimensions for the frame
+        this.setSize(800, 705);
+        
+        // Making button backgrounds, borders, and focus rings transparent/hidden for a cleaner UI
+        btnback.setContentAreaFilled(false); 
+        btnback.setBorderPainted(false);     
+        btnback.setFocusPainted(false);  
+        
+        jButton2.setContentAreaFilled(false); 
+        jButton2.setBorderPainted(false);     
+        jButton2.setFocusPainted(false);  
+        
+        
+        
+        // Styling a button using FlatLaf LookAndFeel client properties (custom background, colors, and fully rounded shape)
+        btnpage.putClientProperty("FlatLaf.style",
+        "background:#1B5E20;" +
+        "foreground:#FFFFFF;" +
+        "borderWidth:0;" +
+        "focusWidth:0;" +
+        "arc:999;");
+        btnpage2.setContentAreaFilled(false); 
+        btnpage2.setBorderPainted(false);     
+        btnpage2.setFocusPainted(false);  
+        
+        jButton7.setContentAreaFilled(false); 
+        jButton7.setBorderPainted(false);     
+        jButton7.setFocusPainted(false);  
+        
+        // Defining dimensions and specific roundness attributes for navigation or control buttons
+        btnclose.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnclose.setSize(42, 42);
+        btnclose.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
+        btnnext.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnnext.setSize(42, 42);
+        btnnext.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
+        
+        
+        textname.setPreferredSize(new java.awt.Dimension(400, 37));
+        textname.setMinimumSize(new java.awt.Dimension(200, 37));
+        
+        
+        jPanel3.revalidate();
+        jPanel3.repaint();
+        
+        // Customizing main content containers with a rounded corner factor of 30 pixels
+        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
+    }
+    //
     private static final Logger logger = Logger.getLogger(ADD1.class.getName());
     
     private JavaBridge miPuente = new JavaBridge();
@@ -132,12 +189,37 @@ public class ADD1 extends javax.swing.JFrame {
                 "-fx-cursor: hand;" +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 6, 0, 0, 2);"
             );
+            
+
+                                                  
 
             btnRegresar.setOnAction(e -> {
-                if (webEngine.getHistory().getCurrentIndex() > 0) {
-                    webEngine.getHistory().go(-1);
-                }
+               if (webEngine.getHistory().getCurrentIndex() > 0) {
+                webEngine.getHistory().go(-1);
+             }
             });
+            
+           btnRegresar.setOnAction(e -> {
+    SwingUtilities.invokeLater(() -> {
+        // 1. Obtenemos el nombre ingresado por el usuario
+        String nombreJardin = textname.getText().trim();
+        if (nombreJardin.isEmpty()) {
+            nombreJardin = "Mi Jardín";
+        }
+        
+        // 2. Instanciamos PLANTS pasándole el ID real que MySQL generó en el INSERT
+        PLANTS vistaPlantas = new PLANTS(
+            this.Main_scren, 
+            this.idGardenGenerado, // <-- ¡AQUÍ SE ENVÍA EL ID GENERADO!
+            nombreJardin, 
+            "0m2", 
+            this.iduser
+        );
+        
+        vistaPlantas.setVisible(true);
+        this.dispose();
+    });
+});
             StackPane root = new StackPane();
             
             root.getChildren().add(webView);
@@ -180,60 +262,7 @@ public class ADD1 extends javax.swing.JFrame {
      * Constructor of the class. Initializes UI components, window size, 
      * and sets custom FlatLaf styles and styling behaviors.
      */
-    public ADD1(grounds main_scren,int idUser) { 
-        this.Main_scren = main_scren;
-        this.iduser = idUser;
-        initComponents();
-        
-        // Setting the default dimensions for the frame
-        this.setSize(800, 705);
-        
-        // Making button backgrounds, borders, and focus rings transparent/hidden for a cleaner UI
-        btnback.setContentAreaFilled(false); 
-        btnback.setBorderPainted(false);     
-        btnback.setFocusPainted(false);  
-        
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
-        
-        
-        
-        // Styling a button using FlatLaf LookAndFeel client properties (custom background, colors, and fully rounded shape)
-        btnpage.putClientProperty("FlatLaf.style",
-        "background:#1B5E20;" +
-        "foreground:#FFFFFF;" +
-        "borderWidth:0;" +
-        "focusWidth:0;" +
-        "arc:999;");
-        btnpage2.setContentAreaFilled(false); 
-        btnpage2.setBorderPainted(false);     
-        btnpage2.setFocusPainted(false);  
-        
-        jButton7.setContentAreaFilled(false); 
-        jButton7.setBorderPainted(false);     
-        jButton7.setFocusPainted(false);  
-        
-        // Defining dimensions and specific roundness attributes for navigation or control buttons
-        btnclose.setPreferredSize(new java.awt.Dimension(40, 40));
-        btnclose.setSize(42, 42);
-        btnclose.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-        
-        btnnext.setPreferredSize(new java.awt.Dimension(40, 40));
-        btnnext.setSize(42, 42);
-        btnnext.putClientProperty("FlatLaf.style", "background: #1B4D2F; arc: 999; borderWidth: 0; focusWidth: 0;");
-        
-        
-        textname.setPreferredSize(new java.awt.Dimension(400, 37));
-        textname.setMinimumSize(new java.awt.Dimension(200, 37));
-        
-        
-        jPanel3.revalidate();
-        jPanel3.repaint();
-        
-        // Customizing main content containers with a rounded corner factor of 30 pixels
-        jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
-    }
+    
 
     /**
      * Custom method to design and paint standard text fields with rounded borders.
@@ -448,6 +477,8 @@ public class ADD1 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnbackActionPerformed
 
+    //btn back
+    
     private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
    if (this.Main_scren != null) {
         this.Main_scren.setVisible(true);
