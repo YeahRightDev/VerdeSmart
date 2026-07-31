@@ -103,11 +103,21 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnback">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Brith\Documents\GitHub\VerdeSmart\src\main\resources\imagenes\atras.png"/>
+                </Property>
+              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbackActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="icon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="C:\Users\Brith\Documents\GitHub\VerdeSmart\src\main\resources\imagenes\hojas-de-coca (1).png"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>

@@ -667,6 +667,44 @@
             }
         });
     }
+    
+    // ==========================================
+// ENVÍO DE ÁREA A MYSQL DESDE WEBVIEW
+// ==========================================
+
+// Retorna el valor exacto del Área Total formateado (Ejemplo: "1.49 m²")
+function obtenerAreaCalculadaInterfaz() {
+    let areaTotal = 0;
+    groups.forEach((g) => {
+        let areaGrupo = g.shapes.reduce((a, s) => 
+            a + (s.type === 'Borde' ? 1 : -1) * (Math.abs(s.points.reduce((acc, p, i) => 
+                acc + (p.x * (s.points[(i+1)%s.points.length].y) - s.points[(i+1)%s.points.length].x * p.y), 0))/2) / (pxPerMeterX * pxPerMeterY), 0);
+        
+        areaTotal += Math.max(0, areaGrupo);
+    });
+
+    return Math.max(0, areaTotal).toFixed(2) + " m²"; 
+}
+
+// Función que dispara el guardado a Java
+function mandarAreaABasedeDatos() {
+    let areaTexto = obtenerAreaCalculadaInterfaz();
+    
+    if (window.javaBridge) {
+        window.javaBridge.actualizarAreaBD(areaTexto);
+    } else {
+        console.log("Área enviada (modo navegador):", areaTexto);
+    }
+}
+function mandarAreaABasedeDatos() {
+    // La variable 'areaTexto' toma el valor real acumulado en ese momento
+    let areaTexto = obtenerAreaCalculadaInterfaz(); 
+    
+    if (window.javaBridge) {
+        // Envia la variable viva a Java
+        window.javaBridge.actualizarAreaBD(areaTexto);
+    }
+}
 </script>
 </body>
 </html>

@@ -87,7 +87,10 @@ public class profile extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
         jPanel2.setForeground(new java.awt.Color(27, 77, 47));
 
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         btnback.addActionListener(this::btnbackActionPerformed);
+
+        icon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");

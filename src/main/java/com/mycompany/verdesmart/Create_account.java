@@ -174,7 +174,10 @@ public class Create_account extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         btnback.addActionListener(this::btnbackActionPerformed);
+
+        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText(" Verde Smart");
@@ -207,7 +210,7 @@ public class Create_account extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
         jLabel2.setText("Crear Cuenta");
 
@@ -242,6 +245,7 @@ public class Create_account extends javax.swing.JFrame {
         registerButton.setText("¿Ya tienes cuenta?");
         registerButton.addActionListener(this::registerButtonActionPerformed);
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
         jLabel3.setText("Nombre");
 
@@ -261,7 +265,7 @@ public class Create_account extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
         jLabel8.setText("Confirmar contraseña");
 
-        jLabel9.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(27, 77, 47));
         jLabel9.setText("Edad");
 
@@ -315,7 +319,7 @@ public class Create_account extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(age, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateborn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)

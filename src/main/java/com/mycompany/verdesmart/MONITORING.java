@@ -179,10 +179,13 @@ public class MONITORING extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(27, 77, 47));
 
+        btnclose.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\boton-x.png")); // NOI18N
         btnclose.addActionListener(this::btncloseActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Monitoreo");
+
+        btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -208,7 +211,7 @@ public class MONITORING extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
         jLabel2.setText("Estado del suelo");
 
