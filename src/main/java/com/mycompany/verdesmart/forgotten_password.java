@@ -367,6 +367,7 @@ public class forgotten_password extends javax.swing.JFrame {
      * lookup query, and enables password edit fields upon finding a structural record match.
      */
     private void btnconfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnconfirmActionPerformed
+        
         String email = mailTxt.getText().trim();
         if (email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Introduce tu correo electrónico.");

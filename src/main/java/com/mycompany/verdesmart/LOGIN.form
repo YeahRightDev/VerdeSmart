@@ -120,14 +120,24 @@
                                   </Group>
                                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel18" alignment="0" min="-2" pref="381" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" pref="296" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="SPinstructions" alignment="0" min="-2" pref="374" max="-2" attributes="0"/>
                                   <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel20" alignment="0" min="-2" pref="264" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" min="-2" pref="296" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="instructions" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="instructions2" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="instructions3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="instructions9" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -144,9 +154,25 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="SPinstructions" min="-2" pref="247" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="instructions" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions8" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="instructions9" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -162,7 +188,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="26" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel19" min="-2" pref="54" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           </Group>
@@ -255,26 +281,78 @@
                 <Property name="text" type="java.lang.String" value="UTC@verdesmart.com"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="SPinstructions">
+            <Component class="javax.swing.JLabel" name="instructions">
               <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="jLabel4"/>
               </Properties>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTextArea" name="instructions">
-                  <Properties>
-                    <Property name="columns" type="int" value="20"/>
-                    <Property name="lineWrap" type="boolean" value="true"/>
-                    <Property name="rows" type="int" value="5"/>
-                    <Property name="wrapStyleWord" type="boolean" value="true"/>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions2">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel4"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions3">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel10"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions4">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel11"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions5">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel12"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions6">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel13"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions7">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel14"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions8">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel15"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="instructions9">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel16"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">

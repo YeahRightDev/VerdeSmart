@@ -502,6 +502,7 @@ public class Create_account extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, 
             "Error en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+          
     }//GEN-LAST:event_logInActionPerformed
     }
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed

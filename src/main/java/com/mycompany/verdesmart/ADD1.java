@@ -1,5 +1,8 @@
 package com.mycompany.verdesmart;
 
+//Import JavaFX libraries needed for rendering HTML/JS content 
+//(WebView), handling user inputs, UI containers, and managing 
+//communication between JavaScript and Java (JSObject).
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
@@ -14,29 +17,30 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import netscape.javascript.JSObject;
-
+//Import utilities for file handling (File, FileWriter) and standard 
+//Java desktop GUI frameworks (Swing and AWT).
 import java.io.File;
 import java.io.FileWriter;
 import javax.swing.*;
 import java.awt.*;
-
-
+//Import JDBC utilities required for connecting to and querying a database (MySQL).
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+//Import logging utilities for tracking application events and error handling.
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+//Declares the public class ADD1, which extends JFrame
 public class ADD1 extends javax.swing.JFrame {
-    private grounds mainScreen;
-    private int idUser;
-    private static final Logger logger = Logger.getLogger(ADD1.class.getName());
-   
-    private JavaBridge miPuente = new JavaBridge();
-    private int idGardenGenerado;
+    
+    private grounds mainScreen;//Reference to the application's previous/main screen window.
+    private int idUser;//ID of the currently logged-in user.
+    private static final Logger logger = Logger.getLogger(ADD1.class.getName());//Logger instance for logging system events or exceptions.
+    private JavaBridge mybridge = new JavaBridge();//mybridge:
+    private int generatedGardenId;//Holds the primary key (ID) of the newly created garden record from the DB.
     
     public ADD1(grounds main_scren,int idUser) { 
         this.mainScreen = main_scren;
@@ -52,9 +56,9 @@ public class ADD1 extends javax.swing.JFrame {
         btnback.setBorderPainted(false);     
         btnback.setFocusPainted(false);  
         
-        jButton2.setContentAreaFilled(false); 
-        jButton2.setBorderPainted(false);     
-        jButton2.setFocusPainted(false);  
+        btnsheet.setContentAreaFilled(false); 
+        btnsheet.setBorderPainted(false);     
+        btnsheet.setFocusPainted(false);  
         
         
         
@@ -69,9 +73,9 @@ public class ADD1 extends javax.swing.JFrame {
         btnpage2.setBorderPainted(false);     
         btnpage2.setFocusPainted(false);  
         
-        jButton7.setContentAreaFilled(false); 
-        jButton7.setBorderPainted(false);     
-        jButton7.setFocusPainted(false);  
+        btnsheet2.setContentAreaFilled(false); 
+        btnsheet2.setBorderPainted(false);     
+        btnsheet2.setFocusPainted(false);  
         
         // Defining dimensions and specific roundness attributes for navigation or control buttons
         btnclose.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -93,35 +97,33 @@ public class ADD1 extends javax.swing.JFrame {
         // Customizing main content containers with a rounded corner factor of 30 pixels
         jPanel3.putClientProperty("FlatLaf.style", "arc: 30;");
     }
-    //
     
-    
-    // ========================================================
-    // ¡ESTO ES CLAVE! Variable global para que Java no borre el puente
-    // ========================================================
-   
-
-    
+    // mipuente THIS IS KEY! Global variable so that Java doesn't delete the bridge.
+   //Default parameterless constructor. Sets default exit-on-close behavior and centers the window on screen.
     public ADD1() {
        initComponents();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
-    // CLASE PUENTE
+    // class bridge
+    //Method exposed to JavaScript. Uses SwingUtilities.invokeLater to execute UI tasks safely 
+    //on the Swing Event Dispatch Thread (EDT). Displays a file chooser dialog to save JSON content.
    public class JavaBridge {
-        public void guardarArchivo(String nombre, String contenidoJson) {
+        public void SaveFile(String name, String jsonContent) {
+            // Guarantees GUI updates execute on the Swing Event Dispatch Thread (EDT)
             SwingUtilities.invokeLater(() -> {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setDialogTitle("Guardar Proyecto Verde Smart");
-                fileChooser.setSelectedFile(new File(nombre + ".json"));
+                fileChooser.setSelectedFile(new File(name + ".json"));
                 
+                //If the user confirms a file location, writes the JSON string payload to disk and displays status dialogs.
                 int userSelection = fileChooser.showSaveDialog(ADD1.this);
                 
                 if (userSelection == JFileChooser.APPROVE_OPTION) {
                     File fileToSave = fileChooser.getSelectedFile();
                     try (FileWriter fw = new FileWriter(fileToSave)) {
-                        fw.write(contenidoJson);
+                        fw.write(jsonContent);
                         JOptionPane.showMessageDialog(ADD1.this, 
                             "Proyecto guardado exitosamente en:\n" + fileToSave.getAbsolutePath(), 
                             "Guardado Exitoso", JOptionPane.INFORMATION_MESSAGE);
@@ -135,45 +137,47 @@ public class ADD1 extends javax.swing.JFrame {
             });
         }
         
-       public void actualizarAreaBD(String areaTexto) {
+        //Invoked from JavaScript. Gets a database connection and uses regular expressions 
+        //to parse out numerical digits and decimals from the area string.
+       public void updateDatabaseArea(String textArea) {
             SwingUtilities.invokeLater(() -> {
                 try {
                     Connection con = DatabaseConnection.getInstance().getConnection();
 
-                    // Extraer solo el número decimal de la cadena recibida
-                    String soloNumero = areaTexto.replaceAll("[^0-9.]", "");
-                    double areaNumerica = 0.0;
+                    // Extract only the decimal number from the received string
+                    String numbersOnly = textArea.replaceAll("[^0-9.]", "");
+                       double numericArea = 0.0;
                     
-                    if (!soloNumero.isEmpty()) {
-                        areaNumerica = Double.parseDouble(soloNumero);
+                    if (!numbersOnly.isEmpty()) {
+                        numericArea = Double.parseDouble(numbersOnly);
                     }
 
-                    // Actualizar MySQL
+                    // Update MySQL
                     String sql = "UPDATE garden SET Total_Area = ? WHERE id_Garden = ?";
                     PreparedStatement ps = con.prepareStatement(sql);
                     
-                    ps.setDouble(1, areaNumerica);
-                    ps.setInt(2, idGardenGenerado);
+                    ps.setDouble(1, numericArea);
+                    ps.setInt(2, generatedGardenId);
                     
-                    int filas = ps.executeUpdate();
-                    System.out.println("✅ Área guardada con éxito en MySQL: " + areaNumerica + " m² (Filas: " + filas + ")");
+                    int line = ps.executeUpdate();
+                    System.out.println(" Área guardada con éxito en MySQL: " + numericArea + " m² (Filas: " + line + ")");
 
-                    // Abrir vista PLANTS tras guardar
-                    String nombreJardin = textname.getText().trim();
-                    if (nombreJardin.isEmpty()) nombreJardin = "Mi Jardín";
+                    // Open PLANTS view after saving
+                    String gardenname = textname.getText().trim();
+                    if (gardenname.isEmpty()) gardenname = "Mi Jardín";
 
-                    PLANTS vistaPlantas = new PLANTS(
+                    PLANTS viewPlants = new PLANTS(
                         mainScreen, 
-                        idGardenGenerado, 
-                        nombreJardin, 
-                        areaNumerica + " m²", 
+                        generatedGardenId, 
+                        gardenname, 
+                        numericArea + " m²", 
                         idUser
                     );
-                    vistaPlantas.setVisible(true);
+                    viewPlants.setVisible(true);
                     dispose();
 
                 } catch (Exception ex) {
-                    System.err.println("❌ Error al actualizar área en MySQL: " + ex.getMessage());
+                    System.err.println("Error al actualizar área en MySQL: " + ex.getMessage());
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(ADD1.this, 
                         "Error al guardar el área: " + ex.getMessage(), 
@@ -183,7 +187,7 @@ public class ADD1 extends javax.swing.JFrame {
         }
     }
    
-    private void cargarWebView() {
+    private void loadWebView() {
         JFXPanel fxPanel = new JFXPanel();
         jPanel1.add(fxPanel, BorderLayout.CENTER);
 
@@ -212,10 +216,10 @@ public class ADD1 extends javax.swing.JFrame {
                     } catch (Exception ex) { }
                 }
             });
-            Button btnRegresar = new Button("⬅ Regresar");
+            Button btnnext = new Button("Plantas");
             
-            // Estilo flotante: fondo semitransparente u opaco, bordes redondeados y cursor de mano
-            btnRegresar.setStyle(
+           // Floating style: semi-transparent or opaque background, rounded corners, and hand cursor
+            btnnext.setStyle(
                 "-fx-background-color: rgba(40, 40, 40, 0.85);" +
                 "-fx-text-fill: white;" +
                 "-fx-font-weight: bold;" +
@@ -227,10 +231,11 @@ public class ADD1 extends javax.swing.JFrame {
             );
             
 
-            btnRegresar.setOnAction(e -> {
+            // Floating button click action: triggers JS to commit calculated area
+            btnnext.setOnAction(e -> {
                 Platform.runLater(() -> {
                     try {
-                        webEngine.executeScript("mandarAreaABasedeDatos();");
+                        webEngine.executeScript("sendAreaToDatabase();");
                     } catch (Exception ex) {
                         System.err.println("Error al invocar JS: " + ex.getMessage());
                     }
@@ -239,9 +244,9 @@ public class ADD1 extends javax.swing.JFrame {
             
             StackPane root = new StackPane();
             root.getChildren().add(webView);
-            root.getChildren().add(btnRegresar);
-            StackPane.setAlignment(btnRegresar, Pos.TOP_LEFT);
-            StackPane.setMargin(btnRegresar, new Insets(15, 0, 0, 15));
+            root.getChildren().add(btnnext);
+            StackPane.setAlignment(btnnext, Pos.TOP_LEFT);
+            StackPane.setMargin(btnnext, new Insets(15, 0, 0, 15));
             
           
         
@@ -249,7 +254,7 @@ public class ADD1 extends javax.swing.JFrame {
                 if (newState == Worker.State.SUCCEEDED) {
                     System.out.println("Página cargada. Inyectando el puente Java-JS...");
                     JSObject window = (JSObject) webEngine.executeScript("window");
-                    window.setMember("javaBridge", miPuente); 
+                    window.setMember("javaBridge", mybridge); 
                 }
             });
             
@@ -277,14 +282,14 @@ public class ADD1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnback = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnsheet = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnpage = new javax.swing.JButton();
         btnpage2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        btnsheet2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         textname = new javax.swing.JTextField();
         btnclose = new javax.swing.JButton();
@@ -302,7 +307,7 @@ public class ADD1 extends javax.swing.JFrame {
         btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\atras.png")); // NOI18N
         btnback.addActionListener(this::btnbackActionPerformed);
 
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+        btnsheet.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setText("Verde Smart");
@@ -315,7 +320,7 @@ public class ADD1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnback)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnsheet)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -329,7 +334,7 @@ public class ADD1 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1))
                     .addComponent(btnback, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnsheet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -347,7 +352,7 @@ public class ADD1 extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
+        btnsheet2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(27, 77, 47));
@@ -363,7 +368,7 @@ public class ADD1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton7)
+                        .addComponent(btnsheet2)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4))
                     .addComponent(textname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,7 +380,7 @@ public class ADD1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnsheet2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(58, 58, 58)
                 .addComponent(textname, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(171, Short.MAX_VALUE))
@@ -477,10 +482,11 @@ public class ADD1 extends javax.swing.JFrame {
      * the Singleton pattern, updates SQL entries, captures auto-generated keys, and triggers the next view.
      */
     private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
-                                         
-    String nombre = textname.getText().trim();
-    Double totalArea = 0.0;
 
+    String nombre = textname.getText().trim();
+    Double totalArea = 0.0;// Temporarily initialized to 0.0 m²
+
+    // Validate garden name field is non-empty
     if (nombre.isEmpty()) {
         JOptionPane.showMessageDialog(this,
                 "Por favor, ingrese el nombre que tendrá el terreno / jardín.",
@@ -489,11 +495,13 @@ public class ADD1 extends javax.swing.JFrame {
         return;
     }
 
+    // Parameterized SQL Query
     String sql = "INSERT INTO garden (Garden_Name, Total_Area, Shape, Soil_Type, Humidity, id_User) VALUES (?, ?, ?, ?, ?, ?)";
 
     try {
         Connection con = DatabaseConnection.getInstance().getConnection();
 
+        // Statement configured to retrieve auto-generated auto-increment keys
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, nombre);
             ps.setDouble(2, totalArea);
@@ -507,16 +515,16 @@ public class ADD1 extends javax.swing.JFrame {
             if (filasInsertadas > 0) {
                 try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        idGardenGenerado = generatedKeys.getInt(1);
+                        generatedGardenId = generatedKeys.getInt(1);
                     }
                 }
 
                 JOptionPane.showMessageDialog(this, "¡Jardín guardado exitosamente!");
 
-                // CORRECCIÓN: Limpiamos el panel principal y cargamos el WebView dinámicamente
+               // Dynamic container panel cleanup and replace with Web view
                 jPanel1.removeAll();
                 jPanel1.setLayout(new BorderLayout());
-                cargarWebView();
+                loadWebView();
                 jPanel1.revalidate();
                 jPanel1.repaint();
             }
@@ -562,8 +570,8 @@ private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JButton btnnext;
     private javax.swing.JButton btnpage;
     private javax.swing.JButton btnpage2;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton btnsheet;
+    private javax.swing.JButton btnsheet2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -68,25 +68,15 @@ public class LOGIN extends javax.swing.JFrame {
        
        //instructions for the app
        instructions.setText("Normalmente, muchos jardineros tienen problemas para saber el ");
-       instructions.append("\ntamaño exacto de sus jardines de forma irregular y recordar qué  ");
-       instructions.append("\nplantas plantaron, así como los horarios o días en que regaron su ");
-       instructions.append("\njardín,  por eso Verde Smart s una app diseñada para ayudar y ");
-       instructions.append("\n facilitar las tarea a todos  los jardineros. Verde Smart ayuda  ");
-       instructions.append("\na los jardineros a conocer las medidas de su terreno irregular y "); 
-       instructions.append("\nllevar un registro detallado del nombre del jardín, las plantas ");
-       instructions.append("\nque contiene, recomendaciones para regar las plantas y el tipo de ");
-       instructions.append("\nsuelo que tiene.");
+       instructions2.setText("tamaño exacto de sus jardines de forma irregular y recordar qué  ");
+       instructions3.setText("plantas plantaron, así como los horarios o días en que regaron su ");
+       instructions4.setText("jardín,  por eso Verde Smart s una app diseñada para ayudar y ");
+       instructions5.setText("facilitar las tarea a todos  los jardineros. Verde Smart ayuda  ");
+       instructions6.setText("a los jardineros a conocer las medidas de su terreno irregular y "); 
+       instructions7.setText("llevar un registro detallado del nombre del jardín, las plantas ");
+       instructions8.setText("que contiene, recomendaciones para regar las plantas y el tipo de ");
+       instructions9.setText("suelo que tiene.");
        
-       instructions.setOpaque(false);
-       SPinstructions.setOpaque(false);
-       SPinstructions.getViewport().setOpaque(false);
-       SPinstructions.setBorder(null);
-       instructions.setForeground(java.awt.Color.WHITE);
-                               
-                                       
-                                               
-                                                      
-     
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -106,8 +96,15 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        SPinstructions = new javax.swing.JScrollPane();
-        instructions = new javax.swing.JTextArea();
+        instructions = new javax.swing.JLabel();
+        instructions2 = new javax.swing.JLabel();
+        instructions3 = new javax.swing.JLabel();
+        instructions4 = new javax.swing.JLabel();
+        instructions5 = new javax.swing.JLabel();
+        instructions6 = new javax.swing.JLabel();
+        instructions7 = new javax.swing.JLabel();
+        instructions8 = new javax.swing.JLabel();
+        instructions9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnnewAcc = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -144,14 +141,32 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("UTC@verdesmart.com");
 
-        SPinstructions.setBorder(null);
+        instructions.setForeground(new java.awt.Color(255, 255, 255));
+        instructions.setText("jLabel4");
 
-        instructions.setColumns(20);
-        instructions.setLineWrap(true);
-        instructions.setRows(5);
-        instructions.setWrapStyleWord(true);
-        instructions.setOpaque(false);
-        SPinstructions.setViewportView(instructions);
+        instructions2.setForeground(new java.awt.Color(255, 255, 255));
+        instructions2.setText("jLabel4");
+
+        instructions3.setForeground(new java.awt.Color(255, 255, 255));
+        instructions3.setText("jLabel10");
+
+        instructions4.setForeground(new java.awt.Color(255, 255, 255));
+        instructions4.setText("jLabel11");
+
+        instructions5.setForeground(new java.awt.Color(255, 255, 255));
+        instructions5.setText("jLabel12");
+
+        instructions6.setForeground(new java.awt.Color(255, 255, 255));
+        instructions6.setText("jLabel13");
+
+        instructions7.setForeground(new java.awt.Color(255, 255, 255));
+        instructions7.setText("jLabel14");
+
+        instructions8.setForeground(new java.awt.Color(255, 255, 255));
+        instructions8.setText("jLabel15");
+
+        instructions9.setForeground(new java.awt.Color(255, 255, 255));
+        instructions9.setText("jLabel16");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -176,13 +191,22 @@ public class LOGIN extends javax.swing.JFrame {
                                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3)
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(SPinstructions, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGap(56, 56, 56)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(instructions, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(instructions2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(instructions3)
+                            .addComponent(instructions4)
+                            .addComponent(instructions5)
+                            .addComponent(instructions6)
+                            .addComponent(instructions7)
+                            .addComponent(instructions8)
+                            .addComponent(instructions9)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5)))
@@ -193,9 +217,25 @@ public class LOGIN extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SPinstructions, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(instructions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(instructions9)
+                .addGap(68, 68, 68)
                 .addComponent(jLabel3)
                 .addGap(69, 69, 69)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -209,7 +249,7 @@ public class LOGIN extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)))
                 .addComponent(jLabel7)
@@ -309,6 +349,7 @@ public class LOGIN extends javax.swing.JFrame {
       login2 nuevaVentana = new login2();
       nuevaVentana.setVisible(true);
       this.dispose();
+     
     }//GEN-LAST:event_btnloginActionPerformed
 
     /**
@@ -370,12 +411,19 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_btnquestionsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane SPinstructions;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnlogin;
     private javax.swing.JButton btnnewAcc;
     private javax.swing.JButton btnquestions;
-    private javax.swing.JTextArea instructions;
+    private javax.swing.JLabel instructions;
+    private javax.swing.JLabel instructions2;
+    private javax.swing.JLabel instructions3;
+    private javax.swing.JLabel instructions4;
+    private javax.swing.JLabel instructions5;
+    private javax.swing.JLabel instructions6;
+    private javax.swing.JLabel instructions7;
+    private javax.swing.JLabel instructions8;
+    private javax.swing.JLabel instructions9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;

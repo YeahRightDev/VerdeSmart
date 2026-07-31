@@ -75,7 +75,7 @@ public class grounds extends javax.swing.JFrame {
         this.setBackground(miColorVerde);
        
         gardens.setLayout(new javax.swing.BoxLayout(gardens, javax.swing.BoxLayout.Y_AXIS));
-        cargarJardinesDesdeBD();
+        loadGardensFromDB();
        
     }
     
@@ -86,7 +86,7 @@ public class grounds extends javax.swing.JFrame {
      * generating individualized GroundCard display panels safely positioned 
      * with alignment parameters and spacer components.
      */
-    public void cargarJardinesDesdeBD() {
+    public void loadGardensFromDB() {
         gardens.removeAll();
         
         if (this.iduser <= 0) {

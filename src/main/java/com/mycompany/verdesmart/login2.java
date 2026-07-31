@@ -321,6 +321,7 @@ public class login2 extends javax.swing.JFrame {
      * and forwards successful authentication tokens to the grounds visual dashboard frame.
      */
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
+       btnlogin.requestFocusInWindow();
         String Email = txtemail.getText().equals("Correo electrónico") ? "" : txtemail.getText().trim();
     
         String rawPassword = new String(txtPassword.getPassword());

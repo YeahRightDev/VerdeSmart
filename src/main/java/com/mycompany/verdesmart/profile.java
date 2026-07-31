@@ -205,6 +205,7 @@ public class profile extends javax.swing.JFrame {
         ventanaGrounds.setVisible(true);
         // We close the current profile window
         this.dispose();
+        btnback.requestFocusInWindow();
     }//GEN-LAST:event_btnbackActionPerformed
 
     /**

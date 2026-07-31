@@ -310,7 +310,7 @@ public class PLANTS extends javax.swing.JFrame {
                 }
             }
 
-            // Guardar temporalmente en las listas de la sesión actual
+      // Temporarily save to the current session's lists
             selectedPlantIds.add(plantId);
             selectedPlantNames.add(plantName);
             javax.swing.JOptionPane.showMessageDialog(this, "Planta '" + plantName + "' seleccionada correctamente.");
@@ -349,8 +349,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description, how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
             pstInsert.setString(1, plantName);
@@ -361,7 +361,7 @@ public class PLANTS extends javax.swing.JFrame {
             pstInsert.setString(6, "Sudáfrica");
             pstInsert.setString(7, "Suculenta / Arbusto perenne");
             pstInsert.setString(8, "Arbusto suculento de hojas pequeñas, carnosas y brillantes con tallos rojizos. Muy resistente a la sequía y símbolo de la prosperidad.");
-     
+            pstInsert.setString(9,"Cada 10 dïas");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
@@ -405,13 +405,13 @@ public class PLANTS extends javax.swing.JFrame {
         return;
     }
 
-    // 1. Verificamos que idGarden no sea 0 o inválido
+    // 1. We verify that idGarden is not 0 or invalid
     if (this.idGarden <= 0) {
         javax.swing.JOptionPane.showMessageDialog(this, "El ID del jardín no es válido. Primero debe guardar el jardín.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // 2. Incluimos el campo 'url' obligatorio según tu tabla garden_plant
+    // 2. We include the mandatory 'url' field based on your garden_plant table.
     String sql = "INSERT INTO garden_plant (id_Plant, id_Garden, url) VALUES (?, ?, ?)";
     
     try (Connection con = DatabaseConnection.getInstance().getConnection();
@@ -420,7 +420,7 @@ public class PLANTS extends javax.swing.JFrame {
         for (int plantId : selectedPlantIds) {
             pst.setInt(1, plantId);
             pst.setInt(2, this.idGarden); 
-            pst.setString(3, ""); // <-- Enviamos string vacío o la URL de la imagen si la tienes
+            pst.setString(3, ""); // <-- Send an empty string or the image URL if you have it
             pst.addBatch(); 
         }
         
@@ -499,8 +499,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -511,7 +511,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "Madagascar");
                 pstInsert.setString(7, "Suculenta / Arbusto");
                 pstInsert.setString(8, "Arbusto espinoso muy resistente al sol directo.");
-
+                pstInsert.setString(9,"Cada 10 días");
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -574,8 +574,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -586,7 +586,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "América Central y del Sur");
                 pstInsert.setString(7, "Planta de Interior / Follaje");
                 pstInsert.setString(8, "Planta tropical de interior con grandes hojas matizadas en tonos verdes y blancos.");
-         
+                pstInsert.setString(9,"Cada 6 días");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {
@@ -651,8 +651,8 @@ public class PLANTS extends javax.swing.JFrame {
         // 3. . If it DOESN'T exist in the catalog, we insert it (without passing id_Garden)
         if (plantId == -1) {
             String insertPlantSql = "INSERT INTO plant (Plant_Name, Species, Necessary_Water_Litres, " +
-                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    "Necessary_Space_SqM, Weather_Min_Temp, Region, Plant_Type, Plant_Description,how_often_to_water) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?,?, ?)";
 
             try (PreparedStatement pstInsert = con.prepareStatement(insertPlantSql, Statement.RETURN_GENERATED_KEYS)) {
                 pstInsert.setString(1, plantName);
@@ -663,7 +663,7 @@ public class PLANTS extends javax.swing.JFrame {
                 pstInsert.setString(6, "América Tropical");
                 pstInsert.setString(7, "Arbusto de Exterior / Ornamental");
                 pstInsert.setString(8, "Arbusto vigoroso ideal para cercas vivas. Produce hermosas flores moradas o azules en racimos.");
-             
+                pstInsert.setString(9,"Cada 3 días");
 
                 pstInsert.executeUpdate();
                 try (ResultSet generatedKeys = pstInsert.getGeneratedKeys()) {

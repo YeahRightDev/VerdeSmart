@@ -61,7 +61,7 @@ public class GroundCard extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(27, 77, 47));
         jLabel1.setText("Nombre del Jardín");
 
@@ -87,9 +87,8 @@ public class GroundCard extends javax.swing.JPanel {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btndelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,13 +104,14 @@ public class GroundCard extends javax.swing.JPanel {
                     .addComponent(btnmonitoring, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addComponent(btndelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(16, 16, 16))
+                        .addComponent(btndelete, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -132,14 +132,14 @@ public class GroundCard extends javax.swing.JPanel {
         
         if (parentWindow instanceof MONITORING) {
            // This block executes if you are deleting from the Monitoring screen
-            MONITORING monitoreoActual = (MONITORING) parentWindow;
+            MONITORING current_monitoring = (MONITORING) parentWindow;
             
            // Note: If you changed the 'delete' constructor to receive 'grounds',
             // ideally monitoreoActual should have a reference to grounds or pass null if it is another logic.
             // For now, to avoid compilation errors if 'delete' strictly requests grounds:
             delete del = new delete(null, this.id_Garden,iduser);
             del.setVisible(true);
-            monitoreoActual.setVisible(false);
+            current_monitoring.setVisible(false);
             
         } else if (parentWindow instanceof grounds) {
             // THIS IS THE BLOCK THAT EXECUTES ON YOUR GARDENS PAGE!

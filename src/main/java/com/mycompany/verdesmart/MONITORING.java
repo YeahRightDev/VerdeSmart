@@ -27,7 +27,7 @@ public class MONITORING extends javax.swing.JFrame {
         // 2. Update view headers and query active metrics if a target garden reference is provided
         if (currentGroundName != null && !currentGroundName.isEmpty()) {
             jLabel1.setText(currentGroundName.toUpperCase());
-            consultarDatosMonitoreo(currentGroundName);
+            queryMonitoringData(currentGroundName);
         }
         btnclose.setContentAreaFilled(false); 
         btnclose.setBorderPainted(false);     
@@ -38,118 +38,126 @@ public class MONITORING extends javax.swing.JFrame {
         btnback.setFocusPainted(false);  
     }
     
-    private void consultarDatosMonitoreo(String nombreJardin) {
-    // Database query targeting the latest available monitoring history metric for this specific plot
-   String sqlUltimoMonitoreo = "SELECT m.Humidity, m.Date_Time, m.irrigation_alert FROM monitoring m "
-                                  + "JOIN garden g ON m.id_Garden = g.id_Garden "
-                                  + "WHERE g.Garden_Name = ? "
-                                  + "ORDER BY m.Date_Time DESC LIMIT 1";
+    private void queryMonitoringData(String namegarden) {
+        // Clear all labels first (removes background colors, borders, and text)
+        resetPlantLabels();
 
-  // Database query targeting the latest logged irrigation entry for scheduling updates
-    String sqlRiego = "SELECT i.Date_time FROM irrigation i "
-                    + "JOIN garden g ON i.id_Garden = g.id_Garden "
-                    + "WHERE g.Name = ? "
-                    + "ORDER BY i.Date_time DESC LIMIT 1";
+        String sqlPlants = "SELECT p.Plant_Name, p.how_often_to_water, gp.Sown_Date "
+                         + "FROM plant p "
+                         + "JOIN garden_plant gp ON p.id_Plant = gp.id_Plant "
+                         + "JOIN garden g ON gp.id_Garden = g.id_Garden "
+                         + "WHERE g.Garden_Name = ?";
 
-  try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
-             java.sql.PreparedStatement psM = con.prepareStatement(sqlUltimoMonitoreo)) {
+        try (java.sql.Connection con = DatabaseConnection.getInstance().getConnection();
+             java.sql.PreparedStatement psM = con.prepareStatement(sqlPlants)) {
             
-            psM.setString(1, nombreJardin);
+            psM.setString(1, namegarden);
             
-            try (java.sql.ResultSet rsM = psM.executeQuery()) {
-                if (rsM.next()) {
-                    // 1. Extract the moisture
-                    float humedad = rsM.getFloat("Humidity");
-                    lbHumedad.setText(String.format("%.1f%%", humedad));
+            try (java.sql.ResultSet rs = psM.executeQuery()) {
+                int count = 0;
+                java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
-                    // 2. Extract the date and time of the monitoring
-                    java.sql.Timestamp fechaMonitoreoTS = rsM.getTimestamp("Date_Time");
-                    java.text.SimpleDateFormat formatoFecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
-                    java.text.SimpleDateFormat formatoHora = new java.text.SimpleDateFormat("hh:mm a");
-
-                    String fechaString = formatoFecha.format(fechaMonitoreoTS);
-                    String horaString = formatoHora.format(fechaMonitoreoTS);
-
-                    // We show the date and time when the sensor measured the data
-                    lblUltimoRiego.setText(fechaString + " - " + horaString); 
-                    lblFechaYHoraRiego.setText(fechaString + " - " + horaString);
-
-                    // 3. control the next watering based on the monitoring alert
-                    String alerta = rsM.getString("irrigation_alert");
+                // Iterate through the plants assigned to this garden
+                while (rs.next()) {
+                    count++;
+                    String plantName = rs.getString("Plant_Name");
+                    String wateringFrequency = rs.getString("how_often_to_water");
+                    java.sql.Timestamp sownDate = rs.getTimestamp("Sown_Date");
                     
-                    // If the monitoring status says it needs water or is scheduled
-                    if (alerta != null && !alerta.isEmpty()) {
-                        lblProximoRiego.setText(alerta.toUpperCase());
-                    } else {
-                        lblProximoRiego.setText("Suelo Estable / Monitoreando");
+                    String dateStr = (sownDate != null) ? dateFormat.format(sownDate) : "No date";
+                    String waterStr = (wateringFrequency != null) ? wateringFrequency : "Normal watering";
+
+                    // Assign data and activate styles ONLY for existing database records
+                    switch (count) {
+                        case 1:
+                            activateLabelStyle(lblCrownofThorns,  plantName + " (Sembrada: " + dateStr + ")");
+                            activateLabelStyle(lblCrownofThorns2, "Cada: " + waterStr);
+                            break;
+                        case 2:
+                            activateLabelStyle(lblDieffenbachia,plantName + " (Sembrada: " + dateStr + ")");
+                            activateLabelStyle(lblDieffenbachia2, "Cada: " + waterStr);
+                            break;
+                        case 3:
+                            activateLabelStyle(lblTreeofAbundance,  plantName + " (Sembrada: " + dateStr + ")");
+                            activateLabelStyle(lblTreeofAbundance2, "Cada: " + waterStr);
+                            break;
+                        case 4:
+                            activateLabelStyle(lbldurantia,  plantName + " (Sembrada: " + dateStr + ")");
+                            activateLabelStyle(lbldurantia2, "Cada: " + waterStr);
+                            break;
                     }
-                    
-                } else {
-                    // If the garden is new and doesn't have any data in the 'monitoring' table
-                    lbHumedad.setText("N/D");
-                    lblUltimoRiego.setText("Sin registros");
-                    lblFechaYHoraRiego.setText("Sin registros");
-                    lblProximoRiego.setText("Sin registros");
+                }
+
+                // If the garden has no registered plants
+                if (count == 0) {
+                    lblCrownofThorns.setText("This garden has no registered plants.");
+                    lblCrownofThorns.setVisible(true);
                 }
             }
 
         } catch (java.sql.SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al cargar datos desde monitoreo", ex);
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Error al conectar con la base de datos: " + ex.getMessage(), 
-                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Error loading garden plants", ex);
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Error retrieving garden plants: " + ex.getMessage(),
+                "DB Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-}
-    private void styleLabels() {
-        lbHumedad.setOpaque(true);
-        lblFechaYHoraRiego.setOpaque(true);
-        lblProximoRiego.setOpaque(true);
+   private void activateLabelStyle(javax.swing.JLabel label, String text) {
+        if (label == null) return;
 
-        btnback.setContentAreaFilled(false);
-        btnback.setBorderPainted(false);
-        btnback.setFocusPainted(false);
-
-        lbHumedad.setBackground(new Color(199,221,181));
-        lbHumedad.setForeground(new Color(27,77,47));
-        lbHumedad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbHumedad.setText("45%");
-
-        lblFechaYHoraRiego.setBackground(new Color(240,240,240));
-        lblFechaYHoraRiego.setForeground(new Color(27,77,47));
-        lblFechaYHoraRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFechaYHoraRiego.setText("30/06/2026");
-
-        lblProximoRiego.setBackground(new Color(240,240,240));
-        lblProximoRiego.setForeground(new Color(27,77,47));
-        lblProximoRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblProximoRiego.setText("10:50 PM");
-        
-        lblUltimoRiego.setBackground(new Color(240,240,240));
-        lblUltimoRiego.setForeground(new Color(27,77,47));
-        lblUltimoRiego.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblUltimoRiego.setText("30/06/2026");
-
-        javax.swing.border.AbstractBorder roundedBorder =
-                new javax.swing.border.AbstractBorder() {
+        javax.swing.border.AbstractBorder roundedBorder = new javax.swing.border.AbstractBorder() {
             @Override
-            public void paintBorder(java.awt.Component c, Graphics g,
-                                    int x, int y, int width, int height) {
+            public void paintBorder(java.awt.Component c, Graphics g, int x, int y, int width, int height) {
                 Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(
-                        RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(27,77,47));
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(27, 77, 47));
                 g2.setStroke(new java.awt.BasicStroke(2));
                 g2.drawRoundRect(x + 1, y + 1, width - 3, height - 3, 20, 20);
                 g2.dispose();
             }
         };
 
-        lbHumedad.setBorder(roundedBorder);
-        lblFechaYHoraRiego.setBorder(roundedBorder);
-        lblProximoRiego.setBorder(roundedBorder);
-        lblUltimoRiego.setBorder(roundedBorder);
+        label.setText(text);
+        label.setOpaque(true);
+        label.setBackground(new Color(199, 221, 181));
+        label.setForeground(new Color(27, 77, 47));
+        label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label.setBorder(roundedBorder);
+        label.setVisible(true);
+    }
+// Helper method to clear or hide plant labels before loading new data
+private void resetPlantLabels() {
+    javax.swing.JLabel[] labels = {
+            lblCrownofThorns, lblCrownofThorns2,
+            lblDieffenbachia, lblDieffenbachia2,
+            lblTreeofAbundance, lblTreeofAbundance2,
+            lbldurantia, lbldurantia2
+          
+        };
+
+        for (javax.swing.JLabel lbl : labels) {
+        if (lbl != null) {
+            lbl.setText(" ");
+            lbl.setOpaque(false);
+            lbl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
+            
+            // Conserva la altura original que le diste en el JFrame de NetBeans
+            if (lbl.getPreferredSize() != null && lbl.getPreferredSize().height > 0) {
+                lbl.setPreferredSize(new java.awt.Dimension(lbl.getPreferredSize().width, lbl.getPreferredSize().height));
+            }
+
+            lbl.setVisible(true);
+        }
+    }
+    }
+    private void styleLabels() {
+      btnback.setContentAreaFilled(false);
+        btnback.setBorderPainted(false);
+        btnback.setFocusPainted(false);
+
+        // Hide all elements completely until data is loaded
+        resetPlantLabels();
     }
     
     @SuppressWarnings("unchecked")
@@ -164,13 +172,15 @@ public class MONITORING extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        lbHumedad = new javax.swing.JLabel();
-        lblUltimoRiegoTitulo = new javax.swing.JLabel();
-        lblFechaYHoraRiego = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblCrownofThorns = new javax.swing.JLabel();
+        lblCrownofThorns2 = new javax.swing.JLabel();
+        lblTreeofAbundance = new javax.swing.JLabel();
+        lbldurantia = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        lblProximoRiego = new javax.swing.JLabel();
-        lblUltimoRiego = new javax.swing.JLabel();
+        lblDieffenbachia = new javax.swing.JLabel();
+        lblDieffenbachia2 = new javax.swing.JLabel();
+        lblTreeofAbundance2 = new javax.swing.JLabel();
+        lbldurantia2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -183,7 +193,7 @@ public class MONITORING extends javax.swing.JFrame {
         btnclose.addActionListener(this::btncloseActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Sylfaen", 0, 36)); // NOI18N
-        jLabel1.setText("Monitoreo");
+        jLabel1.setText("Datos del riego de las plantas");
 
         btnback.setIcon(new javax.swing.ImageIcon("C:\\Users\\Brith\\Documents\\GitHub\\VerdeSmart\\src\\main\\resources\\imagenes\\hojas-de-coca (1).png")); // NOI18N
 
@@ -213,27 +223,50 @@ public class MONITORING extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Sylfaen", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel2.setText("Estado del suelo");
+        jLabel2.setText("Cuando regar");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel3.setText("Humedad");
+        jLabel3.setText("Plantas");
 
-        lbHumedad.setBackground(new java.awt.Color(199, 221, 181));
+        lblCrownofThorns.setBackground(new java.awt.Color(199, 221, 181));
+        lblCrownofThorns.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblCrownofThorns.setForeground(new java.awt.Color(27, 77, 47));
+        lblCrownofThorns.setText("Corona");
 
-        lblUltimoRiegoTitulo.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
-        lblUltimoRiegoTitulo.setForeground(new java.awt.Color(27, 77, 47));
-        lblUltimoRiegoTitulo.setText("Último riego");
+        lblCrownofThorns2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblCrownofThorns2.setForeground(new java.awt.Color(27, 77, 47));
+        lblCrownofThorns2.setText("corona");
 
-        jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(27, 77, 47));
-        jLabel7.setText("Fecha y riego");
+        lblTreeofAbundance.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblTreeofAbundance.setForeground(new java.awt.Color(27, 77, 47));
+        lblTreeofAbundance.setText("Arbol");
+
+        lbldurantia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lbldurantia.setForeground(new java.awt.Color(27, 77, 47));
+        lbldurantia.setText("Durantia");
 
         jLabel8.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(27, 77, 47));
         jLabel8.setText("Próximo riego");
+
+        lblDieffenbachia.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblDieffenbachia.setForeground(new java.awt.Color(27, 77, 47));
+        lblDieffenbachia.setText("DIfenbacha");
+
+        lblDieffenbachia2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblDieffenbachia2.setForeground(new java.awt.Color(27, 77, 47));
+        lblDieffenbachia2.setText("difen");
+
+        lblTreeofAbundance2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lblTreeofAbundance2.setForeground(new java.awt.Color(27, 77, 47));
+        lblTreeofAbundance2.setText("arbol");
+
+        lbldurantia2.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        lbldurantia2.setForeground(new java.awt.Color(27, 77, 47));
+        lbldurantia2.setText("dur");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -241,16 +274,21 @@ public class MONITORING extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(lblFechaYHoraRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                    .addComponent(lblUltimoRiegoTitulo)
-                    .addComponent(jLabel3)
-                    .addComponent(lbHumedad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblProximoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblUltimoRiego, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTreeofAbundance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCrownofThorns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDieffenbachia, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
+                    .addComponent(lbldurantia2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTreeofAbundance2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel3)
+                            .addComponent(lblCrownofThorns2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDieffenbachia2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbldurantia, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(48, 48, 48))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,20 +296,24 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(lblUltimoRiegoTitulo)
+                .addComponent(lblCrownofThorns, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUltimoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jLabel7)
+                .addComponent(lblDieffenbachia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblFechaYHoraRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(lblTreeofAbundance, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbldurantia, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCrownofThorns2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblProximoRiego, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addComponent(lblDieffenbachia2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblTreeofAbundance2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbldurantia2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -284,7 +326,7 @@ public class MONITORING extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,15 +369,17 @@ public class MONITORING extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lbHumedad;
-    private javax.swing.JLabel lblFechaYHoraRiego;
-    private javax.swing.JLabel lblProximoRiego;
-    private javax.swing.JLabel lblUltimoRiego;
-    private javax.swing.JLabel lblUltimoRiegoTitulo;
+    private javax.swing.JLabel lblCrownofThorns;
+    private javax.swing.JLabel lblCrownofThorns2;
+    private javax.swing.JLabel lblDieffenbachia;
+    private javax.swing.JLabel lblDieffenbachia2;
+    private javax.swing.JLabel lblTreeofAbundance;
+    private javax.swing.JLabel lblTreeofAbundance2;
+    private javax.swing.JLabel lbldurantia;
+    private javax.swing.JLabel lbldurantia2;
     // End of variables declaration//GEN-END:variables
 }

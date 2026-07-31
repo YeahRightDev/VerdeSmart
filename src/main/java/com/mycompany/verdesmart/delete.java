@@ -24,9 +24,10 @@ public class delete extends javax.swing.JFrame {
         this.idGardenEliminar = idGarden;
         this.iduser = idUser;
         initComponents();
-        
+        // Binds the keyboard "ENTER" key directly to the delete button action
         this.getRootPane().setDefaultButton(btndelete);
         
+        // Modern UI styling applied using FlatLaf LookAndFeel properties
         btncancel.putClientProperty("FlatLaf.style", ""
                 + "background: #1B4D2F;"
                 + "foreground: #FFFFFF;"
@@ -118,11 +119,11 @@ public class delete extends javax.swing.JFrame {
      * Redirects the user back to the primary dashboard view without dropping database data.
      */
     private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
-    // CAMBIADO: Regresar a grounds al cancelar
+   // CHANGED: Return to grounds upon cancellation
         if (this.home_page != null) {
-            this.home_page.setVisible(true); 
+            this.home_page.setVisible(true); // Restores main dashboard window
         }
-        this.dispose();
+        this.dispose();// Closes current window instance
     }//GEN-LAST:event_btncancelActionPerformed
 
     /**
@@ -132,7 +133,7 @@ public class delete extends javax.swing.JFrame {
      */
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
 
-            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            int answer = javax.swing.JOptionPane.showConfirmDialog(
             this, 
             "¿Estás seguro de que deseas eliminar este jardín? Esta acción borrará de forma permanente todas las plantas, monitoreos e irrigaciones asociadas.", 
             "Confirmar Eliminación", 
@@ -140,7 +141,7 @@ public class delete extends javax.swing.JFrame {
             javax.swing.JOptionPane.WARNING_MESSAGE
         );
 
-        if (respuesta != javax.swing.JOptionPane.YES_OPTION) {
+        if (answer != javax.swing.JOptionPane.YES_OPTION) {
             return; 
         }
 
